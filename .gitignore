@@ -1,0 +1,13 @@
+# WordPress-export & andere XML (privé blog-/commentdata)
+*.xml
+
+# Moodboard-referenties (niet van ons, alleen intern)
+moodboard/
+
+# Bron-/werkbestanden
+*.xcf
+*.ai
+
+# OS-rommel
+Thumbs.db
+.DS_Store
