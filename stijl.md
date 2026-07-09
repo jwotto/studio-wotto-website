@@ -190,11 +190,14 @@ Sectie-padding schaalt mee met het scherm (`--section-y`, bijv.
 `clamp(48px, 8vw, 96px)`), zodat de verhoudingen op elk formaat kloppen. Zijmarges
 (gutters) via `--gutter` (`clamp(16px, 5vw, 64px)`).
 
-### Grid dat inklapt
+### Grid & carousel
 
-Kaartenoverzichten: 3 kolommen (desktop) → 2 (tablet) → 1 (mobiel). Het handigst
-met `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))`, dan klapt het
-vanzelf in zonder losse media-queries.
+**Diensten** (Wat we doen) staan in een gewoon grid dat inklapt: 3 kolommen (desktop)
+→ 2 (tablet) → 1 (mobiel), via `repeat(auto-fit, minmax(280px, 1fr))`.
+
+**Projecten en blogs** staan in een **swipe-carousel** i.p.v. een grid (zie
+UI-elementen → Carousel). Zo vermijden we de scheve "wees-kaart" (orphan) en blijven
+de foto's groot.
 
 ### Beeld & touch
 
@@ -326,17 +329,31 @@ geeft definitie. Bij hover een kwieke lift (bounce), evt. een klein tikje rotati
 
 ### Projectkaart
 
-**Foto voorop, full-bleed** — de projectfoto vult de kaart **vierkant (1:1)**,
-afgerond, met zachte schaduw en geen outline. De projectgrid staat iets breder over
-de pagina (bredere container). Daaronder **alleen de titel** (Fredoka) en het
+**Foto voorop** — de projectfoto vult de kaart **vierkant (1:1)**, afgerond, met
+zachte schaduw en geen outline. Daaronder **alleen de titel** (Fredoka) en het
 **thema** (discipline) als klein label. Geen omschrijving of datum. Hover: de foto
-lift met bounce. (De omlijnde kaartstijl blijft wél gelden voor blog- en dienst-kaarten.)
+lift met bounce. De projectkaarten staan in een **carousel** (zie hieronder).
 
 ### Blogkaart
 
-Een **omlijnde kaart** (transparant + outline in de tekstkleur). Bovenin een
-categorie-**chip** (dotted), daaronder de **titel** (Fredoka), een korte intro en
-een **datum + leestijd** als meta. Hover: kaart lift met bounce + klein tikje rotatie.
+Zelfde opzet als de projectkaart: **vierkante (1:1) cover-foto** voorop, daaronder de
+**titel** (Fredoka) en een korte **intro-zin** (excerpt). Ook in een **carousel**.
+Hover: de foto lift met bounce.
+
+### Carousel (projecten & blogs)
+
+Projecten en blogs staan in een **horizontale swipe-carousel** met **scroll-snap**
+(klikt netjes per kaart vast). Altijd **hele kaarten**, geen half-zichtbare "peek":
+**1** op mobiel, **2** op tablet, **3** op desktop.
+
+- **Pijlknoppen** links/rechts: een plain **Phosphor-pijl** (`arrow-right`, gespiegeld
+  voor links) met een **dotted ink-ring** eromheen — geen dichte achtergrond. Ze staan
+  laag in de foto (~85% hoogte), via JS gecentreerd op het beeld.
+- **Adaptieve kleur:** pijl + ring zijn **ink**, maar worden **cream** boven een
+  **donkere onder-hoek** van de foto. De helderheid van die hoek wordt vooraf gemeten
+  (drempel ~140) en per kaart meegegeven; in productie doen we dit automatisch bij het
+  bouwen. Met een beetje vooruitkijken zodat 'ie iets eerder omslaat.
+- Knoppen **verbergen zich** aan begin/eind en als alles al past (desktop).
 
 ### Chips
 
