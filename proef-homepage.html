@@ -97,6 +97,29 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
 .project:hover .project__img{transform:translateY(-6px) rotate(-.7deg)}
 .project h3{margin-top:var(--space-4); font-size:24px}
 .project__theme{display:inline-block; margin-top:8px; font-family:var(--font-head); font-weight:600; font-size:13px; letter-spacing:.07em; text-transform:uppercase; opacity:.8}
+
+/* ---------- Carousel (swipe — idee C) ---------- */
+.carousel{position:relative}
+.carousel__viewport{position:relative}
+.carousel__track{display:flex; align-items:flex-start; gap:var(--space-6); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding-block:12px; scrollbar-width:none; -ms-overflow-style:none}
+.carousel__track::-webkit-scrollbar{display:none}
+.carousel__item{flex:0 0 var(--card-w,100%); scroll-snap-align:start}   /* hele kaarten, geen peek */
+@media(min-width:640px){.carousel{--card-w:calc((100% - var(--space-6))/2)}}      /* 2 hele kaarten */
+@media(min-width:1024px){.carousel{--card-w:calc((100% - 2*var(--space-6))/3)}}   /* 3 hele kaarten */
+/* Zij-knoppen: kaal Phosphor-pijltje (cream + ink outline), geen cirkel */
+.carousel__btn{position:absolute; top:50%; transform:translateY(-50%); width:60px; height:60px;
+  border:3px dotted var(--ink); border-radius:50%; background:transparent; padding:0; cursor:pointer;
+  display:grid; place-items:center; z-index:6; color:var(--ink); font-size:32px;
+  transition:transform var(--dur) var(--ease-bounce), color var(--dur), border-color var(--dur), opacity .18s}
+.carousel__btn i{display:block; line-height:0}
+.carousel__btn.on-dark{color:var(--cream); border-color:var(--cream)}   /* wit op donkere foto */
+.carousel__btn--prev{left:6px}
+.carousel__btn--prev i{transform:scaleX(-1)}
+.carousel__btn--next{right:6px}
+.carousel__btn:hover:not(:disabled){transform:translateY(-50%) scale(1.15)}
+.carousel__btn:active:not(:disabled){transform:translateY(-50%) scale(.9)}
+.carousel__btn:disabled{opacity:0; pointer-events:none}
+.carousel__footer{margin-top:var(--space-6)}
 .project__excerpt{margin-top:8px; font-size:15px; opacity:.85}
 
 /* ---------- Header (kleurt mee met de sectie) ---------- */
@@ -209,24 +232,32 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
   <i class="ph-bold ph-vinyl-record deco" style="bottom:14%;right:7%;font-size:60px"></i>
   <div class="container container--wide">
     <div class="section-head"><p class="kicker">Uitgelicht</p><h2>Geselecteerde projecten</h2></div>
-    <div class="grid">
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/avatar%20maker.JPG" alt="Draw & Play arcade-kast in de studio"></div>
-        <h3>Draw &amp; Play</h3>
-        <div class="project__theme">Interactieve installatie</div>
-      </article>
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/JoostKlein_@jentevanbrabant_6.jpg" alt="Joost Klein live op het podium"></div>
-        <h3>Joost Klein</h3>
-        <div class="project__theme">Podium</div>
-      </article>
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/ramses%20DDW.jpg" alt="Ramses bespeelt een custom audiovisueel instrument op Dutch Design Week"></div>
-        <h3>Ramses — live AV</h3>
-        <div class="project__theme">Muziekinstrument</div>
-      </article>
+    <div class="carousel">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <article class="project carousel__item" data-lum-left="68" data-lum-right="72">
+            <div class="project__img"><img src="afbeeldingen/avatar%20maker.JPG" alt="Draw & Play arcade-kast in de studio"></div>
+            <h3>Draw &amp; Play</h3>
+            <div class="project__theme">Interactieve installatie</div>
+          </article>
+          <article class="project carousel__item" data-lum-left="186" data-lum-right="201">
+            <div class="project__img"><img src="afbeeldingen/JoostKlein_@jentevanbrabant_6.jpg" alt="Joost Klein live op het podium"></div>
+            <h3>Joost Klein</h3>
+            <div class="project__theme">Podium</div>
+          </article>
+          <article class="project carousel__item" data-lum-left="10" data-lum-right="31">
+            <div class="project__img"><img src="afbeeldingen/ramses%20DDW.jpg" alt="Ramses bespeelt een custom audiovisueel instrument op Dutch Design Week"></div>
+            <h3>Ramses — live AV</h3>
+            <div class="project__theme">Muziekinstrument</div>
+          </article>
+        </div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><i class="ph-bold ph-arrow-right"></i></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende projecten"><i class="ph-bold ph-arrow-right"></i></button>
+      </div>
+      <div class="carousel__footer">
+        <a class="btn btn--primary" href="#">Alle projecten →</a>
+      </div>
     </div>
-    <div style="margin-top:var(--space-7)"><a class="btn btn--primary" href="#">Alle projecten →</a></div>
   </div>
 </section>
 
@@ -279,18 +310,26 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
       <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="FL Studio">
       <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="Home Computer Museum">
       <img src="logo's%20klanten/logo_summa_college_png.png" alt="Summa College">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="Effenaar">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="Tantu">
       <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
       <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
       <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
       <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
       <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -302,24 +341,32 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
   <i class="ph-bold ph-game-controller deco" style="bottom:14%;right:7%;font-size:56px"></i>
   <div class="container">
     <div class="section-head"><p class="kicker">Uit de studio</p><h2>Recente blogs</h2></div>
-    <div class="grid">
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/blog/ramses3000.jpeg" alt="Ramses3000 in de Effenaar Eindhoven"></div>
-        <h3>Samenwerking met Ramses3000</h3>
-        <p class="project__excerpt">Hoe vertaal je creatieve kunstenaarstaal naar iets technisch, zonder dat het zijn ziel verliest?</p>
-      </article>
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/blog/tantu-beats.png" alt="Tantu Beats — FL Studio samenwerking"></div>
-        <h3>Tantu Beats</h3>
-        <p class="project__excerpt">We hebben de afgelopen tijd samengewerkt met Teun de Kruif, beter bekend als Tantu Beats.</p>
-      </article>
-      <article class="project">
-        <div class="project__img"><img src="afbeeldingen/blog/makerdays.jpg" alt="MAKERDAYS Eindhoven 2025"></div>
-        <h3>MAKERDAYS Eindhoven 2025</h3>
-        <p class="project__excerpt">Afgelopen jaar lieten we ons weer horen bij de ingang van het stadhuis, weer aanwezig bij de MAKERDAYS Eindhoven.</p>
-      </article>
+    <div class="carousel">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <article class="project carousel__item" data-lum-left="10" data-lum-right="31">
+            <div class="project__img"><img src="afbeeldingen/blog/ramses3000.jpeg" alt="Ramses3000 in de Effenaar Eindhoven"></div>
+            <h3>Samenwerking met Ramses3000</h3>
+            <p class="project__excerpt">Hoe vertaal je creatieve kunstenaarstaal naar iets technisch, zonder dat het zijn ziel verliest?</p>
+          </article>
+          <article class="project carousel__item" data-lum-left="102" data-lum-right="121">
+            <div class="project__img"><img src="afbeeldingen/blog/tantu-beats.png" alt="Tantu Beats — FL Studio samenwerking"></div>
+            <h3>Tantu Beats</h3>
+            <p class="project__excerpt">We hebben de afgelopen tijd samengewerkt met Teun de Kruif, beter bekend als Tantu Beats.</p>
+          </article>
+          <article class="project carousel__item" data-lum-left="23" data-lum-right="74">
+            <div class="project__img"><img src="afbeeldingen/blog/makerdays.jpg" alt="MAKERDAYS Eindhoven 2025"></div>
+            <h3>MAKERDAYS Eindhoven 2025</h3>
+            <p class="project__excerpt">Afgelopen jaar lieten we ons weer horen bij de ingang van het stadhuis, weer aanwezig bij de MAKERDAYS Eindhoven.</p>
+          </article>
+        </div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><i class="ph-bold ph-arrow-right"></i></button>
+      </div>
+      <div class="carousel__footer">
+        <a class="btn btn--primary" href="#">Naar de blog →</a>
+      </div>
     </div>
-    <div style="margin-top:var(--space-7)"><a class="btn btn--primary" href="#">Naar de blog →</a></div>
   </div>
 </section>
 
@@ -428,6 +475,61 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
   }, {passive:true});
   addEventListener('resize', () => { syncHeader(); updateHeaderVisibility(); });
   syncHeader();
+
+  // Carousels (idee C) — pijltjes scrollen per kaart; verbergen als alles al past
+  document.querySelectorAll('.carousel').forEach(car => {
+    const viewport = car.querySelector('.carousel__viewport');
+    const track = car.querySelector('.carousel__track');
+    const prev  = car.querySelector('[data-dir="-1"]');
+    const next  = car.querySelector('[data-dir="1"]');
+    const btns  = car.querySelectorAll('.carousel__btn');
+    function step(){
+      const it = track.querySelector('.carousel__item');
+      const g = parseFloat(getComputedStyle(track).columnGap) || 24;
+      return it ? it.getBoundingClientRect().width + g : track.clientWidth;
+    }
+    function placeBtns(){
+      // centreer de knoppen op het verticale midden van de foto (niet de hele kaart)
+      const img = track.querySelector('.project__img') || track.querySelector('img');
+      if (!img || !viewport) return;
+      const vp = viewport.getBoundingClientRect(), ir = img.getBoundingClientRect();
+      const top = (ir.top - vp.top) + ir.height * 0.85;   // echt onderin de foto
+      btns.forEach(b => b.style.top = top + 'px');
+    }
+    function tintBtns(){
+      // pijl + ring worden cream op een donkere onder-hoek (vooraf gemeten helderheid), anders ink
+      const THRESHOLD = 140;                    // < 140 = donker -> cream (waar cream beter contrasteert dan ink)
+      function darkFor(btn, side){
+        const b = btn.getBoundingClientRect();
+        const pad = b.width * 0.5;              // beetje vooruitkijken -> iets eerder naar wit
+        const zL = b.left - pad, zR = b.right + pad;
+        let min = null;
+        track.querySelectorAll('.carousel__item').forEach(item => {
+          const r = item.getBoundingClientRect();
+          if (r.right > zL && r.left < zR){
+            const v = side === 'left' ? item.dataset.lumLeft : item.dataset.lumRight;
+            if (v != null && v !== ''){ const n = +v; if (min === null || n < min) min = n; }
+          }
+        });
+        return min !== null && min < THRESHOLD;
+      }
+      if (prev) prev.classList.toggle('on-dark', darkFor(prev, 'left'));
+      if (next) next.classList.toggle('on-dark', darkFor(next, 'right'));
+    }
+    function update(){
+      // knoppen verbergen zich aan het begin/eind (en dus ook als alles al past)
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    prev && prev.addEventListener('click', () => track.scrollBy({left:-step(), behavior:'smooth'}));
+    next && next.addEventListener('click', () => track.scrollBy({left: step(), behavior:'smooth'}));
+    track.addEventListener('scroll', () => { update(); tintBtns(); }, {passive:true});
+    addEventListener('resize', () => { update(); placeBtns(); tintBtns(); });
+    track.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => { placeBtns(); tintBtns(); }, {once:true}); });
+    placeBtns();
+    update();
+    tintBtns();
+  });
 </script>
 </body>
 </html>
