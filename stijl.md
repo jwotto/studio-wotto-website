@@ -117,8 +117,8 @@ Fonts van Google Fonts.
 - **Fredoka** — koppen én UI (hero-tagline, sectie-titels, knoppen, chips, labels,
   navigatie, kaart-titels). Rond en vriendelijk; **bold (700)** voor de grote koppen.
 - **Nunito** — bodytekst en langere leesstukken. Zacht maar goed leesbaar.
-- **Press Start 2P** — spaarzaam pixel-/arcade-accent (bijv. een "INSERT COIN"-badge).
-  Nooit voor lopende tekst.
+- **Press Start 2P** — beschikbaar als spaarzaam pixel-/arcade-accent voor korte
+  labels. Nooit voor lopende tekst. *(Momenteel niet actief in de mockup.)*
 
 ### Schaal (px)
 
@@ -164,14 +164,19 @@ De site moet altijd mooi schalen tussen desktop en mobiel — nooit horizontaal
 scrollen, nooit afgekapte koppen. **Mobiel-first**: we bouwen vanaf de smalste
 breedte op en breiden uit.
 
-### Breakpoints
+### Breakpoints — Tailwind (min-width, mobiel-first)
 
 | Naam | Vanaf | Gebruik |
 |---|---|---|
-| `sm` | 480px | grote telefoons |
-| `md` | 768px | tablet — kaarten naar 2 kolommen |
-| `lg` | 1024px | desktop — kaarten naar 3 kolommen, nav horizontaal |
-| `xl` | 1280px | ruime schermen — content capped op `--content-max` |
+| `sm` | 640px | grote telefoons |
+| `md` | 768px | tablet — **nav wordt horizontaal** (eronder de hamburger) |
+| `lg` | 1024px | kleine desktop |
+| `xl` | 1280px | desktop — content capped op `--content-max` |
+| `2xl` | 1536px | ruime schermen |
+
+De kaarten-grids blijven bewust **vloeiend** (`auto-fit / minmax`) en klappen dus
+op beschikbare breedte in, niet op een vaste breakpoint. De vaste breakpoints
+hierboven gebruiken we voor de **nav** en eventuele latere media-queries.
 
 ### Fluïde typografie
 
@@ -195,8 +200,8 @@ vanzelf in zonder losse media-queries.
 
 - Alle beelden `max-width: 100%` met vaste `aspect-ratio`, zodat niets rekt of overloopt.
 - Touch-targets minimaal 44×44px (pill-knoppen voldoen ruim).
-- Op mobiel wordt de navigatie een hamburger/uitklap (3 lijntjes → kruisje); op
-  desktop horizontaal.
+- Onder `md` (768px) wordt de navigatie een hamburger/uitklap (3 lijntjes → kruisje);
+  vanaf `md` horizontaal.
 - De **sectiekleuren blijven identiek** op elk formaat — alleen de layout herschikt.
 
 ---
@@ -215,8 +220,9 @@ iconografie.
   stempels, badges, mascottes met oogjes) en de vlakke, heldere kleurlogica volgt.
   Geen verlopen naar pastel.
 - **Fotografie / projectbeeld** is voor een studioportfolio wél belangrijk, maar
-  niet het hart van de *stijl*. Zet het altijd op witte surface-kaarten, houd het
-  energiek en helder, en laat het nooit de kleuren vertroebelen.
+  niet het hart van de *stijl*. Het staat **vierkant (1:1) en full-bleed** in de
+  projectkaarten (geen witte omkadering), energiek en helder, en vertroebelt nooit
+  de sectiekleur.
 - **Zwarte outlines:** vlakke vormen en illustraties mogen een stevige zwarte
   contour krijgen (chunky stroke) — kernonderdeel van de moodboard-look (EMOTION
   SHAPES, de toetsen-illustratie). Fills blijven vlak; een speelse, verzadigde
@@ -245,11 +251,11 @@ sectie. Regels:
 Andere Y2K-motieven mogen ook (starbursts, stickers/badges, squiggles,
 speech-bubbles), mits monochroom en rustig.
 
-### Sectie-overgangen (vorm-dividers)
+### Sectie-overgangen (bewegende golf)
 
-De harde kleurwissel is de basis. Optioneel een vorm-divider tussen twee secties
-(schulp, golf, zigzag of een stickerband) die de **kleur van de vólgende sectie**
-aanneemt, zodat de overgang speels maar strak blijft.
+Tussen elke sectie zit een **golf-divider** die de kleur van de **volgende sectie**
+aanneemt en **continu, langzaam horizontaal meebeweegt** (afwisselend van richting per
+sectie). Pauzeert bij `prefers-reduced-motion`.
 
 ---
 
@@ -276,11 +282,40 @@ met net iets te veel enthousiasme in de beweging.
 
 ## UI-elementen
 
+### Header & navigatie
+
+- **Sticky** bovenaan, compacte hoogte.
+- **Kleurt mee met de sectie eronder** — achtergrond én tekstkleur nemen de kleur
+  van de sectie over tijdens het scrollen (zachte transitie).
+- **Logo = de cropped avatar** (compact merk): wit standaard, wordt **zwart** op
+  lichte secties (zon/mint/bubblegum) via een filter, zodat het altijd leesbaar is.
+- **Desktop:** horizontale links (Fredoka), meekleurend.
+- **Onder `md` (< 768px):** een **hamburger** (3 lijntjes) die met een bounce naar een
+  **kruisje** morpht; het menu klapt eronder uit met een **dekkende, meekleurende
+  achtergrond** (nooit doorschijnend — de rest van de site blijft erachter verborgen).
+- **Onder `md` — hide-on-scroll:** de header **verdwijnt bij omlaag scrollen** en
+  **verschijnt weer bij omhoog scrollen** (slide met bounce). Vanaf `md` blijft de
+  header altijd staan.
+- **Uitklapmenu sluit vanzelf** bij scrollen, bij een klik buiten de header, bij
+  Escape en na het kiezen van een link — zodat je nooit een open menu meesleept.
+
+### Hero / landing
+
+Koraal vlak met **het logo groot** (witte wordmark) als blikvanger, daaronder een
+korte **tagline** (Fredoka bold), een lead-zin en twee knoppen (primary + ghost-light).
+Zwevende game/muziek-iconen rond de randen.
+
 ### Knoppen
 
-Pill-vormig, met een subtiele 1px border in ink op 10% (geen harde zwarte lijn).
-Primary = blauwe vulling met witte tekst. Zachte box-shadow, geen harde
-offset-schaduw. Bij interactie de bounce-animatie hierboven.
+Pill-vormig, subtiele 1px border in ink op 10% (geen harde zwarte lijn), zachte
+box-shadow. Bij interactie de bounce-animatie (hover: +3px & ×1,03; klik: krimpt).
+Drie varianten:
+
+- **Primary** — blauwe vulling, witte tekst (de actiekleur). Voor lichte/gekleurde secties.
+- **Light** — cream vulling, ink tekst. Voor knoppen op koraal/blauw/ink (bijv. de
+  mail- en telefoon-pills op contact).
+- **Ghost (light)** — transparant met cream border + cream tekst. Secundaire actie op
+  een gekleurde/donkere sectie (bijv. "Neem contact op" in de hero).
 
 ### Kaarten (algemeen)
 
@@ -299,9 +334,9 @@ lift met bounce. (De omlijnde kaartstijl blijft wél gelden voor blog- en dienst
 
 ### Blogkaart
 
-Zelfde opzet als de projectkaart: **vierkante (1:1) cover-foto**, daaronder de
-**titel** en de **eerste zin** van het bericht. Geen outline, geen datum/chip.
-Hover: de foto lift met bounce.
+Een **omlijnde kaart** (transparant + outline in de tekstkleur). Bovenin een
+categorie-**chip** (dotted), daaronder de **titel** (Fredoka), een korte intro en
+een **datum + leestijd** als meta. Hover: kaart lift met bounce + klein tikje rotatie.
 
 ### Chips
 
@@ -323,7 +358,9 @@ bent. Bijv. bruikbaar voor filters op het projectenoverzicht.
 ### Links & navigatie
 
 In ink of blauw, met duidelijke maar niet schreeuwerige nadruk. Navigatie in de
-UI-font (Fredoka). In de blauwe hero: witte links.
+UI-font (Fredoka). In het **mobiele uitklapmenu** zijn de links groter (~22px, bold)
+en **volledige rijen** met genoeg padding (tikvlak ≥ 44px); op **desktop** compact
+(16px, horizontaal).
 
 ### Klant-logo marquee
 
@@ -333,14 +370,14 @@ Logo's op uniforme hoogte en **monochroom** (ink, via `brightness(0)`) zodat de 
 cohesief oogt. **Pauzeert bij hover en bij `prefers-reduced-motion`.**
 
 > Het HCM-logo heeft een eigen (bruine) achtergrond; daarvan is een omgekleurde versie
-> gemaakt (`hcm_logo_bw.png`: bruin → zwart, tekst/balken → **transparant** uitgesneden)
-> die de zwart-filter overslaat en zo naast de zwarte silhouetten past.
+> gemaakt (`hcm_logo_bw.png`: bruin → **zwart**, tekst/balken → **wit**) die de
+> zwart-filter overslaat (`.raw`) en zo naast de zwarte silhouetten past.
 
 ### Get in touch
 
-Geen formulier. Eén grote, uitnodigende sectie met een klikbaar **06-nummer**
-(`tel:`) en **e-mailadres** (`mailto:`), als pill-knoppen of grote display-tekst.
-Bubblegum achtergrond, ink tekst.
+Geen formulier. Eén grote, uitnodigende **koraal** sectie (cream tekst) met een
+klikbaar **06-nummer** (`tel:`) en **e-mailadres** (`mailto:`) als **light-pills**
+(cream vulling, ink tekst, met Phosphor-icoon), plus de locatie (Eindhoven).
 
 ---
 
@@ -378,11 +415,14 @@ Vertaling van bovenstaande keuzes naar CSS-variabelen. Deze zetten we straks in 
   --border-strong: rgba(26,26,46,0.16);
 
   /* — Sectie-tekstkleur volgt de contrastregel —
-     op blauw/ink: var(--cream); elders: var(--ink) */
+     op blauw/ink/koraal: var(--cream); op mint/zon/bubblegum: var(--ink) */
+  --hdr-bg: var(--coral);  /* meekleurende header: JS zet dit per sectie */
 
   /* — Typografie — */
-  --font-head: 'Fredoka', sans-serif;
-  --font-body: 'Nunito', sans-serif;
+  --font-display: 'Fredoka', sans-serif;      /* grote koppen (bold) */
+  --font-head:    'Fredoka', sans-serif;      /* UI, subkoppen, knoppen */
+  --font-body:    'Nunito', sans-serif;       /* bodytekst */
+  --font-pixel:   'Press Start 2P', monospace;/* arcade-accent */
 
   --text-xs:  12px;
   --text-sm:  14px;
@@ -393,7 +433,7 @@ Vertaling van bovenstaande keuzes naar CSS-variabelen. Deze zetten we straks in 
   --text-2xl: 32px;
   --text-3xl: 40px;
   --text-4xl: 48px;
-  --text-hero: clamp(48px, 9vw, 112px); /* grote landings-kop */
+  --text-hero: clamp(30px, 5vw, 54px); /* hero-tagline (het logo staat groot als beeld) */
 
   /* — Spacing (4px-basis) — */
   --space-1: 4px;
@@ -415,7 +455,12 @@ Vertaling van bovenstaande keuzes naar CSS-variabelen. Deze zetten we straks in 
   --content-max: 1200px;
   --gutter:    clamp(16px, 5vw, 64px);  /* zijmarge, schaalt mee */
   --section-y: clamp(48px, 8vw, 96px);  /* verticale sectie-padding */
-  /* breakpoints (voor media-queries): sm 480 · md 768 · lg 1024 · xl 1280 */
+  /* — Breakpoints (Tailwind) — @media gebruikt de vaste px; deze vars zijn ter referentie/JS — */
+  --bp-sm:  640px;
+  --bp-md:  768px;   /* nav wordt hier horizontaal; eronder de hamburger */
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1536px;
 
   /* — Motion — */
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -425,6 +470,7 @@ Vertaling van bovenstaande keuzes naar CSS-variabelen. Deze zetten we straks in 
   /* — Schaduw (zacht, geen harde offset) — */
   --shadow-sm: 0 2px 8px  rgba(26,26,46,0.08);
   --shadow-md: 0 8px 24px rgba(26,26,46,0.12);
+  --shadow-lg: 0 18px 44px rgba(26,26,46,0.18);
 }
 ```
 
@@ -433,7 +479,7 @@ Vertaling van bovenstaande keuzes naar CSS-variabelen. Deze zetten we straks in 
 ```css
 .section--blue      { background: var(--blue);      color: var(--cream); }
 .section--sun       { background: var(--sun);       color: var(--ink);   }
-.section--coral     { background: var(--coral);     color: var(--ink);   }
+.section--coral     { background: var(--coral);     color: var(--cream); }
 .section--mint      { background: var(--mint);      color: var(--ink);   }
 .section--bubblegum { background: var(--bubblegum); color: var(--ink);   }
 .section--ink       { background: var(--ink);       color: var(--cream); }

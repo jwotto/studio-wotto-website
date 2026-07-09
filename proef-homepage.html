@@ -29,6 +29,8 @@
   --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
   --radius-sm:8px; --radius-md:16px; --radius-lg:24px; --radius-full:999px;
   --content-max:1200px; --gutter:clamp(16px,5vw,64px); --section-y:clamp(72px,9vw,116px);
+  /* Breakpoints (Tailwind) — @media gebruikt vaste px; deze vars zijn ter referentie */
+  --bp-sm:640px; --bp-md:768px; --bp-lg:1024px; --bp-xl:1280px; --bp-2xl:1536px;
   --ease-bounce:cubic-bezier(.34,1.56,.64,1); --dur-fast:120ms; --dur:200ms;
   --shadow-sm:0 2px 8px rgba(26,26,46,.08); --shadow-md:0 10px 28px rgba(26,26,46,.14); --shadow-lg:0 18px 44px rgba(26,26,46,.18);
 }
@@ -98,7 +100,8 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
 .project__excerpt{margin-top:8px; font-size:15px; opacity:.85}
 
 /* ---------- Header (kleurt mee met de sectie) ---------- */
-.header{position:sticky; top:0; z-index:50; background:var(--coral); color:var(--cream); transition:background var(--dur) linear, color var(--dur) linear}
+.header{position:sticky; top:0; z-index:50; background:var(--hdr-bg, var(--coral)); color:var(--cream); transition:transform .32s var(--ease-bounce), background var(--dur) linear, color var(--dur) linear}
+.header--hidden{transform:translateY(-100%)}
 .nav{display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); width:100%; padding:12px var(--gutter)}
 .brand-logo{height:40px; width:auto; transition:filter var(--dur) linear}
 .nav-links{display:flex; align-items:center; gap:var(--space-5); list-style:none; margin:0; padding:0}
@@ -146,11 +149,11 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
   transition:transform .7s var(--ease-bounce); will-change:transform}
 
 /* ---------- Responsive ---------- */
-@media (max-width:900px){
+@media (max-width:767.98px){ /* onder md — Tailwind breakpoints: sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536 */
   .nav-toggle{display:flex}
-  .nav-links{display:none; position:absolute; left:0; right:0; top:100%; flex-direction:column; align-items:flex-start; gap:var(--space-2); background:inherit; color:inherit; padding:var(--space-4) var(--gutter) var(--space-6); box-shadow:var(--shadow-md)}
+  .nav-links{display:none; position:absolute; left:0; right:0; top:100%; flex-direction:column; align-items:flex-start; gap:2px; background:var(--hdr-bg, var(--coral)); color:inherit; padding:var(--space-4) var(--gutter) var(--space-6); box-shadow:var(--shadow-md)}
   .header.nav-open .nav-links{display:flex}
-  .header{position:relative}
+  .nav-links a{width:100%; font-size:22px; font-weight:700; padding:10px 0; opacity:1}
   .deco{display:none}
 }
 @media (prefers-reduced-motion:reduce){
@@ -366,12 +369,15 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
 <script>
   const header = document.getElementById('header');
   const toggle = document.getElementById('navToggle');
+  function closeMenu(){ header.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); }
   toggle.addEventListener('click', () => {
     const open = header.classList.toggle('nav-open');
     toggle.setAttribute('aria-expanded', open);
   });
-  header.querySelectorAll('.nav-links a').forEach(a =>
-    a.addEventListener('click', () => header.classList.remove('nav-open')));
+  header.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', closeMenu));
+  // Sluit het menu bij klik buiten de header of Escape
+  document.addEventListener('click', (e) => { if (header.classList.contains('nav-open') && !header.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
   // Header kleurt mee met de sectie eronder; het witte avatar-logo wordt zwart op lichte secties
   const logo = document.getElementById('brandLogo');
@@ -381,7 +387,7 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
     let active = blocks[0];
     for (const b of blocks){ const r = b.getBoundingClientRect(); if (r.top <= y && r.bottom > y){ active = b; break; } }
     const cs = getComputedStyle(active);
-    header.style.background = cs.backgroundColor;
+    header.style.setProperty('--hdr-bg', cs.backgroundColor);
     header.style.color = cs.color;
     logo.style.filter = active.dataset.nav === 'light' ? 'none' : 'brightness(0)';
   }
@@ -403,11 +409,24 @@ h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
     }, 130);
   }
 
+  // Mobiel: header verbergt bij scrollen omlaag, verschijnt bij scrollen omhoog
+  let lastScrollY = window.scrollY;
+  function updateHeaderVisibility(){
+    const y = window.scrollY;
+    if (window.innerWidth < 768 && !header.classList.contains('nav-open')){
+      if (y > lastScrollY && y > header.offsetHeight + 8) header.classList.add('header--hidden');
+      else if (y < lastScrollY) header.classList.remove('header--hidden');
+    } else {
+      header.classList.remove('header--hidden');
+    }
+    lastScrollY = y;
+  }
+
   let ticking = false;
   addEventListener('scroll', () => {
-    if (!ticking){ ticking = true; requestAnimationFrame(() => { syncHeader(); spinDecos(); ticking = false; }); }
+    if (!ticking){ ticking = true; requestAnimationFrame(() => { if (header.classList.contains('nav-open')) closeMenu(); syncHeader(); updateHeaderVisibility(); spinDecos(); ticking = false; }); }
   }, {passive:true});
-  addEventListener('resize', syncHeader);
+  addEventListener('resize', () => { syncHeader(); updateHeaderVisibility(); });
   syncHeader();
 </script>
 </body>
