@@ -6,7 +6,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const clean = (id: string) => id.replace(/\/index$/, '');
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const onderwijsProjecten = (await getCollection('projecten'))
   .filter((p) => p.data.tags.includes('onderwijs'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());

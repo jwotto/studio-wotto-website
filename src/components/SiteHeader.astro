@@ -1,6 +1,6 @@
 ---
 // Statische header voor subpagina's (koraal). De homepage heeft z'n eigen meekleurende variant.
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <header class="header" id="header" style="--hdr-bg:var(--coral)">
   <nav class="nav" aria-label="Hoofdnavigatie">
