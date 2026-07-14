@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const pillars: Record<string, { thema: string; title: string; intro: string }> = {
+  'interactieve-installaties': {
+    thema: 'installaties',
+    title: 'Interactieve installaties',
+    intro: 'Kunstwerken en presentaties die reageren op de bezoeker. We koppelen sensoren, camera’s en geluidsontwerp aan een creatief concept: van een reactieve arcadekast tot een interactieve tentoonstelling. Voor musea, festivals en beurzen.',
+  },
+  'muzikale-webapps': {
+    thema: 'webapps',
+    title: 'Muzikale webapps & games',
+    intro: 'Muziek en games die direct in de browser werken, op laptop, telefoon en tablet. Ideaal voor educatieve apps, gamification en QR-spellen in de etalage.',
+  },
+  'muziekinstrumenten': {
+    thema: 'podium',
+    title: 'Podium & instrumenten',
+    intro: 'Muziekinstrumenten en objecten voor podium en artiesten: reactieve lasers, custom controllers en 3D-geprinte props, eenmalig voor dat ene optreden.',
+  },
+};
+
+export function getStaticPaths() {
+  const p: Record<string, { thema: string; title: string; intro: string }> = {
+    'interactieve-installaties': { thema: 'installaties', title: 'Interactieve installaties', intro: '' },
+    'muzikale-webapps': { thema: 'webapps', title: 'Muzikale webapps & games', intro: '' },
+    'muziekinstrumenten': { thema: 'podium', title: 'Podium & instrumenten', intro: '' },
+  };
+  return Object.keys(p).map((slug) => ({ params: { thema: slug } }));
+}
+
+const slug = Astro.params.thema as string;
+const pillar = pillars[slug];
+
+const projecten = (await getCollection('projecten'))
+  .filter((x) => x.data.thema === pillar.thema)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const blogs = (await getCollection('blog'))
+  .filter((x) => x.data.thema === pillar.thema)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title={pillar.title + ' — Studio Wotto'} description={pillar.intro}>
+  <SiteHeader />
+
+  <section class="section section--coral">
+    <div class="container">
+      <p class="kicker">Wat we doen</p>
+      <h2>{pillar.title}</h2>
+      <p class="lead" style="max-width:660px">{pillar.intro}</p>
+      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href="/#contact">Neem contact op</a></div>
+    </div>
+  </section>
+
+  <section style="padding-block:var(--section-y)">
+    <div class="container container--wide">
+      <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Voorbeelden</h2>
+      {projecten.length > 0 ? (
+        <div class="grid">
+          {projecten.map((p) => (
+            <article class="project">
+              <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
+              <h3>{p.data.title}</h3>
+              <div class="project__theme">{pillar.title}</div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p style="opacity:.75">Binnenkort meer voorbeelden bij dit thema.</p>
+      )}
+    </div>
+  </section>
+
+  {blogs.length > 0 && (
+    <section style="padding-bottom:var(--section-y)">
+      <div class="container container--wide">
+        <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Verhalen over dit thema</h2>
+        <div class="grid">
+          {blogs.map((b) => (
+            <article class="project">
+              <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
+              <h3>{b.data.title}</h3>
+              {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--ink" style="text-align:center">
+    <div class="container">
+      <h2 style="font-size:clamp(26px,4vw,40px)">Meer uit de studio</h2>
+      <div style="margin-top:var(--space-6); display:flex; gap:var(--space-3); justify-content:center; flex-wrap:wrap">
+        <a class="btn btn--light" href="/blog">Alle blogs →</a>
+        <a class="btn btn--ghost-light" href="/projecten">Alle projecten →</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter />
+</Base>

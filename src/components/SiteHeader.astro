@@ -1,0 +1,29 @@
+---
+// Statische header voor subpagina's (koraal). De homepage heeft z'n eigen meekleurende variant.
+---
+<header class="header" id="header" style="--hdr-bg:var(--coral)">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="/"><img class="brand-logo" src="/logos/avatar-white.png" alt="Studio Wotto" /></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="/projecten">Projecten</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/#over">Over ons</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('header');
+  const toggle = document.getElementById('navToggle');
+  if (header && toggle) {
+    const close = () => { header.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); };
+    toggle.addEventListener('click', () => {
+      const open = header.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    header.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  }
+</script>

@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const workshops = [
+  { titel: 'Bouw je eigen elektrische gitaar', tekst: 'Van gerecyclede materialen bouw je een unieke elektrische gitaar, en je leert de techniek achter geluid.' },
+  { titel: 'Muziek en techniek (drumrobots)', tekst: 'Maak je eigen muziekmachine met sequencers en elektronica, een geluidskunstwerk dat er goed uitziet en klinkt.' },
+  { titel: 'Maak een game', tekst: 'Ontwerp en programmeer je eigen videogame en speel je game op een echte arcadekast.' },
+  { titel: 'SoundSketch', tekst: 'Teken je eigen geluid: lijnen worden hoorbaar, waar beeld en geluid samenkomen.' },
+];
+
+const faq = [
+  { v: 'Voor wie zijn de workshops bedoeld?', a: 'Basisscholen, middelbare scholen, speciaal onderwijs, hogescholen (MBO, HBO, WO), en ook leerkrachten en volwassenen. We passen het niveau aan op de groep.' },
+  { v: 'Hoe lang duurt een workshop en wat kost het?', a: 'Gemiddeld 45 tot 90 minuten. De kosten variëren met de duur, het aantal deelnemers en de materialen. We maken een prijsopgave op maat. Studio Wotto is CJP-acceptant.' },
+  { v: 'Wie geeft de workshops?', a: 'Ervaren makers en vakdocenten met een passie voor technologie en creativiteit.' },
+  { v: 'Worden de workshops op locatie gegeven?', a: 'Ja, door heel Nederland. We komen naar jouw school of locatie.' },
+];
+---
+
+<Base title="Workshops & talks — Studio Wotto" description="Workshops en gastcolleges over creatieve technologie, op scholen, hogescholen en festivals.">
+  <SiteHeader />
+
+  <section class="section section--blue">
+    <div class="container">
+      <p class="kicker">Educatie</p>
+      <h2>Workshops & talks</h2>
+      <p class="lead" style="max-width:660px">We delen onze kennis via workshops en gastcolleges over creatieve technologie. Vaak op hogescholen en in het onderwijs, waar we tegelijk onze creaties testen. Op locatie, door heel Nederland.</p>
+      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href="/#contact">Workshop aanvragen</a></div>
+    </div>
+  </section>
+
+  <section style="padding-block:var(--section-y)">
+    <div class="container">
+      <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Onze workshops</h2>
+      <div class="grid">
+        {workshops.map((w) => (
+          <article class="card"><div class="card__body">
+            <h3>{w.titel}</h3>
+            <p>{w.tekst}</p>
+          </div></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-bottom:var(--section-y)">
+    <div class="container" style="max-width:760px">
+      <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Veelgestelde vragen</h2>
+      {faq.map((f) => (
+        <div style="margin-bottom:var(--space-5)">
+          <h3 style="font-size:19px">{f.v}</h3>
+          <p style="margin-top:var(--space-2); opacity:.85">{f.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--ink" style="text-align:center">
+    <div class="container">
+      <h2 style="font-size:clamp(26px,4vw,40px)">Wat we in workshops testen, bouwen we ook in opdracht</h2>
+      <p class="lead" style="max-width:600px; margin-inline:auto">Van interactieve installaties tot muzikale webapps, ook voor het onderwijs.</p>
+      <div style="margin-top:var(--space-6); display:flex; gap:var(--space-3); justify-content:center; flex-wrap:wrap">
+        <a class="btn btn--light" href="/interactieve-installaties">Interactieve installaties</a>
+        <a class="btn btn--ghost-light" href="/muzikale-webapps">Muzikale webapps</a>
+        <a class="btn btn--ghost-light" href="/muziekinstrumenten">Podium & instrumenten</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter />
+</Base>

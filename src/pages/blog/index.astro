@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+const blogs = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Base title="Blog — Studio Wotto" description="Verhalen uit de studio: projecten, workshops en samenwerkingen.">
+  <SiteHeader />
+  <section class="section section--bubblegum">
+    <div class="container"><h2>Blog</h2></div>
+  </section>
+  <section style="padding-block:var(--section-y)">
+    <div class="container container--wide">
+      <div class="grid">
+        {blogs.map((b) => (
+          <article class="project">
+            <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
+            <h3>{b.data.title}</h3>
+            {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <SiteFooter />
+</Base>
