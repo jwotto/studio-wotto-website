@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Studio Wotto — proef-homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+/* ============================================================
+   Studio Wotto — proef-homepage
+   Volgorde: hero · projecten · wat we doen · klanten · blogs · contact · footer
+   ============================================================ */
+
+:root{
+  --blue:#0061E0; --coral:#FF5757; --mint:#38C789; --sun:#FFF069; --bubblegum:#F9B3D5;
+  --ink:#1A1A2E; --cream:#FFFEFB; --cream-warm:#F7F5EE; --surface:#FFFFFF;
+  --line:#ECEAE2; --border:rgba(26,26,46,.10); --border-strong:rgba(26,26,46,.16);
+
+  --font-display:'Fredoka', sans-serif;
+  --font-head:'Fredoka', sans-serif;
+  --font-body:'Nunito', sans-serif;
+  --text-hero:clamp(30px,5vw,54px);
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  --radius-sm:8px; --radius-md:16px; --radius-lg:24px; --radius-full:999px;
+  --content-max:1200px; --gutter:clamp(16px,5vw,64px); --section-y:clamp(72px,9vw,116px);
+  /* Breakpoints (Tailwind) — @media gebruikt vaste px; deze vars zijn ter referentie */
+  --bp-sm:640px; --bp-md:768px; --bp-lg:1024px; --bp-xl:1280px; --bp-2xl:1536px;
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1); --dur-fast:120ms; --dur:200ms;
+  --shadow-sm:0 2px 8px rgba(26,26,46,.08); --shadow-md:0 10px 28px rgba(26,26,46,.14); --shadow-lg:0 18px 44px rgba(26,26,46,.18);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:76px}
+body{margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; overflow-x:clip; -webkit-font-smoothing:antialiased}
+img{max-width:100%; display:block}
+a{color:inherit; text-decoration:none}
+h1,h2{font-family:var(--font-display); font-weight:700; line-height:1.1; margin:0}
+h3{font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0}
+
+/* ---------- Sectiekleuren ---------- */
+.section{position:relative; background:var(--bg); color:var(--fg); padding-block:var(--section-y)}
+.section--coral{--bg:var(--coral); --fg:var(--cream)}
+.section--blue{--bg:var(--blue); --fg:var(--cream)}
+.section--sun{--bg:var(--sun); --fg:var(--ink)}
+.section--mint{--bg:var(--mint); --fg:var(--ink)}
+.section--bubblegum{--bg:var(--bubblegum); --fg:var(--ink)}
+.section--ink{--bg:var(--ink); --fg:var(--cream)}
+
+/* ---------- Doorbewegende golf-overgangen ---------- */
+.wave-top{position:absolute; left:0; top:0; width:100%; height:clamp(34px,5vw,66px); transform:translateY(-99%); overflow:hidden; line-height:0; z-index:1}
+.wave-top svg{display:block; width:200%; height:100%; fill:var(--bg); animation:wavemove 11s linear infinite}
+.wave-top.rev svg{animation-direction:reverse; animation-duration:14s}
+@keyframes wavemove{to{transform:translateX(-50%)}}
+
+/* ---------- Layout ---------- */
+.container{position:relative; z-index:2; max-width:var(--content-max); margin-inline:auto; padding-inline:var(--gutter)}
+.container--wide{max-width:1440px}
+.section-head{max-width:640px; margin-bottom:var(--space-7)}
+.kicker{font-family:var(--font-head); font-weight:600; font-size:14px; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:var(--space-3)}
+.section h2{font-size:clamp(30px,5.5vw,56px)}
+.lead{font-size:clamp(17px,2.2vw,20px); margin-top:var(--space-4)}
+
+/* ---------- Knoppen ---------- */
+.btn{display:inline-flex; align-items:center; gap:var(--space-2); font-family:var(--font-head); font-weight:600; font-size:16px;
+  padding:14px 26px; border-radius:var(--radius-full); border:1px solid var(--border); cursor:pointer; min-height:44px;
+  transition:transform var(--dur) var(--ease-bounce), box-shadow var(--dur) var(--ease-bounce), background var(--dur)}
+.btn:hover{transform:translateY(-3px) scale(1.03); box-shadow:var(--shadow-md)}
+.btn:active{transform:translateY(1px) scale(.97); transition-duration:var(--dur-fast); box-shadow:none}
+.btn--primary{background:var(--blue); color:#fff; border-color:transparent; box-shadow:var(--shadow-sm)}
+.btn--light{background:var(--cream); color:var(--ink); border-color:transparent; box-shadow:var(--shadow-sm)}
+.btn--ghost-light{background:transparent; color:var(--cream); border-color:rgba(255,255,255,.6)}
+.btn i{font-size:20px}
+
+/* ---------- Chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-family:var(--font-head); font-weight:500; font-size:13px; padding:6px 14px; border-radius:var(--radius-full); border:2px dotted currentColor}
+
+/* ---------- Kaarten (services + blogs): transparant + outline ---------- */
+.grid{display:grid; gap:var(--space-6); grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.card{background:transparent; color:inherit; border-radius:var(--radius-lg); border:2.5px solid currentColor; overflow:hidden; transition:transform var(--dur) var(--ease-bounce)}
+.card:hover{transform:translateY(-5px) rotate(-.6deg)}
+.card__body{padding:var(--space-6)}
+.card h3{font-size:22px}
+.card p{margin:var(--space-3) 0 0; font-size:15px; opacity:.85}
+.card__meta{font-size:13px; opacity:.7; margin-top:var(--space-4)}
+.service__icon{font-size:44px; line-height:1; margin-bottom:var(--space-4)}
+
+/* ---------- Projectkaart: full-bleed foto + titel + thema ---------- */
+.project{color:inherit}
+.project__img{aspect-ratio:1/1; border-radius:var(--radius-lg); overflow:hidden; transition:transform var(--dur) var(--ease-bounce); box-shadow:var(--shadow-md)}
+.project__img img{width:100%; height:100%; object-fit:cover}
+.project:hover .project__img{transform:translateY(-6px) rotate(-.7deg)}
+.project h3{margin-top:var(--space-4); font-size:24px}
+.project__theme{display:inline-block; margin-top:8px; font-family:var(--font-head); font-weight:600; font-size:13px; letter-spacing:.07em; text-transform:uppercase; opacity:.8}
+
+/* ---------- Carousel (swipe — idee C) ---------- */
+.carousel{position:relative}
+.carousel__viewport{position:relative}
+.carousel__track{display:flex; align-items:flex-start; gap:var(--space-6); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding-block:12px; scrollbar-width:none; -ms-overflow-style:none}
+.carousel__track::-webkit-scrollbar{display:none}
+.carousel__item{flex:0 0 var(--card-w,100%); scroll-snap-align:start}   /* hele kaarten, geen peek */
+@media(min-width:640px){.carousel{--card-w:calc((100% - var(--space-6))/2)}}      /* 2 hele kaarten */
+@media(min-width:1024px){.carousel{--card-w:calc((100% - 2*var(--space-6))/3)}}   /* 3 hele kaarten */
+/* Zij-knoppen: kaal Phosphor-pijltje (cream + ink outline), geen cirkel */
+.carousel__btn{position:absolute; top:50%; transform:translateY(-50%); width:60px; height:60px;
+  border:3px dotted var(--ink); border-radius:50%; background:transparent; padding:0; cursor:pointer;
+  display:grid; place-items:center; z-index:6; color:var(--ink); font-size:32px;
+  transition:transform var(--dur) var(--ease-bounce), color var(--dur), border-color var(--dur), opacity .18s}
+.carousel__btn i{display:block; line-height:0}
+.carousel__btn.on-dark{color:var(--cream); border-color:var(--cream)}   /* wit op donkere foto */
+.carousel__btn--prev{left:6px}
+.carousel__btn--prev i{transform:scaleX(-1)}
+.carousel__btn--next{right:6px}
+.carousel__btn:hover:not(:disabled){transform:translateY(-50%) scale(1.15)}
+.carousel__btn:active:not(:disabled){transform:translateY(-50%) scale(.9)}
+.carousel__btn:disabled{opacity:0; pointer-events:none}
+.carousel__footer{margin-top:var(--space-6)}
+.project__excerpt{margin-top:8px; font-size:15px; opacity:.85}
+
+/* ---------- Header (kleurt mee met de sectie) ---------- */
+.header{position:sticky; top:0; z-index:50; background:var(--hdr-bg, var(--coral)); color:var(--cream); transition:transform .32s var(--ease-bounce), background var(--dur) linear, color var(--dur) linear}
+.header--hidden{transform:translateY(-100%)}
+.nav{display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); width:100%; padding:12px var(--gutter)}
+.brand-logo{height:40px; width:auto; transition:filter var(--dur) linear}
+.nav-links{display:flex; align-items:center; gap:var(--space-5); list-style:none; margin:0; padding:0}
+.nav-links a{font-family:var(--font-head); font-weight:600; color:inherit; opacity:.85}
+.nav-links a:hover{opacity:1}
+.nav-toggle{display:none; flex-direction:column; justify-content:center; gap:5px; width:46px; height:44px; padding:11px 10px; background:transparent; border:0; color:inherit; cursor:pointer}
+.nav-toggle span{display:block; width:100%; height:3px; border-radius:2px; background:currentColor; transition:transform .25s var(--ease-bounce), opacity .2s}
+.header.nav-open .nav-toggle span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.header.nav-open .nav-toggle span:nth-child(2){opacity:0}
+.header.nav-open .nav-toggle span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* ---------- Hero ---------- */
+.hero__logo{width:min(680px,86%); height:auto; margin-bottom:var(--space-5)}
+.hero__tag{font-size:var(--text-hero); max-width:16ch}
+.hero .lead{max-width:620px}
+.hero__cta{display:flex; flex-wrap:wrap; gap:var(--space-3); margin-top:var(--space-6)}
+
+/* ---------- Specialisaties ---------- */
+.cloud{display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--space-7)}
+
+/* ---------- Get in touch ---------- */
+.touch{text-align:center}
+.touch h2{font-size:clamp(34px,7vw,68px)}
+.touch__pills{display:flex; flex-wrap:wrap; gap:var(--space-3); justify-content:center; margin-top:var(--space-6)}
+
+/* ---------- Klanten (logo-marquee, links → rechts) ---------- */
+.clients{position:relative; z-index:2; overflow:hidden; width:100%}
+.clients__track{display:flex; align-items:center; gap:clamp(40px,7vw,96px); width:max-content; animation:logoscroll 45s linear infinite}
+.clients__track img{height:clamp(32px,5vw,50px); width:auto; object-fit:contain; filter:brightness(0)}
+.clients__track img.raw{filter:none}
+.clients:hover .clients__track{animation-play-state:paused}
+@keyframes logoscroll{from{transform:translateX(-50%)} to{transform:translateX(0)}}
+
+/* ---------- Footer ---------- */
+.footer{--bg:var(--ink); --fg:var(--cream); background:var(--ink); color:var(--cream); padding-block:var(--space-8); position:relative}
+.footer__logo{height:38px; width:auto; margin-bottom:var(--space-4)}
+.footer__grid{display:grid; gap:var(--space-6); grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.footer h4{font-family:var(--font-head); font-size:15px; letter-spacing:.05em; text-transform:uppercase; opacity:.6; margin:0 0 var(--space-3)}
+.footer ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.footer a{opacity:.85} .footer a:hover{opacity:1}
+.footer__bottom{margin-top:var(--space-7); padding-top:var(--space-5); border-top:1px solid rgba(255,255,255,.15); display:flex; flex-wrap:wrap; gap:var(--space-3); justify-content:space-between; font-size:14px; opacity:.7}
+
+/* ---------- Game/muziek-decoratie (monochroom, draait bij scroll) ---------- */
+.deco{position:absolute; z-index:0; pointer-events:none; display:inline-block; line-height:1; color:inherit; opacity:.9;
+  transition:transform .7s var(--ease-bounce); will-change:transform}
+
+/* ---------- Responsive ---------- */
+@media (max-width:767.98px){ /* onder md — Tailwind breakpoints: sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536 */
+  .nav-toggle{display:flex}
+  .nav-links{display:none; position:absolute; left:0; right:0; top:100%; flex-direction:column; align-items:flex-start; gap:2px; background:var(--hdr-bg, var(--coral)); color:inherit; padding:var(--space-4) var(--gutter) var(--space-6); box-shadow:var(--shadow-md)}
+  .header.nav-open .nav-links{display:flex}
+  .nav-links a{width:100%; font-size:22px; font-weight:700; padding:10px 0; opacity:1}
+  .deco{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important}
+  html{scroll-behavior:auto}
+  .btn,.card,.project__img,.deco{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Golf-sprite ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="wave" viewBox="0 0 2400 80" preserveAspectRatio="none">
+    <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
+</defs></svg>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header" data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="logo's/cropped-avatar-logo-2-e1721815131329-300x202.png" alt="Studio Wotto"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#projecten">Projecten</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#over">Over ons</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ============ HERO (koraal) ============ -->
+<section class="section section--coral hero" id="top" data-nav="light">
+  <i class="ph-bold ph-game-controller deco" style="top:14%;right:7%;font-size:68px"></i>
+  <i class="ph-bold ph-ghost deco" style="bottom:16%;left:5%;font-size:60px"></i>
+  <i class="ph-bold ph-music-notes deco" style="top:24%;right:24%;font-size:40px"></i>
+  <i class="ph-bold ph-waveform deco" style="bottom:24%;right:15%;font-size:52px"></i>
+  <div class="container">
+    <img class="hero__logo" src="logo's/logo%20studio%20wotto%20white.png" alt="Studio Wotto">
+    <h1 class="hero__tag">Techniek om mee te spelen.</h1>
+    <p class="lead">Wij maken interactieve installaties, muzikale webapps en muziekinstrumenten voor musea, podia en artiesten. We bedenken het, ontwerpen het en bouwen het, van het eerste idee tot een werkend resultaat.</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="#projecten">Bekijk projecten →</a>
+      <a class="btn btn--ghost-light" href="#contact">Neem contact op</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GESELECTEERDE PROJECTEN (zon) ============ -->
+<section class="section section--sun" id="projecten" data-nav="dark">
+  <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <i class="ph-bold ph-dice-five deco" style="top:12%;left:6%;font-size:52px"></i>
+  <i class="ph-bold ph-vinyl-record deco" style="bottom:14%;right:7%;font-size:60px"></i>
+  <div class="container container--wide">
+    <div class="section-head"><h2>Onze projecten</h2></div>
+    <div class="carousel">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <article class="project carousel__item" data-lum-left="68" data-lum-right="72">
+            <div class="project__img"><img src="afbeeldingen/avatar%20maker.JPG" alt="Draw & Play arcade-kast in de studio"></div>
+            <h3>Draw &amp; Play</h3>
+            <div class="project__theme">Interactieve installatie</div>
+          </article>
+          <article class="project carousel__item" data-lum-left="186" data-lum-right="201">
+            <div class="project__img"><img src="afbeeldingen/JoostKlein_@jentevanbrabant_6.jpg" alt="Joost Klein live op het podium"></div>
+            <h3>Joost Klein</h3>
+            <div class="project__theme">Podium</div>
+          </article>
+          <article class="project carousel__item" data-lum-left="10" data-lum-right="31">
+            <div class="project__img"><img src="afbeeldingen/ramses%20DDW.jpg" alt="Ramses bespeelt een custom audiovisueel instrument op Dutch Design Week"></div>
+            <h3>Ramses live AV</h3>
+            <div class="project__theme">Muziekinstrument</div>
+          </article>
+        </div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><i class="ph-bold ph-arrow-right"></i></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende projecten"><i class="ph-bold ph-arrow-right"></i></button>
+      </div>
+      <div class="carousel__footer">
+        <a class="btn btn--primary" href="#">Alle projecten →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WAT WE DOEN (blauw) ============ -->
+<section class="section section--blue" id="over" data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <i class="ph-bold ph-equalizer deco" style="top:12%;right:8%;font-size:58px"></i>
+  <i class="ph-bold ph-music-note deco" style="bottom:14%;left:6%;font-size:48px"></i>
+  <div class="container">
+    <div class="section-head">
+      <h2>Wat we doen</h2>
+      <p class="lead">Wij houden van techniek waar je mee speelt in plaats van naar kijkt.</p>
+    </div>
+    <div class="grid">
+      <article class="card service"><div class="card__body">
+        <div class="service__icon"><i class="ph-bold ph-magic-wand"></i></div><h3>Interactieve installaties</h3>
+        <p>Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.</p>
+      </div></article>
+      <article class="card service"><div class="card__body">
+        <div class="service__icon"><i class="ph-bold ph-app-window"></i></div><h3>Webapps</h3>
+        <p>Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een QR-spel in de etalage.</p>
+      </div></article>
+      <article class="card service"><div class="card__body">
+        <div class="service__icon"><i class="ph-bold ph-microphone-stage"></i></div><h3>Voor op het podium</h3>
+        <p>Eenmalige objecten voor artiesten. Een instrument, reactieve lasers of een 3D-geprinte prop voor die ene show.</p>
+      </div></article>
+    </div>
+    <div class="cloud">
+      <span class="chip">Interactieve installaties</span><span class="chip">Interactieve tentoonstellingen</span>
+      <span class="chip">Museuminstallaties</span><span class="chip">Muzikale webapps</span>
+      <span class="chip">Muziekinstrumenten</span><span class="chip">Gamification</span>
+      <span class="chip">Games</span><span class="chip">Creatieve technologie</span>
+      <span class="chip">Geluidsontwerp</span><span class="chip">Conceptontwikkeling</span><span class="chip">Phygital</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KLANTEN (mint) ============ -->
+<section class="section section--mint" data-nav="dark">
+  <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <i class="ph-bold ph-ghost deco" style="top:14%;right:8%;font-size:58px"></i>
+  <i class="ph-bold ph-star deco" style="bottom:16%;left:7%;font-size:46px"></i>
+  <div class="container">
+    <div class="section-head"><h2>Onze klanten</h2><p class="lead">Samen met musea, artiesten, merken en scholen maken we speelse interactieve ervaringen die publiek activeren. Niet kijken, maar meedoen. We maakten eerder ervaringen voor:</p></div>
+  </div>
+  <div class="clients">
+    <div class="clients__track">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="Museum Speelklok">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="FL Studio">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="Home Computer Museum">
+      <img src="logo's%20klanten/logo_summa_college_png.png" alt="Summa College">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="Effenaar">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="Tantu">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true">
+      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOGS (bubblegum) ============ -->
+<section class="section section--bubblegum" id="blog" data-nav="dark">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <i class="ph-bold ph-waveform deco" style="top:12%;left:6%;font-size:54px"></i>
+  <i class="ph-bold ph-game-controller deco" style="bottom:14%;right:7%;font-size:56px"></i>
+  <div class="container">
+    <div class="section-head"><h2>Recente blogs</h2></div>
+    <div class="carousel">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <article class="project carousel__item" data-lum-left="10" data-lum-right="31">
+            <div class="project__img"><img src="afbeeldingen/blog/ramses3000.jpeg" alt="Ramses3000 in de Effenaar Eindhoven"></div>
+            <h3>Samenwerking met Ramses3000</h3>
+            <p class="project__excerpt">Hoe vertaal je creatieve kunstenaarstaal naar iets technisch, zonder dat het zijn ziel verliest?</p>
+          </article>
+          <article class="project carousel__item" data-lum-left="102" data-lum-right="121">
+            <div class="project__img"><img src="afbeeldingen/blog/tantu-beats.png" alt="Tantu Beats, FL Studio samenwerking"></div>
+            <h3>Tantu Beats</h3>
+            <p class="project__excerpt">We hebben de afgelopen tijd samengewerkt met Teun de Kruif, beter bekend als Tantu Beats.</p>
+          </article>
+          <article class="project carousel__item" data-lum-left="23" data-lum-right="74">
+            <div class="project__img"><img src="afbeeldingen/blog/makerdays.jpg" alt="MAKERDAYS Eindhoven 2025"></div>
+            <h3>MAKERDAYS Eindhoven 2025</h3>
+            <p class="project__excerpt">Afgelopen jaar lieten we ons weer horen bij de ingang van het stadhuis, weer aanwezig bij de MAKERDAYS Eindhoven.</p>
+          </article>
+        </div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><i class="ph-bold ph-arrow-right"></i></button>
+      </div>
+      <div class="carousel__footer">
+        <a class="btn btn--primary" href="#">Naar de blog →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GET IN TOUCH (koraal) ============ -->
+<section class="section section--coral touch" id="contact" data-nav="light">
+  <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <i class="ph-bold ph-music-notes deco" style="top:16%;left:8%;font-size:56px"></i>
+  <i class="ph-bold ph-heart deco" style="top:18%;right:9%;font-size:50px"></i>
+  <i class="ph-bold ph-equalizer deco" style="bottom:14%;left:16%;font-size:44px"></i>
+  <div class="container">
+    <p class="kicker">Get in touch</p>
+    <h2>Iets moois maken samen?</h2>
+    <p class="lead" style="max-width:560px; margin-inline:auto">Benieuwd of we samen iets kunnen maken? Stuur ons gerust een bericht.</p>
+    <div class="touch__pills">
+      <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
+      <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+    </div>
+    <p style="margin-top:var(--space-6); display:inline-flex; align-items:center; gap:8px"><i class="ph-bold ph-map-pin"></i> Eindhoven, Noord-Brabant</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER (ink) ============ -->
+<footer class="footer" data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="logo's/logo%20studio%20wotto%20white.png" alt="Studio Wotto">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h4>Menu</h4><ul>
+        <li><a href="#projecten">Projecten</a></li><li><a href="#blog">Blog</a></li>
+        <li><a href="#over">Over ons</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Eindhoven, NL</li></ul></div>
+      <div><h4>Volg</h4><ul>
+        <li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · www.studiowotto.com</span>
+      <span>Proef-homepage, gebouwd op stijl.md</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('header');
+  const toggle = document.getElementById('navToggle');
+  function closeMenu(){ header.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); }
+  toggle.addEventListener('click', () => {
+    const open = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  header.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', closeMenu));
+  // Sluit het menu bij klik buiten de header of Escape
+  document.addEventListener('click', (e) => { if (header.classList.contains('nav-open') && !header.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  // Header kleurt mee met de sectie eronder; het witte avatar-logo wordt zwart op lichte secties
+  const logo = document.getElementById('brandLogo');
+  const blocks = [...document.querySelectorAll('[data-nav]')].filter(b => b !== header);
+  function syncHeader(){
+    const y = header.offsetHeight + 2;
+    let active = blocks[0];
+    for (const b of blocks){ const r = b.getBoundingClientRect(); if (r.top <= y && r.bottom > y){ active = b; break; } }
+    const cs = getComputedStyle(active);
+    header.style.setProperty('--hdr-bg', cs.backgroundColor);
+    header.style.color = cs.color;
+    logo.style.filter = active.dataset.nav === 'light' ? 'none' : 'brightness(0)';
+  }
+
+  // Zwevende figuurtjes draaien mee met scrollen, en gaan recht staan bij stilstand
+  const decos = [...document.querySelectorAll('.deco')];
+  let idleTimer;
+  function spinDecos(){
+    const y = window.scrollY;
+    decos.forEach((d, i) => {
+      const dir = (i % 2) ? 1 : -1;
+      const rot = y * (0.22 + (i % 4) * 0.05) * dir;
+      d.style.transition = 'none';
+      d.style.transform = 'rotate(' + rot.toFixed(1) + 'deg)';
+    });
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      decos.forEach(d => { d.style.transition = 'transform .7s var(--ease-bounce)'; d.style.transform = 'rotate(0deg)'; });
+    }, 130);
+  }
+
+  // Mobiel: header verbergt bij scrollen omlaag, verschijnt bij scrollen omhoog
+  let lastScrollY = window.scrollY;
+  function updateHeaderVisibility(){
+    const y = window.scrollY;
+    if (window.innerWidth < 768 && !header.classList.contains('nav-open')){
+      if (y > lastScrollY && y > header.offsetHeight + 8) header.classList.add('header--hidden');
+      else if (y < lastScrollY) header.classList.remove('header--hidden');
+    } else {
+      header.classList.remove('header--hidden');
+    }
+    lastScrollY = y;
+  }
+
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (!ticking){ ticking = true; requestAnimationFrame(() => { if (header.classList.contains('nav-open')) closeMenu(); syncHeader(); updateHeaderVisibility(); spinDecos(); ticking = false; }); }
+  }, {passive:true});
+  addEventListener('resize', () => { syncHeader(); updateHeaderVisibility(); });
+  syncHeader();
+
+  // Carousels (idee C) — pijltjes scrollen per kaart; verbergen als alles al past
+  document.querySelectorAll('.carousel').forEach(car => {
+    const viewport = car.querySelector('.carousel__viewport');
+    const track = car.querySelector('.carousel__track');
+    const prev  = car.querySelector('[data-dir="-1"]');
+    const next  = car.querySelector('[data-dir="1"]');
+    const btns  = car.querySelectorAll('.carousel__btn');
+    function step(){
+      const it = track.querySelector('.carousel__item');
+      const g = parseFloat(getComputedStyle(track).columnGap) || 24;
+      return it ? it.getBoundingClientRect().width + g : track.clientWidth;
+    }
+    function placeBtns(){
+      // centreer de knoppen op het verticale midden van de foto (niet de hele kaart)
+      const img = track.querySelector('.project__img') || track.querySelector('img');
+      if (!img || !viewport) return;
+      const vp = viewport.getBoundingClientRect(), ir = img.getBoundingClientRect();
+      const top = (ir.top - vp.top) + ir.height * 0.85;   // echt onderin de foto
+      btns.forEach(b => b.style.top = top + 'px');
+    }
+    function tintBtns(){
+      // pijl + ring worden cream op een donkere onder-hoek (vooraf gemeten helderheid), anders ink
+      const THRESHOLD = 140;                    // < 140 = donker -> cream (waar cream beter contrasteert dan ink)
+      function darkFor(btn, side){
+        const b = btn.getBoundingClientRect();
+        const pad = b.width * 0.5;              // beetje vooruitkijken -> iets eerder naar wit
+        const zL = b.left - pad, zR = b.right + pad;
+        let min = null;
+        track.querySelectorAll('.carousel__item').forEach(item => {
+          const r = item.getBoundingClientRect();
+          if (r.right > zL && r.left < zR){
+            const v = side === 'left' ? item.dataset.lumLeft : item.dataset.lumRight;
+            if (v != null && v !== ''){ const n = +v; if (min === null || n < min) min = n; }
+          }
+        });
+        return min !== null && min < THRESHOLD;
+      }
+      if (prev) prev.classList.toggle('on-dark', darkFor(prev, 'left'));
+      if (next) next.classList.toggle('on-dark', darkFor(next, 'right'));
+    }
+    function update(){
+      // knoppen verbergen zich aan het begin/eind (en dus ook als alles al past)
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    prev && prev.addEventListener('click', () => track.scrollBy({left:-step(), behavior:'smooth'}));
+    next && next.addEventListener('click', () => track.scrollBy({left: step(), behavior:'smooth'}));
+    track.addEventListener('scroll', () => { update(); tintBtns(); }, {passive:true});
+    addEventListener('resize', () => { update(); placeBtns(); tintBtns(); });
+    track.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => { placeBtns(); tintBtns(); }, {once:true}); });
+    placeBtns();
+    update();
+    tintBtns();
+  });
+</script>
+</body>
+</html>

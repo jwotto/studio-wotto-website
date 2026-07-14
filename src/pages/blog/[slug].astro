@@ -8,6 +8,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 const pillarSlug: Record<string, string> = { installaties: 'interactieve-installaties', webapps: 'muzikale-webapps', podium: 'muziekinstrumenten' };
 const pillarLabel: Record<string, string> = { installaties: 'Interactieve installaties', webapps: 'Muzikale webapps', podium: 'Podium & instrumenten' };
 const clean = (id: string) => id.replace(/\/index$/, '');
+const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
   const items = await getCollection('blog');
@@ -28,7 +29,7 @@ const related = (await getCollection('blog'))
 
   <section class="section section--bubblegum">
     <div class="container" style="max-width:820px">
-      {thema && <a class="chip" href={`/${pillarSlug[thema]}`}>{pillarLabel[thema]}</a>}
+      {thema && <a class="chip" href={base + pillarSlug[thema]}>{pillarLabel[thema]}</a>}
       <h1 style="font-size:clamp(30px,5vw,52px); margin-top:var(--space-4)">{entry.data.title}</h1>
       {entry.data.excerpt && <p class="lead" style="max-width:640px">{entry.data.excerpt}</p>}
     </div>
@@ -54,7 +55,7 @@ const related = (await getCollection('blog'))
         <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Meer verhalen</h2>
         <div class="grid">
           {related.map((b) => (
-            <a class="project" href={`/blog/${clean(b.id)}`}>
+            <a class="project" href={base + 'blog/' + clean(b.id)}>
               <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={480} /></div>
               <h3>{b.data.title}</h3>
               {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
@@ -68,7 +69,7 @@ const related = (await getCollection('blog'))
   <section class="section section--ink" style="text-align:center">
     <div class="container">
       <h2 style="font-size:clamp(26px,4vw,40px)">Benieuwd wat we voor jou kunnen maken?</h2>
-      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href="/#contact">Neem contact op</a></div>
+      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href={base + '#contact'}>Neem contact op</a></div>
     </div>
   </section>
 

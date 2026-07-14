@@ -1,15 +1,16 @@
 ---
 // Statische header voor subpagina's (koraal). De homepage heeft z'n eigen meekleurende variant.
+const base = import.meta.env.BASE_URL;
 ---
 <header class="header" id="header" style="--hdr-bg:var(--coral)">
   <nav class="nav" aria-label="Hoofdnavigatie">
-    <a class="brand" href="/"><img class="brand-logo" src="/logos/avatar-white.png" alt="Studio Wotto" /></a>
+    <a class="brand" href={base}><img class="brand-logo" src={base + 'logos/avatar-white.png'} alt="Studio Wotto" /></a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
-      <li><a href="/projecten">Projecten</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/#over">Over ons</a></li>
-      <li><a href="/#contact">Contact</a></li>
+      <li><a href={base + 'projecten'}>Projecten</a></li>
+      <li><a href={base + 'blog'}>Blog</a></li>
+      <li><a href={base + '#over'}>Over ons</a></li>
+      <li><a href={base + '#contact'}>Contact</a></li>
     </ul>
   </nav>
 </header>

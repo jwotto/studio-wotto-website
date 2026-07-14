@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.studiowotto.com',
+  site: 'https://jwotto.github.io',
+  base: '/studio-wotto-website',
   integrations: [mdx(), sitemap()],
 });

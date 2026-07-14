@@ -44,6 +44,7 @@ const blogs = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const clean = (id: string) => id.replace(/\/index$/, '');
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={pillar.title + ' — Studio Wotto'} description={pillar.intro}>
@@ -54,7 +55,7 @@ const clean = (id: string) => id.replace(/\/index$/, '');
       <p class="kicker">Wat we doen</p>
       <h2>{pillar.title}</h2>
       <p class="lead" style="max-width:660px">{pillar.intro}</p>
-      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href="/#contact">Neem contact op</a></div>
+      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href={base + '#contact'}>Neem contact op</a></div>
     </div>
   </section>
 
@@ -64,7 +65,7 @@ const clean = (id: string) => id.replace(/\/index$/, '');
       {projecten.length > 0 ? (
         <div class="grid">
           {projecten.map((p) => (
-            <a class="project" href={`/projecten/${clean(p.id)}`}>
+            <a class="project" href={base + 'projecten/' + clean(p.id)}>
               <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
               <h3>{p.data.title}</h3>
               <div class="project__theme">{pillar.title}</div>
@@ -83,7 +84,7 @@ const clean = (id: string) => id.replace(/\/index$/, '');
         <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Verhalen over dit thema</h2>
         <div class="grid">
           {blogs.map((b) => (
-            <a class="project" href={`/blog/${clean(b.id)}`}>
+            <a class="project" href={base + 'blog/' + clean(b.id)}>
               <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
               <h3>{b.data.title}</h3>
               {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
@@ -98,8 +99,8 @@ const clean = (id: string) => id.replace(/\/index$/, '');
     <div class="container">
       <h2 style="font-size:clamp(26px,4vw,40px)">Meer uit de studio</h2>
       <div style="margin-top:var(--space-6); display:flex; gap:var(--space-3); justify-content:center; flex-wrap:wrap">
-        <a class="btn btn--light" href="/blog">Alle blogs →</a>
-        <a class="btn btn--ghost-light" href="/projecten">Alle projecten →</a>
+        <a class="btn btn--light" href={base + 'blog'}>Alle blogs →</a>
+        <a class="btn btn--ghost-light" href={base + 'projecten'}>Alle projecten →</a>
       </div>
     </div>
   </section>

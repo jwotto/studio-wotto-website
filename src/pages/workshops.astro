@@ -6,6 +6,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const clean = (id: string) => id.replace(/\/index$/, '');
+const base = import.meta.env.BASE_URL;
 const onderwijsProjecten = (await getCollection('projecten'))
   .filter((p) => p.data.tags.includes('onderwijs'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -33,7 +34,7 @@ const faq = [
       <p class="kicker">Educatie</p>
       <h2>Workshops & talks</h2>
       <p class="lead" style="max-width:660px">We delen onze kennis via workshops en gastcolleges over creatieve technologie. Vaak op hogescholen en in het onderwijs, waar we tegelijk onze creaties testen. Op locatie, door heel Nederland.</p>
-      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href="/#contact">Workshop aanvragen</a></div>
+      <div style="margin-top:var(--space-6)"><a class="btn btn--light" href={base + '#contact'}>Workshop aanvragen</a></div>
     </div>
   </section>
 
@@ -58,7 +59,7 @@ const faq = [
         <p class="lead" style="max-width:620px; margin-bottom:var(--space-6)">Naast workshops bouwen we interactieve installaties en games in opdracht van scholen en onderwijsinstellingen.</p>
         <div class="grid">
           {onderwijsProjecten.map((p) => (
-            <a class="project" href={`/projecten/${clean(p.id)}`}>
+            <a class="project" href={base + 'projecten/' + clean(p.id)}>
               <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
               <h3>{p.data.title}</h3>
             </a>
@@ -85,9 +86,9 @@ const faq = [
       <h2 style="font-size:clamp(26px,4vw,40px)">Wat we in workshops testen, bouwen we ook in opdracht</h2>
       <p class="lead" style="max-width:600px; margin-inline:auto">Van interactieve installaties tot muzikale webapps, ook voor het onderwijs.</p>
       <div style="margin-top:var(--space-6); display:flex; gap:var(--space-3); justify-content:center; flex-wrap:wrap">
-        <a class="btn btn--light" href="/interactieve-installaties">Interactieve installaties</a>
-        <a class="btn btn--ghost-light" href="/muzikale-webapps">Muzikale webapps</a>
-        <a class="btn btn--ghost-light" href="/muziekinstrumenten">Podium & instrumenten</a>
+        <a class="btn btn--light" href={base + 'interactieve-installaties'}>Interactieve installaties</a>
+        <a class="btn btn--ghost-light" href={base + 'muzikale-webapps'}>Muzikale webapps</a>
+        <a class="btn btn--ghost-light" href={base + 'muziekinstrumenten'}>Podium & instrumenten</a>
       </div>
     </div>
   </section>
