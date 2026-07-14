@@ -18,6 +18,8 @@ const projecten = defineCollection({
       featured: z.boolean().default(false),
       excerpt: z.string().optional(),
       video: z.string().optional(),
+      lumLeft: z.number().optional(),
+      lumRight: z.number().optional(),
     }),
 });
 
@@ -35,6 +37,8 @@ const blog = defineCollection({
       featured: z.boolean().default(false),
       excerpt: z.string().optional(),
       video: z.string().optional(),
+      lumLeft: z.number().optional(),
+      lumRight: z.number().optional(),
     }),
 });
 

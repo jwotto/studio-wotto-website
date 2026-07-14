@@ -3,35 +3,320 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 
-const projecten = (await getCollection('projecten')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
-const blogs = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+const themaLabel: Record<string, string> = {
+  installaties: 'Interactieve installatie',
+  webapps: 'Muzikale webapp',
+  podium: 'Podium',
+};
+
+const projecten = (await getCollection('projecten'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const blogs = (await getCollection('blog'))
+  .filter((b) => b.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const klanten = [
+  { src: '/klanten/museum-speelklok.png', alt: 'Museum Speelklok' },
+  { src: '/klanten/fl-studio.png', alt: 'FL Studio' },
+  { src: '/klanten/hcm.png', alt: 'Home Computer Museum', raw: true },
+  { src: '/klanten/summa.png', alt: 'Summa College' },
+  { src: '/klanten/effenaar.png', alt: 'Effenaar' },
+  { src: '/klanten/tantu.png', alt: 'Tantu' },
+];
+const reps = [0, 1, 2, 3];
 ---
 
-<Base title="Studio Wotto — proef Astro">
-  <main style="max-width: var(--content-max); margin-inline: auto; padding: var(--space-8) var(--gutter);">
-    <h1 style="font-size: var(--text-hero); color: var(--coral);">Studio Wotto</h1>
-    <p>Astro-fundament staat. Content-collecties worden ingelezen:</p>
+<Base title="Studio Wotto — Techniek om mee te spelen" description="Studio Wotto maakt interactieve installaties, muzikale webapps en muziekinstrumenten voor musea, podia en artiesten.">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="wave" viewBox="0 0 2400 80" preserveAspectRatio="none">
+      <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
+  </defs></svg>
 
-    <h2>Projecten ({projecten.length})</h2>
-    <ul style="list-style:none; padding:0; display:grid; gap:var(--space-5); grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
-      {projecten.map((p) => (
-        <li>
-          {p.data.cover && (
-            <Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={480} height={320} style="border-radius:var(--radius-md); object-fit:cover; width:100%; aspect-ratio:3/2;" />
-          )}
-          <h3>{p.data.title}</h3>
-          <small>{p.data.thema} · {p.data.tags.join(', ')}</small>
-        </li>
-      ))}
-    </ul>
+  <header class="header" id="header" data-nav="light">
+    <nav class="nav" aria-label="Hoofdnavigatie">
+      <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="/logos/avatar-white.png" alt="Studio Wotto" /></a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="#projecten">Projecten</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#over">Over ons</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <h2>Blogs ({blogs.length})</h2>
-    <ul>
-      {blogs.map((b) => <li>{b.data.title}</li>)}
-    </ul>
-  </main>
+  <section class="section section--coral hero" id="top" data-nav="light">
+    <i class="ph-bold ph-game-controller deco" style="top:14%;right:7%;font-size:68px"></i>
+    <i class="ph-bold ph-ghost deco" style="bottom:16%;left:5%;font-size:60px"></i>
+    <i class="ph-bold ph-music-notes deco" style="top:24%;right:24%;font-size:40px"></i>
+    <i class="ph-bold ph-waveform deco" style="bottom:24%;right:15%;font-size:52px"></i>
+    <div class="container">
+      <img class="hero__logo" src="/logos/wordmark-white.png" alt="Studio Wotto" />
+      <h1 class="hero__tag">Techniek om mee te spelen.</h1>
+      <p class="lead">Wij maken interactieve installaties, muzikale webapps en muziekinstrumenten voor musea, podia en artiesten. We bedenken het, ontwerpen het en bouwen het, van het eerste idee tot een werkend resultaat.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projecten">Bekijk projecten →</a>
+        <a class="btn btn--ghost-light" href="#contact">Neem contact op</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sun" id="projecten" data-nav="dark">
+    <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <i class="ph-bold ph-dice-five deco" style="top:12%;left:6%;font-size:52px"></i>
+    <i class="ph-bold ph-vinyl-record deco" style="bottom:14%;right:7%;font-size:60px"></i>
+    <div class="container container--wide">
+      <div class="section-head"><h2>Onze projecten</h2></div>
+      <div class="carousel">
+        <div class="carousel__viewport">
+          <div class="carousel__track">
+            {projecten.map((p) => (
+              <article class="project carousel__item" data-lum-left={p.data.lumLeft} data-lum-right={p.data.lumRight}>
+                <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
+                <h3>{p.data.title}</h3>
+                <div class="project__theme">{themaLabel[p.data.thema]}</div>
+              </article>
+            ))}
+          </div>
+          <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><i class="ph-bold ph-arrow-right"></i></button>
+          <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende projecten"><i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+        <div class="carousel__footer">
+          <a class="btn btn--primary" href="/projecten">Alle projecten →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--blue" id="over" data-nav="light">
+    <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <i class="ph-bold ph-equalizer deco" style="top:12%;right:8%;font-size:58px"></i>
+    <i class="ph-bold ph-music-note deco" style="bottom:14%;left:6%;font-size:48px"></i>
+    <div class="container">
+      <div class="section-head">
+        <h2>Wat we doen</h2>
+        <p class="lead">Wij houden van techniek waar je mee speelt in plaats van naar kijkt.</p>
+      </div>
+      <div class="grid">
+        <article class="card service"><div class="card__body">
+          <div class="service__icon"><i class="ph-bold ph-magic-wand"></i></div><h3>Interactieve installaties</h3>
+          <p>Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.</p>
+        </div></article>
+        <article class="card service"><div class="card__body">
+          <div class="service__icon"><i class="ph-bold ph-app-window"></i></div><h3>Webapps</h3>
+          <p>Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een QR-spel in de etalage.</p>
+        </div></article>
+        <article class="card service"><div class="card__body">
+          <div class="service__icon"><i class="ph-bold ph-microphone-stage"></i></div><h3>Voor op het podium</h3>
+          <p>Eenmalige objecten voor artiesten. Een instrument, reactieve lasers of een 3D-geprinte prop voor die ene show.</p>
+        </div></article>
+      </div>
+      <div class="cloud">
+        <span class="chip">Interactieve installaties</span><span class="chip">Interactieve tentoonstellingen</span>
+        <span class="chip">Museuminstallaties</span><span class="chip">Muzikale webapps</span>
+        <span class="chip">Muziekinstrumenten</span><span class="chip">Gamification</span>
+        <span class="chip">Games</span><span class="chip">Creatieve technologie</span>
+        <span class="chip">Geluidsontwerp</span><span class="chip">Conceptontwikkeling</span><span class="chip">Phygital</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mint" data-nav="dark">
+    <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <i class="ph-bold ph-ghost deco" style="top:14%;right:8%;font-size:58px"></i>
+    <i class="ph-bold ph-star deco" style="bottom:16%;left:7%;font-size:46px"></i>
+    <div class="container">
+      <div class="section-head"><h2>Onze klanten</h2><p class="lead">Samen met musea, artiesten, merken en scholen maken we speelse interactieve ervaringen die publiek activeren. Niet kijken, maar meedoen. We maakten eerder ervaringen voor:</p></div>
+    </div>
+    <div class="clients">
+      <div class="clients__track">
+        {reps.map((rep) => klanten.map((l) => (
+          <img src={l.src} class={l.raw ? 'raw' : undefined} alt={rep === 0 ? l.alt : ''} aria-hidden={rep !== 0 ? 'true' : undefined} />
+        )))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--bubblegum" id="blog" data-nav="dark">
+    <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <i class="ph-bold ph-waveform deco" style="top:12%;left:6%;font-size:54px"></i>
+    <i class="ph-bold ph-game-controller deco" style="bottom:14%;right:7%;font-size:56px"></i>
+    <div class="container">
+      <div class="section-head"><h2>Recente blogs</h2></div>
+      <div class="carousel">
+        <div class="carousel__viewport">
+          <div class="carousel__track">
+            {blogs.map((b) => (
+              <article class="project carousel__item" data-lum-left={b.data.lumLeft} data-lum-right={b.data.lumRight}>
+                <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
+                <h3>{b.data.title}</h3>
+                {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
+              </article>
+            ))}
+          </div>
+          <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>
+          <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+        <div class="carousel__footer">
+          <a class="btn btn--primary" href="/blog">Naar de blog →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--coral touch" id="contact" data-nav="light">
+    <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <i class="ph-bold ph-music-notes deco" style="top:16%;left:8%;font-size:56px"></i>
+    <i class="ph-bold ph-heart deco" style="top:18%;right:9%;font-size:50px"></i>
+    <i class="ph-bold ph-equalizer deco" style="bottom:14%;left:16%;font-size:44px"></i>
+    <div class="container">
+      <p class="kicker">Get in touch</p>
+      <h2>Iets moois maken samen?</h2>
+      <p class="lead" style="max-width:560px; margin-inline:auto">Benieuwd of we samen iets kunnen maken? Stuur ons gerust een bericht.</p>
+      <div class="touch__pills">
+        <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
+        <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+      </div>
+      <p style="margin-top:var(--space-6); display:inline-flex; align-items:center; gap:8px"><i class="ph-bold ph-map-pin"></i> Eindhoven, Noord-Brabant</p>
+    </div>
+  </section>
+
+  <footer class="footer" data-nav="light">
+    <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <img class="footer__logo" src="/logos/wordmark-white.png" alt="Studio Wotto" />
+          <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+        </div>
+        <div><h4>Menu</h4><ul>
+          <li><a href="#projecten">Projecten</a></li><li><a href="#blog">Blog</a></li>
+          <li><a href="#over">Over ons</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div><h4>Contact</h4><ul>
+          <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+          <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Eindhoven, NL</li></ul></div>
+        <div><h4>Volg</h4><ul>
+          <li><a href="https://www.instagram.com/studio.wotto/">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/studio-wotto/">LinkedIn</a></li>
+          <li><a href="#">YouTube</a></li></ul></div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Studio Wotto · www.studiowotto.com</span>
+        <span>Gebouwd met Astro</span>
+      </div>
+    </div>
+  </footer>
 </Base>
+
+<script>
+  const header = document.getElementById('header')!;
+  const toggle = document.getElementById('navToggle')!;
+  function closeMenu(){ header.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); }
+  toggle.addEventListener('click', () => {
+    const open = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  header.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', closeMenu));
+  document.addEventListener('click', (e) => { if (header.classList.contains('nav-open') && !header.contains(e.target as Node)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  const logo = document.getElementById('brandLogo') as HTMLImageElement;
+  const blocks = [...document.querySelectorAll('[data-nav]')].filter((b) => b !== header) as HTMLElement[];
+  function syncHeader(){
+    const y = header.offsetHeight + 2;
+    let active = blocks[0];
+    for (const b of blocks){ const r = b.getBoundingClientRect(); if (r.top <= y && r.bottom > y){ active = b; break; } }
+    const cs = getComputedStyle(active);
+    header.style.setProperty('--hdr-bg', cs.backgroundColor);
+    header.style.color = cs.color;
+    logo.style.filter = active.dataset.nav === 'light' ? 'none' : 'brightness(0)';
+  }
+
+  const decos = [...document.querySelectorAll('.deco')] as HTMLElement[];
+  let idleTimer: number;
+  function spinDecos(){
+    const y = window.scrollY;
+    decos.forEach((d, i) => {
+      const dir = (i % 2) ? 1 : -1;
+      const rot = y * (0.22 + (i % 4) * 0.05) * dir;
+      d.style.transition = 'none';
+      d.style.transform = 'rotate(' + rot.toFixed(1) + 'deg)';
+    });
+    clearTimeout(idleTimer);
+    idleTimer = window.setTimeout(() => {
+      decos.forEach((d) => { d.style.transition = 'transform .7s var(--ease-bounce)'; d.style.transform = 'rotate(0deg)'; });
+    }, 130);
+  }
+
+  let lastScrollY = window.scrollY;
+  function updateHeaderVisibility(){
+    const y = window.scrollY;
+    if (window.innerWidth < 768 && !header.classList.contains('nav-open')){
+      if (y > lastScrollY && y > header.offsetHeight + 8) header.classList.add('header--hidden');
+      else if (y < lastScrollY) header.classList.remove('header--hidden');
+    } else {
+      header.classList.remove('header--hidden');
+    }
+    lastScrollY = y;
+  }
+
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (!ticking){ ticking = true; requestAnimationFrame(() => { if (header.classList.contains('nav-open')) closeMenu(); syncHeader(); updateHeaderVisibility(); spinDecos(); ticking = false; }); }
+  }, { passive: true });
+  addEventListener('resize', () => { syncHeader(); updateHeaderVisibility(); });
+  syncHeader();
+
+  document.querySelectorAll('.carousel').forEach((car) => {
+    const viewport = car.querySelector('.carousel__viewport') as HTMLElement;
+    const track = car.querySelector('.carousel__track') as HTMLElement;
+    const prev = car.querySelector('[data-dir="-1"]') as HTMLButtonElement | null;
+    const next = car.querySelector('[data-dir="1"]') as HTMLButtonElement | null;
+    const btns = car.querySelectorAll('.carousel__btn') as NodeListOf<HTMLElement>;
+    function step(){
+      const it = track.querySelector('.carousel__item');
+      const g = parseFloat(getComputedStyle(track).columnGap) || 24;
+      return it ? it.getBoundingClientRect().width + g : track.clientWidth;
+    }
+    function placeBtns(){
+      const img = track.querySelector('.project__img') as HTMLElement | null;
+      if (!img || !viewport) return;
+      const vp = viewport.getBoundingClientRect(), ir = img.getBoundingClientRect();
+      const top = (ir.top - vp.top) + ir.height * 0.85;
+      btns.forEach((b) => (b.style.top = top + 'px'));
+    }
+    function tintBtns(){
+      const THRESHOLD = 140;
+      function darkFor(btn: HTMLElement, side: 'left' | 'right'){
+        const b = btn.getBoundingClientRect();
+        const pad = b.width * 0.5;
+        const zL = b.left - pad, zR = b.right + pad;
+        let min: number | null = null;
+        track.querySelectorAll('.carousel__item').forEach((item) => {
+          const r = item.getBoundingClientRect();
+          if (r.right > zL && r.left < zR){
+            const v = side === 'left' ? (item as HTMLElement).dataset.lumLeft : (item as HTMLElement).dataset.lumRight;
+            if (v != null && v !== ''){ const n = +v; if (min === null || n < min) min = n; }
+          }
+        });
+        return min !== null && min < THRESHOLD;
+      }
+      if (prev) prev.classList.toggle('on-dark', darkFor(prev, 'left'));
+      if (next) next.classList.toggle('on-dark', darkFor(next, 'right'));
+    }
+    function update(){
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    prev && prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next && next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', () => { update(); tintBtns(); }, { passive: true });
+    addEventListener('resize', () => { update(); placeBtns(); tintBtns(); });
+    track.querySelectorAll('img').forEach((im) => { if (!(im as HTMLImageElement).complete) im.addEventListener('load', () => { placeBtns(); tintBtns(); }, { once: true }); });
+    placeBtns();
+    update();
+    tintBtns();
+  });
+</script>
