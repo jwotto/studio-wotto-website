@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Header (los te bekijken) — Studio Wotto</title>
+<!--
+  Dit bestand is los te bekijken met Live Server, mét vormgeving.
+  Alleen het element met data-partial (hieronder) wordt op een
+  echte pagina ingeladen; deze <head> en het voorbeeldkader eronder
+  worden dan genegeerd. De paden wijzen met ../ terug naar de root,
+  zodat het los ook klopt; bij het inladen worden ze automatisch
+  omgerekend naar de juiste locatie.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- ===== Het onderdeel zelf (dit wordt overal ingeladen) ===== -->
+<header class="header" id="header" data-partial data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="../logo's/cropped-avatar-logo-2-e1721815131329-300x202.png" alt="Studio Wotto"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#projecten">Projecten</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#over">Over ons</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Alleen voor dit losse voorbeeld; wordt niet mee ingeladen. -->
+<p style="font-family:var(--font-body); color:var(--ink); opacity:.6; padding:var(--space-6) var(--gutter)">
+  Los voorbeeld van de header. Op een echte pagina kleurt hij mee met de sectie eronder en verandert het logo van wit naar zwart op lichte secties.
+</p>
+
+</body>
+</html>

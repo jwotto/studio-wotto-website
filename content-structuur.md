@@ -14,21 +14,27 @@ De drie kern-diensten. Elk krijgt een eigen pillar page.
 
 | Sleutel | Titel | URL | Omvat |
 |---|---|---|---|
-| `installaties` | Interactieve installaties | `/interactieve-installaties` | museuminstallaties, interactieve tentoonstellingen, sensor-kunst |
-| `webapps` | Muzikale webapps & games | `/muzikale-webapps` | webapps, games, gamification, educatieve apps, QR-spellen |
-| `podium` | Podium & instrumenten | `/muziekinstrumenten` | muziekinstrumenten, reactieve lasers, custom controllers, props |
+| `installaties` | Interactieve installaties | `/interactieve-installaties` | museuminstallaties, interactieve tentoonstellingen |
+| `webapps` | Muzikale webapps & games | `/muzikale-webapps` | webapps, games, gamification, educatieve apps |
+| `podium` | Podium & instrumenten | `/podium` | muziekinstrumenten, reactieve lasers, custom controllers, props |
 
-*Open keuze pillar 3: URL `/muziekinstrumenten` (sterkere zoekterm, aanrader) of
-`/podium` (breder). Sleutel en titel blijven gelijk.*
-
-### Tags (secundair, meerdere per item)
+### Sub-subjects / kernwoorden (secundair, meerdere per item)
 
 Snijden dwars door de pillars heen. Voor filtering, gerelateerde content en extra
-zoektermen. Krijgen niet automatisch een zware eigen pagina.
+zoektermen (waar mensen echt op zoeken). Krijgen niet automatisch een zware eigen pagina.
 
-- **Publiek/sector:** `museum`, `festival`, `onderwijs`, `merk`
-- **Discipline:** `gamification`, `geluidsontwerp`, `phygital`, `conceptontwikkeling`
-- **Speciaal:** `workshop` (voor blogs/verhalen over gegeven workshops)
+De 10 vastgestelde sub-subjects:
+
+`gamification` · `educatie` · `muziektechnologie` · `interactieve kunst` · `museum` ·
+`geluidsontwerp` · `creatieve technologie` · `games` · `phygital` · `interactieve reclame`
+
+**Nieuwe richting:** phygital marketing in de ruimte (interactieve merkbeleving op
+locatie: winkel, horeca, etalage, out of home). Gevangen onder `interactieve reclame`
+(+ `phygital`). Voorbeeldconcepten in Notion, o.a. "barkeet" (scherm bij de bar, scan
+QR, bestuur de game op het grote scherm met je telefoon), "Interactieve Poster (Ridder
+Klimb)", en de etalage-QR-game met kortingscode.
+
+**Speciaal:** `workshop` blijft als markering voor blogs/verhalen over gegeven workshops.
 
 ---
 
@@ -137,6 +143,8 @@ Daarom: geef relevante projecten de tag `onderwijs`, zodat `/workshops` automati
 
 ## 6. Openstaand / later beslissen
 
-- URL pillar 3: `/muziekinstrumenten` of `/podium`.
+- URL pillar 3: besloten op `/podium`.
 - Krijgt `/contact` een eigen pagina of blijft het de sectie op de homepage?
+  (voorlopig: homepage-sectie + gedeelde CTA-partial)
 - Wanneer tag-pagina's aanzetten (afhankelijk van hoeveelheid content).
+- Workshops: alle workshop-pagina's van studiowotto.com (nog live) overnemen op `/workshops`.

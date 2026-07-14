@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Footer (los te bekijken) — Studio Wotto</title>
+<!--
+  Dit bestand is los te bekijken met Live Server, mét vormgeving.
+  Alleen het element met data-partial (hieronder) wordt op een
+  echte pagina ingeladen; deze <head>, de golf-sprite en het
+  voorbeeldkader worden dan genegeerd. De paden wijzen met ../ terug
+  naar de root; bij het inladen worden ze automatisch omgerekend.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- Golf-sprite, zodat de golf boven de footer ook los zichtbaar is.
+     Op een echte pagina staat deze sprite al in de pagina zelf. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="wave" viewBox="0 0 2400 80" preserveAspectRatio="none">
+    <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
+</defs></svg>
+
+<!-- ===== Het onderdeel zelf (dit wordt overal ingeladen) ===== -->
+<footer class="footer" data-partial data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="../logo's/logo%20studio%20wotto%20white.png" alt="Studio Wotto">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h4>Menu</h4><ul>
+        <li><a href="#projecten">Projecten</a></li><li><a href="#blog">Blog</a></li>
+        <li><a href="#over">Over ons</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Eindhoven, NL</li></ul></div>
+      <div><h4>Volg</h4><ul>
+        <li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · www.studiowotto.com</span>
+      <span>Creatieve technologie uit Eindhoven</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
