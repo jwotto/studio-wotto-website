@@ -1,0 +1,11 @@
+# GitHub Pages (Jekyll): bepaalt wat er wel en niet op de site komt.
+# Deze bestanden blijven gewoon in de repo staan (voor jou en Claude),
+# maar worden NIET gepubliceerd op de site-URL.
+# Nieuw bron- of doc-bestand dat je prive wilt houden? Zet het hieronder.
+exclude:
+  - stijl.md
+  - content-structuur.md
+  - "oude blogs en pagina's"
+  - moodboard
+  - content/build-manifest.py
+  - content/update-manifest.bat
