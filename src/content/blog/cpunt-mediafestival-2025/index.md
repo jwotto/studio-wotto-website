@@ -1,5 +1,6 @@
 ---
 title: "Cpunt Mediafestival 2025"
+thema: "installaties"
 tags: ["onderwijs"]
 cover: "./cover.jpg"
 alt: "Opstelling Cpunt Mediafestival"

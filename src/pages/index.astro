@@ -17,6 +17,18 @@ const blogs = (await getCollection('blog'))
   .filter((b) => b.data.featured)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
+const alleProjecten = await getCollection('projecten');
+const alleBlogs = await getCollection('blog');
+const diensten = [
+  { thema: 'installaties', slug: 'interactieve-installaties', icon: 'ph-magic-wand', titel: 'Interactieve installaties', tekst: 'Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.' },
+  { thema: 'webapps', slug: 'muzikale-webapps', icon: 'ph-app-window', titel: 'Webapps', tekst: 'Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een QR-spel in de etalage.' },
+  { thema: 'podium', slug: 'muziekinstrumenten', icon: 'ph-microphone-stage', titel: 'Voor op het podium', tekst: 'Eenmalige objecten voor artiesten. Een instrument, reactieve lasers of een 3D-geprinte prop voor die ene show.' },
+].map((d) => ({
+  ...d,
+  pCount: alleProjecten.filter((x) => x.data.thema === d.thema).length,
+  bCount: alleBlogs.filter((x) => x.data.thema === d.thema).length,
+}));
+
 const klanten = [
   { src: '/klanten/museum-speelklok.png', alt: 'Museum Speelklok' },
   { src: '/klanten/fl-studio.png', alt: 'FL Studio' },
@@ -100,21 +112,17 @@ const reps = [0, 1, 2, 3];
         <p class="lead">Wij houden van techniek waar je mee speelt in plaats van naar kijkt.</p>
       </div>
       <div class="grid">
-        <a class="card service" href="/interactieve-installaties"><div class="card__body">
-          <div class="service__icon"><i class="ph-bold ph-magic-wand"></i></div><h3>Interactieve installaties</h3>
-          <p>Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.</p>
-          <p class="card__meta" style="font-weight:600">Bekijk voorbeelden →</p>
-        </div></a>
-        <a class="card service" href="/muzikale-webapps"><div class="card__body">
-          <div class="service__icon"><i class="ph-bold ph-app-window"></i></div><h3>Webapps</h3>
-          <p>Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een QR-spel in de etalage.</p>
-          <p class="card__meta" style="font-weight:600">Bekijk voorbeelden →</p>
-        </div></a>
-        <a class="card service" href="/muziekinstrumenten"><div class="card__body">
-          <div class="service__icon"><i class="ph-bold ph-microphone-stage"></i></div><h3>Voor op het podium</h3>
-          <p>Eenmalige objecten voor artiesten. Een instrument, reactieve lasers of een 3D-geprinte prop voor die ene show.</p>
-          <p class="card__meta" style="font-weight:600">Bekijk voorbeelden →</p>
-        </div></a>
+        {diensten.map((d) => (
+          <a class="card service" href={`/${d.slug}`}><div class="card__body">
+            <div class="service__icon"><i class={`ph-bold ${d.icon}`}></i></div><h3>{d.titel}</h3>
+            <p>{d.tekst}</p>
+            <p class="card__meta" style="font-weight:600">
+              {d.pCount + d.bCount > 0
+                ? `${d.pCount} ${d.pCount === 1 ? 'project' : 'projecten'} · ${d.bCount} ${d.bCount === 1 ? 'verhaal' : 'verhalen'} →`
+                : 'Binnenkort voorbeelden →'}
+            </p>
+          </div></a>
+        ))}
       </div>
       <div class="cloud">
         <span class="chip">Interactieve installaties</span><span class="chip">Interactieve tentoonstellingen</span>

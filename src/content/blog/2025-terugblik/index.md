@@ -1,5 +1,6 @@
 ---
 title: "2025, een terugblik"
+thema: "podium"
 tags: []
 cover: "./cover.jpeg"
 alt: "Ramses3000 optreden in 2025"

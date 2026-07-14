@@ -1,6 +1,7 @@
 ---
 title: "MAKERDAYS Eindhoven 2025"
 slug: "makerdays-eindhoven-2025"
+thema: "installaties"
 tags: ["festival"]
 cover: "./cover.jpg"
 alt: "MAKERDAYS Eindhoven 2025"
