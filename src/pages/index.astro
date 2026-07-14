@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+
+const projecten = (await getCollection('projecten')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const blogs = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Base title="Studio Wotto — proef Astro">
+  <main style="max-width: var(--content-max); margin-inline: auto; padding: var(--space-8) var(--gutter);">
+    <h1 style="font-size: var(--text-hero); color: var(--coral);">Studio Wotto</h1>
+    <p>Astro-fundament staat. Content-collecties worden ingelezen:</p>
+
+    <h2>Projecten ({projecten.length})</h2>
+    <ul style="list-style:none; padding:0; display:grid; gap:var(--space-5); grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
+      {projecten.map((p) => (
+        <li>
+          {p.data.cover && (
+            <Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={480} height={320} style="border-radius:var(--radius-md); object-fit:cover; width:100%; aspect-ratio:3/2;" />
+          )}
+          <h3>{p.data.title}</h3>
+          <small>{p.data.thema} · {p.data.tags.join(', ')}</small>
+        </li>
+      ))}
+    </ul>
+
+    <h2>Blogs ({blogs.length})</h2>
+    <ul>
+      {blogs.map((b) => <li>{b.data.title}</li>)}
+    </ul>
+  </main>
+</Base>

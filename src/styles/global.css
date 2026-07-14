@@ -1,0 +1,69 @@
+/* Studio Wotto — globale tokens (uit stijl.md) + basis-reset */
+
+:root {
+  /* Kleuren */
+  --coral: #FF5757;      /* hoofdkleur / identiteit */
+  --blue: #0061E0;       /* actie / UI */
+  --mint: #38C789;
+  --sun: #FFF069;
+  --bubblegum: #F9B3D5;
+  --ink: #1A1A2E;
+  --cream: #FFFEFB;
+  --cream-warm: #F7F5EE;
+  --surface: #FFFFFF;
+  --line: #ECEAE2;
+
+  /* Typografie */
+  --font-display: 'Fredoka', system-ui, sans-serif;
+  --font-head: 'Fredoka', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-pixel: 'Press Start 2P', monospace;
+
+  --text-hero: clamp(30px, 5vw, 54px);
+
+  /* Ruimte (8-punts schaal) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --content-max: 1200px;
+  --gutter: clamp(16px, 5vw, 64px);
+  --section-y: clamp(72px, 9vw, 116px);
+
+  /* Breakpoints (Tailwind) */
+  --bp-sm: 640px; --bp-md: 768px; --bp-lg: 1024px; --bp-xl: 1280px; --bp-2xl: 1536px;
+
+  /* Radius */
+  --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px; --radius-full: 999px;
+
+  /* Schaduw */
+  --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.08);
+  --shadow-md: 0 8px 24px rgba(26, 26, 46, 0.12);
+  --shadow-lg: 0 18px 44px rgba(26, 26, 46, 0.18);
+
+  /* Motion */
+  --dur: 0.28s;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.1; margin: 0 0 var(--space-3); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}

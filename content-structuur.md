@@ -18,8 +18,7 @@ De drie kern-diensten. Elk krijgt een eigen pillar page.
 | `webapps` | Muzikale webapps & games | `/muzikale-webapps` | webapps, games, gamification, educatieve apps, QR-spellen |
 | `podium` | Podium & instrumenten | `/muziekinstrumenten` | muziekinstrumenten, reactieve lasers, custom controllers, props |
 
-*Open keuze pillar 3: URL `/muziekinstrumenten` (sterkere zoekterm, aanrader) of
-`/podium` (breder). Sleutel en titel blijven gelijk.*
+*Besloten: pillar 3 gebruikt URL `/muziekinstrumenten` (sterkere zoekterm).*
 
 ### Tags (secundair, meerdere per item)
 
@@ -27,7 +26,7 @@ Snijden dwars door de pillars heen. Voor filtering, gerelateerde content en extr
 zoektermen. Krijgen niet automatisch een zware eigen pagina.
 
 - **Publiek/sector:** `museum`, `festival`, `onderwijs`, `merk`
-- **Discipline:** `gamification`, `geluidsontwerp`, `phygital`, `conceptontwikkeling`
+- **Discipline:** `gamification`, `geluidsontwerp`, `phygital`, `conceptontwikkeling`, `props`
 - **Speciaal:** `workshop` (voor blogs/verhalen over gegeven workshops)
 
 ---
@@ -45,7 +44,7 @@ zoektermen. Krijgen niet automatisch een zware eigen pagina.
 /blog/[slug]                 Blogdetail
 /workshops                   Workshops & talks (satelliet, onderwijs-funnel)
 /over-ons                    Over de studio (+ kleine workshop-vermelding)
-/contact                     Contact (of op de homepage)
+/contact                     Contactpagina met het team (Jan-Willem en Jaimy)
 ```
 
 Tag-pagina's (`/tag/onderwijs` etc.): pas genereren als er genoeg content is,
@@ -135,8 +134,14 @@ Daarom: geef relevante projecten de tag `onderwijs`, zodat `/workshops` automati
 
 ---
 
-## 6. Openstaand / later beslissen
+## 6. Besloten
 
-- URL pillar 3: `/muziekinstrumenten` of `/podium`.
-- Krijgt `/contact` een eigen pagina of blijft het de sectie op de homepage?
-- Wanneer tag-pagina's aanzetten (afhankelijk van hoeveelheid content).
+- Pillar 3 URL: `/muziekinstrumenten`.
+- Contact: **beide**. Een contactsectie onderaan de homepage én een aparte
+  `/contact`-pagina met het team (Jan-Willem en Jaimy).
+- Tantu Beats en Ramses3000 zijn **projecten** (geen blog).
+- The SideQuest Rave: 1 projectpagina, plus de Nerdland- en Muzikale-Speelplaats-verhalen als blog.
+
+### Nog open
+- Wanneer we tag-pagina's aanzetten (afhankelijk van hoeveelheid content).
+- Meer projecten en artikelen volgen binnenkort (o.a. vanaf LinkedIn); de structuur is erop gebouwd.
