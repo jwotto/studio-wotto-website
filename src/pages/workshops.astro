@@ -1,7 +1,14 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+
+const clean = (id: string) => id.replace(/\/index$/, '');
+const onderwijsProjecten = (await getCollection('projecten'))
+  .filter((p) => p.data.tags.includes('onderwijs'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const workshops = [
   { titel: 'Bouw je eigen elektrische gitaar', tekst: 'Van gerecyclede materialen bouw je een unieke elektrische gitaar, en je leert de techniek achter geluid.' },
@@ -30,7 +37,7 @@ const faq = [
     </div>
   </section>
 
-  <section style="padding-block:var(--section-y)">
+  <section class="section section--sun">
     <div class="container">
       <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Onze workshops</h2>
       <div class="grid">
@@ -44,7 +51,24 @@ const faq = [
     </div>
   </section>
 
-  <section style="padding-bottom:var(--section-y)">
+  {onderwijsProjecten.length > 0 && (
+    <section class="section section--mint">
+      <div class="container container--wide">
+        <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-3)">Ook voor het onderwijs gemaakt</h2>
+        <p class="lead" style="max-width:620px; margin-bottom:var(--space-6)">Naast workshops bouwen we interactieve installaties en games in opdracht van scholen en onderwijsinstellingen.</p>
+        <div class="grid">
+          {onderwijsProjecten.map((p) => (
+            <a class="project" href={`/projecten/${clean(p.id)}`}>
+              <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
+              <h3>{p.data.title}</h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--bubblegum">
     <div class="container" style="max-width:760px">
       <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Veelgestelde vragen</h2>
       {faq.map((f) => (

@@ -42,6 +42,8 @@ const projecten = (await getCollection('projecten'))
 const blogs = (await getCollection('blog'))
   .filter((x) => x.data.thema === pillar.thema)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const clean = (id: string) => id.replace(/\/index$/, '');
 ---
 
 <Base title={pillar.title + ' — Studio Wotto'} description={pillar.intro}>
@@ -56,17 +58,17 @@ const blogs = (await getCollection('blog'))
     </div>
   </section>
 
-  <section style="padding-block:var(--section-y)">
+  <section class="section section--sun">
     <div class="container container--wide">
       <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Voorbeelden</h2>
       {projecten.length > 0 ? (
         <div class="grid">
           {projecten.map((p) => (
-            <article class="project">
+            <a class="project" href={`/projecten/${clean(p.id)}`}>
               <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
               <h3>{p.data.title}</h3>
               <div class="project__theme">{pillar.title}</div>
-            </article>
+            </a>
           ))}
         </div>
       ) : (
@@ -76,16 +78,16 @@ const blogs = (await getCollection('blog'))
   </section>
 
   {blogs.length > 0 && (
-    <section style="padding-bottom:var(--section-y)">
+    <section class="section section--bubblegum">
       <div class="container container--wide">
         <h2 style="font-size:clamp(26px,4vw,40px); margin-bottom:var(--space-6)">Verhalen over dit thema</h2>
         <div class="grid">
           {blogs.map((b) => (
-            <article class="project">
+            <a class="project" href={`/blog/${clean(b.id)}`}>
               <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
               <h3>{b.data.title}</h3>
               {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
-            </article>
+            </a>
           ))}
         </div>
       </div>

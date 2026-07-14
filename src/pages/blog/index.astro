@@ -8,6 +8,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 const blogs = (await getCollection('blog')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+const clean = (id: string) => id.replace(/\/index$/, '');
 ---
 
 <Base title="Blog — Studio Wotto" description="Verhalen uit de studio: projecten, workshops en samenwerkingen.">
@@ -15,15 +16,15 @@ const blogs = (await getCollection('blog')).sort(
   <section class="section section--bubblegum">
     <div class="container"><h2>Blog</h2></div>
   </section>
-  <section style="padding-block:var(--section-y)">
+  <section class="section section--sun">
     <div class="container container--wide">
       <div class="grid">
         {blogs.map((b) => (
-          <article class="project">
+          <a class="project" href={`/blog/${clean(b.id)}`}>
             <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
             <h3>{b.data.title}</h3>
             {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
-          </article>
+          </a>
         ))}
       </div>
     </div>

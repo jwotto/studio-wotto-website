@@ -19,6 +19,7 @@ const blogs = (await getCollection('blog'))
 
 const alleProjecten = await getCollection('projecten');
 const alleBlogs = await getCollection('blog');
+const clean = (id: string) => id.replace(/\/index$/, '');
 const diensten = [
   { thema: 'installaties', slug: 'interactieve-installaties', icon: 'ph-magic-wand', titel: 'Interactieve installaties', tekst: 'Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.' },
   { thema: 'webapps', slug: 'muzikale-webapps', icon: 'ph-app-window', titel: 'Webapps', tekst: 'Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een QR-spel in de etalage.' },
@@ -85,11 +86,11 @@ const reps = [0, 1, 2, 3];
         <div class="carousel__viewport">
           <div class="carousel__track">
             {projecten.map((p) => (
-              <article class="project carousel__item" data-lum-left={p.data.lumLeft} data-lum-right={p.data.lumRight}>
+              <a class="project carousel__item" href={`/projecten/${clean(p.id)}`} data-lum-left={p.data.lumLeft} data-lum-right={p.data.lumRight}>
                 <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
                 <h3>{p.data.title}</h3>
                 <div class="project__theme">{themaLabel[p.data.thema]}</div>
-              </article>
+              </a>
             ))}
           </div>
           <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><i class="ph-bold ph-arrow-right"></i></button>
@@ -165,11 +166,11 @@ const reps = [0, 1, 2, 3];
         <div class="carousel__viewport">
           <div class="carousel__track">
             {blogs.map((b) => (
-              <article class="project carousel__item" data-lum-left={b.data.lumLeft} data-lum-right={b.data.lumRight}>
+              <a class="project carousel__item" href={`/blog/${clean(b.id)}`} data-lum-left={b.data.lumLeft} data-lum-right={b.data.lumRight}>
                 <div class="project__img"><Image src={b.data.cover} alt={b.data.alt ?? b.data.title} width={640} /></div>
                 <h3>{b.data.title}</h3>
                 {b.data.excerpt && <p class="project__excerpt">{b.data.excerpt}</p>}
-              </article>
+              </a>
             ))}
           </div>
           <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>

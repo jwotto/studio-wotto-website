@@ -14,6 +14,7 @@ const themaLabel: Record<string, string> = {
 const projecten = (await getCollection('projecten')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+const clean = (id: string) => id.replace(/\/index$/, '');
 ---
 
 <Base title="Projecten — Studio Wotto" description="Interactieve installaties, muzikale webapps en muziekinstrumenten van Studio Wotto.">
@@ -21,15 +22,15 @@ const projecten = (await getCollection('projecten')).sort(
   <section class="section section--coral">
     <div class="container"><h2>Onze projecten</h2></div>
   </section>
-  <section style="padding-block:var(--section-y)">
+  <section class="section section--sun">
     <div class="container container--wide">
       <div class="grid">
         {projecten.map((p) => (
-          <article class="project">
+          <a class="project" href={`/projecten/${clean(p.id)}`}>
             <div class="project__img"><Image src={p.data.cover} alt={p.data.alt ?? p.data.title} width={640} /></div>
             <h3>{p.data.title}</h3>
             <div class="project__theme">{themaLabel[p.data.thema]}</div>
-          </article>
+          </a>
         ))}
       </div>
     </div>
