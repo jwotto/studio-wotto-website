@@ -2,6 +2,11 @@
 # Deze bestanden blijven gewoon in de repo staan (voor jou en Claude),
 # maar worden NIET gepubliceerd op de site-URL.
 # Nieuw bron- of doc-bestand dat je prive wilt houden? Zet het hieronder.
+# Jekyll slaat bestanden met een punt ervoor standaard over. De .htaccess
+# hebben we op Vimexx wel nodig, dus die halen we er expliciet bij.
+include:
+  - .htaccess
+
 exclude:
   - stijl.md
   - content-structuur.md

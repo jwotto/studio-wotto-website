@@ -1,0 +1,57 @@
+# ============================================================
+# Studio Wotto - Apache-instellingen (Vimexx)
+# ============================================================
+# Dit bestand werkt ALLEEN op Vimexx (Apache). Live Server en de
+# GitHub-preview negeren het volledig, dus het kan hier veilig staan
+# tot je live gaat.
+#
+# Wat het doet: de oude WordPress-adressen doorsturen naar de nieuwe
+# plek. "301" betekent permanent verhuisd. Daarmee vervangt Google de
+# oude URL door de nieuwe en verhuizen je opgebouwde posities en de
+# links die anderen naar je legden gewoon mee. Zonder deze regels
+# krijgt iedereen die een oude link volgt een 404.
+#
+# RedirectMatch met (/.*)? vangt ook de onderliggende foto-pagina's van
+# WordPress af (zoals /tantu-beats/1-4/), die komen zo op het item uit.
+#
+# Nieuw item dat vroeger op de oude site stond? Zet er een regel bij.
+
+<IfModule mod_alias.c>
+
+  # --- Projecten ------------------------------------------------
+  RedirectMatch 301 ^/interactieve-arcade-kast-om-jongeren-enthousiast-te-maken-voor-techniek(/.*)?$ /werk/interactieve-arcade-kast/
+  RedirectMatch 301 ^/interactieve-arcade-kast(/.*)?$ /werk/interactieve-arcade-kast/
+  RedirectMatch 301 ^/the-side-quest-rave(/.*)?$ /werk/side-quest-rave/
+  RedirectMatch 301 ^/super-nintendo-videosynthesizer-omtoveren(/.*)?$ /werk/snes-videosynthesizer/
+  RedirectMatch 301 ^/ramses3000(/.*)?$ /werk/ramses3000/
+  RedirectMatch 301 ^/tantu-beats(/.*)?$ /werk/tantu-beats/
+
+  # Eerdere adressen van de Super Nintendo-post (die WordPress zelf al doorstuurde)
+  RedirectMatch 301 ^/(project/)?muziekgestuurde-nintendo-visuals(/.*)?$ /werk/snes-videosynthesizer/
+  RedirectMatch 301 ^/defecte-nintendo-wordt-kunst(/.*)?$ /werk/snes-videosynthesizer/
+  RedirectMatch 301 ^/nintendo-kunst(/.*)?$ /werk/snes-videosynthesizer/
+
+  # --- Blogs ----------------------------------------------------
+  RedirectMatch 301 ^/muzikale-speelplaats-interactieve-muziekinstallatie(/.*)?$ /werk/muzikale-speelplaats/
+  RedirectMatch 301 ^/een-muzikale-speelplaats-voor-iedereen-interactieve-muziekinstallatie-en-muzikale-workshops-sidequest-rave(/.*)?$ /werk/muzikale-speelplaats/
+  RedirectMatch 301 ^/maak-muziek-die-er-ook-mooi-uitziet(/.*)?$ /werk/maak-muziek-die-er-ook-mooi-uitziet/
+  RedirectMatch 301 ^/mkrdays-2024(/.*)?$ /werk/mkrdays-2024/
+  RedirectMatch 301 ^/2025-terugblik(/.*)?$ /werk/2025-terugblik/
+  RedirectMatch 301 ^/cpunt-mediafestival-2025(/.*)?$ /werk/cpunt-mediafestival-2025/
+  RedirectMatch 301 ^/makerdays-eindhoven-2025(/.*)?$ /werk/makerdays-eindhoven-2025/
+  RedirectMatch 301 ^/lindenberg-cultuurhuis(/.*)?$ /werk/lindenberg-cultuurhuis/
+
+  # --- Workshops ------------------------------------------------
+  RedirectMatch 301 ^/bouw-je-eigen-elektrische-gitaar(/.*)?$ /werk/bouw-je-eigen-elektrische-gitaar/
+  RedirectMatch 301 ^/maak-muziek-met-techniek(/.*)?$ /werk/maak-muziek-met-techniek/
+  RedirectMatch 301 ^/maak-een-game(/.*)?$ /werk/maak-een-game/
+  RedirectMatch 301 ^/workshop-soundsketch(/.*)?$ /werk/workshop-soundsketch/
+
+  # De oude workshops-overzichtspagina (/workshops/ blijft gelijk, die hoeft niet)
+  RedirectMatch 301 ^/techniek-workshops(/.*)?$ /workshops/
+
+  # Nog toe te voegen zodra die pagina's er zijn:
+  # RedirectMatch 301 ^/over-studio-wotto(/.*)?$ /over-ons/
+  # RedirectMatch 301 ^/contact(/.*)?$ /contact/
+
+</IfModule>

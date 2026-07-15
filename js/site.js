@@ -148,8 +148,40 @@
         const top = (ir.top - vp.top) + ir.height * 0.85;   // echt onderin de foto
         btns.forEach(b => b.style.top = top + 'px');
       }
+      // Meet de helderheid (0-255) van de onderste hoeken van een foto. Dit gebeurt
+      // in de browser, dus het klopt vanzelf voor elke nieuwe foto die je toevoegt.
+      function measureLum(img){
+        const W = 32, H = 32;
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const ctx = c.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, W, H);
+        function avg(x0, x1, y0, y1){
+          const d = ctx.getImageData(x0, y0, x1 - x0, y1 - y0).data;
+          let sum = 0, n = 0;
+          for (let i = 0; i < d.length; i += 4){
+            sum += 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];   // waargenomen helderheid
+            n++;
+          }
+          return n ? sum / n : 255;
+        }
+        const yTop = Math.round(H * 0.68);   // de pijlen staan laag in de foto
+        return { left: avg(0, Math.round(W * 0.3), yTop, H), right: avg(Math.round(W * 0.7), W, yTop, H) };
+      }
+      function measureItems(){
+        track.querySelectorAll('.carousel__item').forEach(item => {
+          if (item.dataset.lumLeft) return;                        // al gemeten
+          const img = item.querySelector('.project__img img');
+          if (!img || !img.complete || !img.naturalWidth) return;  // nog niet geladen
+          try {
+            const l = measureLum(img);
+            item.dataset.lumLeft  = Math.round(l.left);
+            item.dataset.lumRight = Math.round(l.right);
+          } catch (e) { /* canvas afgeschermd: pijl blijft gewoon ink */ }
+        });
+      }
       function tintBtns(){
-        // pijl + ring worden cream op een donkere onder-hoek (vooraf gemeten helderheid), anders ink
+        // pijl + ring worden cream op een donkere onder-hoek van de foto, anders ink
         const THRESHOLD = 140;
         function darkFor(btn, side){
           const b = btn.getBoundingClientRect();
@@ -176,7 +208,8 @@
       next && next.addEventListener('click', () => track.scrollBy({left: step(), behavior:'smooth'}));
       track.addEventListener('scroll', () => { update(); tintBtns(); }, {passive:true});
       addEventListener('resize', () => { update(); placeBtns(); tintBtns(); });
-      track.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => { placeBtns(); tintBtns(); }, {once:true}); });
+      track.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => { measureItems(); placeBtns(); tintBtns(); }, {once:true}); });
+      measureItems();
       placeBtns();
       update();
       tintBtns();
@@ -224,11 +257,12 @@
       .catch(err => { console.error('Manifest laden mislukt:', err); return []; });
   }
 
-  function renderCard(item){
-    const onder = item.type === 'blog'
-      ? '<p class="project__excerpt">' + esc(item.excerpt) + '</p>'
-      : '<div class="project__theme">' + esc(PILAAR_LABEL[item.pilaar] || '') + '</div>';
-    return '<article class="project carousel__item">'
+  function renderCard(item, inCarousel){
+    // Projecten tonen hun pijler, blogs en workshops hun korte intro.
+    const onder = item.type === 'project'
+      ? '<div class="project__theme">' + esc(PILAAR_LABEL[item.pilaar] || '') + '</div>'
+      : '<p class="project__excerpt">' + esc(item.excerpt) + '</p>';
+    return '<article class="project' + (inCarousel ? ' carousel__item' : '') + '">'
       + '<a href="' + item.url + '">'
       + '<div class="project__img"><img src="' + item.coverUrl + '" alt="' + esc(item.titel) + '" loading="lazy"></div>'
       + '<h3>' + esc(item.titel) + '</h3>' + onder
@@ -237,14 +271,16 @@
 
   function renderCollections(items){
     document.querySelectorAll('[data-list]').forEach(el => {
-      const type = el.dataset.list;              // 'project' | 'blog' | 'all'
-      let list = items.filter(i => type === 'all' || i.type === type);
+      // 'project' | 'blog' | 'workshop' | 'all', of meerdere: 'project,blog'
+      const types = el.dataset.list.split(',').map(s => s.trim()).filter(Boolean);
+      let list = items.filter(i => types.includes('all') || types.includes(i.type));
       if (el.dataset.featured === 'true') list = list.filter(i => i.featured);
       if (el.dataset.pilaar)  list = list.filter(i => i.pilaar === el.dataset.pilaar);
       if (el.dataset.subject) list = list.filter(i => i.subjects.includes(el.dataset.subject));
       list.sort((a, b) => (b.datum || '').localeCompare(a.datum || ''));
       if (el.dataset.limit) list = list.slice(0, +el.dataset.limit);
-      el.innerHTML = list.map(renderCard).join('');
+      const inCarousel = el.classList.contains('carousel__track');
+      el.innerHTML = list.map(i => renderCard(i, inCarousel)).join('');
     });
   }
 
