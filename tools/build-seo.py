@@ -32,8 +32,11 @@ ORGANISATIE = {
     "logo": {"@type": "ImageObject", "url": SITE + "/favicons/web-app-manifest-512x512.png",
              "width": 512, "height": 512},
     "image": SITE + "/favicons/web-app-manifest-512x512.png",
-    "description": "Studio Wotto maakt interactieve muziekinstallaties, muzikale webapps "
-                   "en podiumtechniek. Van festivalinstallatie tot videosynthesizer.",
+    # Dit is de zin die een AI-assistent citeert als iemand vraagt wie je bent.
+    # Hou hem feitelijk en zelfstandig leesbaar, zonder verwijzingen naar "wij".
+    "description": "Studio Wotto maakt interactieve muziekinstallaties, muzikale webapps en "
+                   "podiumtechniek voor musea, scholen, festivals en artiesten. Installaties "
+                   "worden op maat gebouwd of zijn kant-en-klaar te huur op locatie.",
     "areaServed": {"@type": "Country", "name": "Nederland"},
     # sameAs: alle plekken waar Studio Wotto te vinden is. Hier bouwt Google
     # zijn beeld van "wie is Studio Wotto" mee op.
@@ -55,7 +58,9 @@ ORGANISATIE = {
     # gebruiken dit om te bepalen of jij het antwoord bent op een vraag.
     "knowsAbout": [
         "Interactieve installaties", "Interactieve muziekinstallaties",
-        "Muzikale webapps", "Podiumtechniek", "Videosynthesizers",
+        "Interactieve installatie huren", "Merkactivering",
+        "Muzikale webapps", "Muziekinstrumenten op maat",
+        "Live visuals", "VJ-techniek", "Stage props", "Videosynthesizers",
         "Muziektechnologie", "Interactieve kunst", "Creatieve technologie",
         "Phygital marketing", "Workshops muziek en techniek",
     ],
@@ -84,9 +89,10 @@ WEBSITE = {"@type": "WebSite", "@id": WEB, "url": SITE + "/", "name": "Studio Wo
 # ------------------------------------------------- wat is elke pagina er een
 # Service = een dienst die je verkoopt. Dit zijn je verkooppagina's.
 DIENSTEN = {
-    "interactieve-installaties": "Interactieve installatie",
-    "muzikale-webapps": "Muzikale webapp",
-    "podium": "Podiumtechniek",
+    "interactieve-installaties": "Interactieve installatie laten maken",
+    "installatie-huren": "Interactieve installatie huren",
+    "muzikale-webapps": "Muzikale webapp laten maken",
+    "podium": "Muziekinstrument, visuals en props op maat",
     "workshops": "Workshop muziek en techniek",
 }
 VERZAMELINGEN = ["blog", "projecten", "onderwerp"]     # en alles onder onderwerp/

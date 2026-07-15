@@ -50,7 +50,23 @@
   }
 
   /* ---------- 2. Gedeelde interactie ---------- */
+  // Staat dit item te huur (meta wotto:huur)? Dan krijgt het automatisch een
+  // chip naar de verhuurpagina. Zo hoef je die nooit met de hand toe te voegen
+  // en kan hij ook niet vergeten worden als je later iets te huur zet.
+  function huurChip() {
+    const m = document.querySelector('meta[name="wotto:huur"]');
+    if (!m || !/^(ja|true|1)$/i.test((m.getAttribute('content') || '').trim())) return;
+    const chips = document.querySelector('.detail-chips');
+    if (!chips || chips.querySelector('.chip--huur')) return;
+    const a = document.createElement('a');
+    a.className = 'chip chip--huur';
+    a.href = base + 'installatie-huren/';
+    a.innerHTML = '<i class="ph-bold ph-truck"></i> Te huur';
+    chips.appendChild(a);
+  }
+
   function initSite() {
+    huurChip();
     const header = document.getElementById('header');
     const toggle = document.getElementById('navToggle');
     const logo   = document.getElementById('brandLogo');
@@ -239,6 +255,7 @@
       excerpt: m('excerpt'),
       datum: m('datum'),
       featured: /^(ja|true|1)$/i.test(m('featured')),
+      huur: /^(ja|true|1)$/i.test(m('huur')),          // staat dit stuk te huur op locatie?
       url: base + 'werk/' + slug + '/',
       coverUrl: base + 'werk/' + slug + '/' + cover
     };
@@ -275,6 +292,7 @@
       const types = el.dataset.list.split(',').map(s => s.trim()).filter(Boolean);
       let list = items.filter(i => types.includes('all') || types.includes(i.type));
       if (el.dataset.featured === 'true') list = list.filter(i => i.featured);
+      if (el.dataset.huur === 'true') list = list.filter(i => i.huur);
       if (el.dataset.pilaar)  list = list.filter(i => i.pilaar === el.dataset.pilaar);
       if (el.dataset.subject) list = list.filter(i => i.subjects.includes(el.dataset.subject));
       list.sort((a, b) => (b.datum || '').localeCompare(a.datum || ''));
