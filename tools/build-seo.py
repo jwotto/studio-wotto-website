@@ -24,11 +24,28 @@ EIND = "<!-- /structured data -->"
 # ---------------------------------------------------------------- je bedrijf
 # Dit is de plek om je gegevens aan te passen.
 ORGANISATIE = {
-    "@type": "Organization",
+    # LocalBusiness in plaats van Organization: dat vertelt Google dat je een
+    # PLEK bent waar mensen langs kunnen komen, niet alleen een merk. Dat is
+    # wat je nodig hebt om op te duiken bij "... in Eindhoven".
+    # Let op: dit alleen zet je niet op Google Maps, daar heb je een Google
+    # Bedrijfsprofiel voor nodig. Dit zorgt dat het klopt als je dat aanmaakt.
+    "@type": "LocalBusiness",
     "@id": ORG,
     "name": "Studio Wotto",
     "url": SITE + "/",
     "email": "info@studiowotto.com",
+    "telephone": "+31643474328",
+    # Het BEZOEKadres. Het bedrijf staat op een huisadres ingeschreven en dat
+    # hoort hier bewust niet: dit is waar je mensen ontvangt.
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Hurksestraat 19",
+        "postalCode": "5652 AH",
+        "addressLocality": "Eindhoven",
+        "addressCountry": "NL",
+    },
+    "vatID": "NL002219337B86",
+    "identifier": {"@type": "PropertyValue", "name": "KVK", "value": "66978106"},
     "logo": {"@type": "ImageObject", "url": SITE + "/favicons/web-app-manifest-512x512.png",
              "width": 512, "height": 512},
     "image": SITE + "/favicons/web-app-manifest-512x512.png",
