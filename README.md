@@ -75,10 +75,11 @@ meerdere gescheiden door komma's), `data-pilaar`, `data-subject`, `data-huur`,
 <meta name="wotto:datum"    content="2025-08-14">  <!-- bepaalt de volgorde -->
 <meta name="wotto:featured" content="ja">          <!-- selectie op de homepage -->
 <meta name="wotto:huur"     content="ja">          <!-- te huur op locatie -->
+<meta name="wotto:auteur"   content="Jan-Willem Otto">  <!-- alleen bij een ik-verhaal -->
 <meta name="wotto:videocover" content="loop.mp4">  <!-- bewegende kaart, optioneel -->
 ```
 
-Dit zijn ze alle tien. Leest `site.js` iets wat hier niet staat, dan is deze
+Dit zijn ze alle elf. Leest `site.js` iets wat hier niet staat, dan is deze
 lijst verouderd.
 
 **`cover` is verplicht.** Zonder cover slaat `build-manifest.py` het item over
@@ -92,6 +93,13 @@ zijn onderwerp-pagina's, alleen niet op een pijlerpagina.
 **`huur` staat los van de onderwerpen**, want te huur is geen thema maar een
 verdienmodel. Een item met `huur` krijgt automatisch een chip naar de
 verhuurpagina.
+
+**`auteur`** zet onderaan de tekst "Geschreven door ..." met de datum erbij, en
+maakt die persoon ook de `author` in de structured data in plaats van Studio
+Wotto. Volg de tekst: staat er "ik", dan zet je een naam. Staat er "wij", dan
+laat je dit leeg, want dan is het van de studio. Juist doordat het meestal
+leeg is, betekent het iets als er wel een naam staat. De naam moet voorkomen in
+`AUTEURS` bovenin `tools/build-seo.py`.
 
 **`videocover`** vervangt de foto op het kaartje door een kort filmpje dat
 vanzelf loopt. Alleen voor loops zonder geluid. `cover` blijft nodig: als

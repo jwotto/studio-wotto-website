@@ -65,8 +65,41 @@
     chips.appendChild(a);
   }
 
+  const MAANDEN = ['januari','februari','maart','april','mei','juni','juli',
+                   'augustus','september','oktober','november','december'];
+
+  // Wie schreef dit, en wanneer? Onderaan de tekst, uit de metatags, dus je
+  // hoeft die regel nooit te typen en hij kan niet uit de pas lopen met de datum.
+  //
+  // Geen wotto:auteur = geen regel. Dat is met opzet: staat een stuk in de
+  // wij-vorm, dan is het van de studio en hoeft er niemand onder. Juist daardoor
+  // betekent het iets als er wel een naam staat.
+  function byline() {
+    const body = document.querySelector('.article-body');
+    if (!body || body.querySelector('.byline')) return;
+    const m = n => {
+      const el = document.querySelector('meta[name="wotto:' + n + '"]');
+      return el ? (el.getAttribute('content') || '').trim() : '';
+    };
+    const auteur = m('auteur');
+    if (!auteur) return;
+
+    let tekst = 'Geschreven door <a href="' + base + 'contact/">' + esc(auteur) + '</a>';
+    const datum = m('datum');
+    if (datum) {
+      const d = datum.split('-');
+      const mooi = d.length === 3 ? (+d[2]) + ' ' + MAANDEN[+d[1] - 1] + ' ' + d[0] : datum;
+      tekst += ' · <time datetime="' + esc(datum) + '">' + mooi + '</time>';
+    }
+    const p = document.createElement('p');
+    p.className = 'byline';
+    p.innerHTML = tekst;
+    body.appendChild(p);
+  }
+
   function initSite() {
     huurChip();
+    byline();
     const header = document.getElementById('header');
     const toggle = document.getElementById('navToggle');
     const logo   = document.getElementById('brandLogo');

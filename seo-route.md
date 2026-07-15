@@ -73,6 +73,11 @@ Kopieer een bestaand item en pas aan. Kijk vooral naar:
 - [ ] `wotto:datum` (bepaalt de volgorde, nieuwste eerst)
 - [ ] `wotto:huur` op `ja` als het te huur is. Dat is geen genre maar een
       verdienmodel, en het item krijgt er automatisch een chip van.
+- [ ] `wotto:auteur` alleen bij een ik-verhaal. Dan komt er onderaan
+      "Geschreven door ..." te staan en wordt die persoon ook de auteur in de
+      structured data. Bij een wij-verhaal leeg laten: dan is het van de studio.
+      Google kijkt naar wie iets schrijft (E-E-A-T), en een echt persoon met een
+      profiel weegt zwaarder dan een merknaam.
 
 ### De foto's
 - [ ] Bestandsnaam = zoekwoorden. **Geen `cover.jpg` of `IMG_4021.jpg`**,

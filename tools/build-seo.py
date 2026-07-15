@@ -114,6 +114,16 @@ DIENSTEN = {
 }
 VERZAMELINGEN = ["blog", "projecten", "onderwerp"]     # en alles onder onderwerp/
 
+# Wie kan er auteur zijn? De naam uit wotto:auteur wordt hier omgezet naar de
+# persoon uit ORGANISATIE["founder"], zodat Google weet dat de schrijver van dit
+# stuk dezelfde is als die op je contactpagina. Staat er geen auteur, dan is het
+# Studio Wotto zelf. Dat volgt de tekst: de ik-vorm is een persoon, de wij-vorm
+# is de studio.
+AUTEURS = {
+    "Jan-Willem Otto": SITE + "/over-ons/#jan-willem",
+    "Jaimy Kortenhoff": SITE + "/over-ons/#jaimy",
+}
+
 
 def leesmeta(h, naam, attr="name"):
     m = re.search(r'%s="%s"\s+content="([^"]*)"' % (attr, re.escape(naam)), h)
@@ -170,6 +180,12 @@ def bouw(f):
         onderwerpen = [s.strip() for s in (leesmeta(h, "wotto:subjects") or "").split(",") if s.strip()]
         beeld = d["url"] + cover if cover else None
 
+        # wie schreef dit? Een naam uit AUTEURS wordt de persoon, anders de studio.
+        auteur = leesmeta(h, "wotto:auteur")
+        if auteur and auteur not in AUTEURS:
+            print("  !! %s: onbekende auteur '%s'" % (rel, auteur))
+        wie = {"@id": AUTEURS[auteur]} if auteur in AUTEURS else {"@id": ORG}
+
         typ = {"blog": "Article", "workshop": "Course"}.get(soort, "CreativeWork")
         node = {"@context": "https://schema.org", "@type": typ, "@id": d["url"] + "#item",
                 "name": titel, "description": excerpt, "url": d["url"], "inLanguage": "nl-NL"}
@@ -179,14 +195,14 @@ def bouw(f):
             node["keywords"] = ", ".join(onderwerpen)
         if typ == "Article":
             node["headline"] = titel
-            node["author"] = {"@id": ORG}
-            node["publisher"] = {"@id": ORG}
+            node["author"] = wie              # de persoon als het een ik-verhaal is
+            node["publisher"] = {"@id": ORG}  # de studio publiceert het altijd
             if datum:
                 node["datePublished"] = datum
         elif typ == "Course":
             node["provider"] = {"@id": ORG}
         else:
-            node["creator"] = {"@id": ORG}
+            node["creator"] = wie             # ook een project kan door één iemand geschreven zijn
             if datum:
                 node["dateCreated"] = datum
 

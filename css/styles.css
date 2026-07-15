@@ -402,12 +402,40 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 .article-body::after{ content:""; display:block; clear:both }   /* houdt de floats binnen het blok */
 .article-body .float-right{ float:right; width:44%; max-width:460px; margin:6px 0 var(--space-4) var(--space-6) }
 .article-body .float-left{ float:left; width:44%; max-width:460px; margin:6px var(--space-6) var(--space-4) 0 }
+/* clear:both is hier geen luxe. Staan er twee zwevende blokken op dezelfde
+   hoogte, eentje links en eentje rechts, dan houdt je tekst nog 280px over van
+   de 1200 en krijg je twee woorden per regel. Met deze regel begint elk volgend
+   blok netjes onder het vorige. */
+.article-body .float-left, .article-body .float-right{ clear:both }
+/* Staand beeld hoort smaller dan liggend. Een telefoonvideo (9:16) wordt op
+   460px breed ruim 800px hoog, en dan staat er een toren naast je tekst.
+   Zet 'staand' erbij op een <img> of <figure> die hoger is dan breed. */
+.article-body .float-left.staand, .article-body .float-right.staand{ width:30%; max-width:300px }
 /* Zwevende foto's zijn vierkant, net als de projectkaarten (stijl.md) */
 .article-body img.float-left, .article-body img.float-right{ aspect-ratio:1/1; object-fit:cover }
 
 /* Extra foto's onderaan, naast elkaar over de volle breedte */
 .article-body .gallery{ clear:both; display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:var(--space-7) }
 .article-body .gallery img{ width:100%; max-width:none; height:auto; margin:0 }
+/* Twee kolommen: links twee liggende foto's op elkaar, rechts een staande die
+   over beide rijen loopt en onderaan gelijk afsluit.
+   Waarom die foto in een <div class="hoog"> zit en niet gewoon een <img> is:
+   een foto heeft zelf een hoogte-verhouding, en die telt mee bij het bepalen
+   van de rijhoogte. De staande duwde de twee rijen dan uit elkaar en er viel
+   een gat tussen de liggende foto's. Door de foto absoluut in een lege div te
+   zetten telt hij niet meer mee: de liggende bepalen de hoogte, en de staande
+   vult op wat er is. */
+.article-body .gallery--kolommen{ grid-template-columns:1fr 1fr }
+.article-body .gallery--kolommen .hoog{ grid-row:span 2; position:relative; overflow:hidden;
+  border-radius:var(--radius-lg); box-shadow:var(--shadow-md) }
+.article-body .gallery--kolommen .hoog img{ position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; border-radius:0; box-shadow:none }
+@media (max-width:720px){
+  .article-body .gallery--kolommen{ grid-template-columns:1fr }
+  .article-body .gallery--kolommen .hoog{ grid-row:auto; position:static; box-shadow:none; border-radius:0 }
+  .article-body .gallery--kolommen .hoog img{ position:static; height:auto;
+    border-radius:var(--radius-lg); box-shadow:var(--shadow-md) }
+}
 @media (max-width:720px){
   .article-body .float-left, .article-body .float-right{ float:none; width:100%; max-width:100%; margin:var(--space-6) auto }
   .article-body .video-embed{ width:100%; max-width:100% }   /* filmpje altijd volle breedte en zichtbaar op mobiel */
@@ -418,6 +446,12 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 .article-body p a{ font-weight:700; text-decoration:underline; text-underline-offset:2px }
 .article-body blockquote{ margin:var(--space-6) 0; padding-left:var(--space-4); border-left:3px solid currentColor; font-family:var(--font-head); font-size:20px; opacity:.9 }
 .article-body .credit{ font-size:14px; opacity:.7 }   /* fotocredit onder een artikel */
+/* Wie schreef dit en wanneer. Wordt door js/site.js onderaan de tekst gezet, uit
+   de metatags wotto:auteur en wotto:datum. Staat er geen auteur, dan komt er ook
+   geen regel: dan is het van de studio.
+   clear:both, want anders schuift hij naast een zwevend beeld. */
+.article-body .byline{ clear:both; margin-top:var(--space-7); padding-top:var(--space-4); border-top:2px dotted currentColor; font-family:var(--font-head); font-weight:600; font-size:15px; opacity:.75 }
+.article-body .byline a{ text-decoration:underline; text-underline-offset:2px }
 
 
 /* ============================================================
