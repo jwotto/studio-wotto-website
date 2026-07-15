@@ -139,21 +139,21 @@ chip-wolken en de chips op elk item.
 
 | Onderwerp | Items |
 |---|---|
-| Educatie | 10 |
-| Festival | 7 |
-| Muziektechnologie | 5 |
-| Phygital | 5 |
-| Gamification | 5 |
+| Educatie | 12 |
+| Festival | 8 |
+| Phygital | 6 |
+| Muziektechnologie | 6 |
+| Gamification | 6 |
 | Creatieve technologie | 5 |
 | Muziekinstrumenten | 4 |
+| Interactieve kunst | 4 |
 | Games | 3 |
-| Interactieve kunst | 3 |
 | Geluidsontwerp | 2 |
+| Museum | 1 |
 | Merkactivering | 1 |
-| Museum | 0 |
 | Interactieve reclame | 0 |
 
-**Educatie zit op 10 van de 19.** Klik je erop, dan krijg je meer dan de helft
+**Educatie zit op 12 van de 24.** Klik je erop, dan krijg je meer dan de helft
 van je werk, dus het filtert weinig. Bewuste keuze, maar hou het in de gaten.
 
 **Museum en Interactieve reclame staan er leeg in**, omdat er werk aan komt.
@@ -222,7 +222,30 @@ zelfpromotie op Reddit is de snelste route naar een ban.
 
 ---
 
-## 7. Bij het live gaan
+## 7. Openstaand: vier covers zijn foto's die als PNG zijn opgeslagen
+
+Samen ruim 6 MB, en het zijn **covers**, dus ze staan op elke lijstpagina.
+
+| Bestand | Nu | Zou moeten |
+|---|---|---|
+| `bouw-je-eigen-elektrische-gitaar.png` | 2192 kB | ~200 kB |
+| `maak-muziek-met-techniek.png` | 1806 kB | ~200 kB |
+| `tantu-beats.png` | 1235 kB | ~150 kB |
+| `mkrdays-2024.png` | 1011 kB | ~120 kB |
+
+`build-galerij.py` laat ze met rust, want ze zijn kleiner dan 1600px. Het
+probleem is niet hun afmeting maar hun formaat: PNG slaat een foto bijna pixel
+voor pixel op.
+
+Waarom het niet automatisch gaat: omzetten naar JPEG verandert de
+bestandsnaam, en die staat in `wotto:cover`, in `og:image` en in de HTML. Dat
+moet dus in één ronde, met alle verwijzingen mee. Ook moet je eerst kijken of
+het echt een foto is: bij een schermafdruk of een logo is PNG juist beter.
+Dat is precies waarom `crackthenotes` PNG's mag houden.
+
+---
+
+## 8. Bij het live gaan
 
 In deze volgorde.
 
@@ -243,7 +266,7 @@ In deze volgorde.
 
 ---
 
-## 8. De gereedschapskist
+## 9. De gereedschapskist
 
 | Commando | Wat het doet |
 |---|---|

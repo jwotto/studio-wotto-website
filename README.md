@@ -22,13 +22,13 @@ podium/
 installatie-huren/
 workshops/
 
-werk/<slug>/                ALLE content: 19 items, elk een map met index.html
+werk/<slug>/                ALLE content: 24 items, elk een map met index.html
 onderwerp/<slug>/           13 onderwerp-pagina's, gemaakt door een tool
 
 partials/                   header.html en footer.html
 css/styles.css              de hele stylesheet
 js/site.js                  de hele JavaScript
-tools/                      drie python-scripts, zie onderaan
+tools/                      python-scripts, zie onderaan
 
 .htaccess                   redirects + 404. Werkt ALLEEN op Vimexx.
 robots.txt  sitemap.xml     zoekmachines
@@ -37,7 +37,7 @@ content.json                lijst met welke items bestaan (gemaakt door een tool
 
 ---
 
-## Vier dingen die je moet snappen
+## Vijf dingen die je moet snappen
 
 ### 1. Alle content staat in `werk/`, ook de blogs
 
@@ -108,7 +108,29 @@ aangezet (dat controleert `site.js`).
 
 De chips onderin een item hoef je niet te typen, die komen uit `subjects`.
 
-### 3. Header en footer staan op één plek
+### 3. Foto's: slepen en bouwen
+
+Zet foto's en filmpjes in `werk/<slug>/` en draai `python tools/build.py`. Dan:
+
+- **Alles boven 1600px wordt verkleind.** Ook je cover, en juist die staat op
+  elke lijstpagina. Een cameraorigineel van 7 MB werd zo 180 kB.
+- **Twee of meer ongebruikte bestanden** worden een galerij onderaan het item.
+  Ongebruikt betekent: staat nog nergens in je tekst. Je zwevende foto, de
+  poster van een filmpje en je `videocover` blijven er dus buiten, die zie je al.
+- **Eén los bestand** krijgt geen galerij. Het script zegt het alleen, want een
+  galerij van één foto is onzin: die hoort zwevend in je tekst en waar precies
+  kan een script niet bedenken.
+- **Een eigen galerij blijft van jou.** Het script beheert alleen wat het zelf
+  tussen zijn markers heeft neergezet.
+- **De alt-tekst komt uit de bestandsnaam.** Schrijf je zelf een betere, dan
+  blijft die staan. Noem je bestanden dus fatsoenlijk, dat scheelt je werk.
+
+Elke foto in de tekst is aanklikbaar en gaat schermvullend open, met pijltjes,
+toetsenbord en vegen. Het bijschrift daaronder is de figcaption als die er is,
+anders de alt-tekst. Dat is dus een tweede reden om die goed te schrijven.
+Zonder JavaScript zie je gewoon je foto's, er gaat niets stuk.
+
+### 4. Header en footer staan op één plek
 
 `partials/header.html` en `partials/footer.html`. Op een pagina zet je:
 
@@ -124,7 +146,7 @@ en dan ziet hij er gewoon uit**, inclusief vormgeving.
 Relatieve paden in een partial worden bij het inladen omgerekend tegen de
 partial zelf, dus `../projecten/` klopt vanaf elke maplaag.
 
-### 4. Waarom de site overal werkt
+### 5. Waarom de site overal werkt
 
 Op drie plekken staat hij op een ander niveau:
 
@@ -156,12 +178,26 @@ het verkeerde niveau wijzen. Die pagina gebruikt als enige `/css/` en `/js/`.
 laden. Die attributen werken als CSS. Zonder die regel legt `height="1500"` een
 hoogte van 1500px op en rekt je foto uit.
 
-**Foto's verkleinen voor je ze toevoegt.** Max 1600px breed. Een
-cameraorigineel is zo 7 MB.
+**Foto's verkleinen hoeft niet meer met de hand.** `tools/build-galerij.py` doet
+alles boven 1600px. Een cameraorigineel is zo 7 MB.
 
 **JPEG voor foto's, PNG alleen voor logo's en schermafdrukken.** PNG slaat een
 foto bijna pixel voor pixel op. Zeven foto's van Crafted stonden als PNG samen
 op 12 MB, als JPEG op 1 MB. Bij vlakke kleuren en tekst is PNG juist beter.
+
+**`clear:both` op zwevende beelden niet weghalen.** Zonder die regel kruipen
+twee zwevende blokken naast elkaar en houdt je tekst 280px over van de 1200:
+twee woorden per regel.
+
+**`1fr` in een raster wordt nooit kleiner dan zijn inhoud.** Dat lijkt "de rest
+van de ruimte" te betekenen, maar een grote foto duwt de rij gewoon buiten het
+scherm. Wil je dat een rij mag krimpen, schrijf dan `minmax(0, 1fr)`.
+
+**Een foto kan zijn eigen maximum niet bepalen.** Zet je `max-height:100%` op
+een foto die zelf de hoogte van zijn vak bepaalt, dan is die 100% een cirkel en
+negeert de browser hem zonder te klagen. Dat is waarom de foto in de
+schermvullende weergave los van de indeling staat (`position:absolute` +
+`margin:auto`). Ziet er ingewikkeld uit, is de enige manier waarop het werkt.
 
 **Bestandsnamen met zoekwoorden.** Geen `cover.jpg`, geen `IMG_4021.jpg`.
 
@@ -202,6 +238,7 @@ juiste volgorde:
 | Stap | Wat het doet |
 |---|---|
 | `build-manifest.py` | schrijft `content.json`: welke items bestaan er. Slaat items zonder cover over. |
+| `build-galerij.py` | verkleint te grote foto's en bouwt de galerij onder een item |
 | `build-onderwerpen.py` | onderwerp-pagina's, alle chip-wolken, en de chips op elk item |
 | `build-seo.py` | structured data op elke pagina + `sitemap.xml` |
 

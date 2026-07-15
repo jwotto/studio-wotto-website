@@ -417,6 +417,47 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 /* Extra foto's onderaan, naast elkaar over de volle breedte */
 .article-body .gallery{ clear:both; display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:var(--space-7) }
 .article-body .gallery img{ width:100%; max-width:none; height:auto; margin:0 }
+
+/* ---- Klik een foto en zie hem groot. js/site.js pakt elke <img> in de tekst,
+   dus de opmaak hierboven verandert niet: alles blijft staan waar het staat.
+   De klasse hieronder wordt door dat script gezet, zodat een pagina zonder
+   JavaScript geen klikbare cursor toont voor iets dat dan niet werkt. */
+.article-body img.kanGroot{ cursor:pointer }
+.article-body img.kanGroot:hover{ filter:brightness(1.04) }
+
+/* ---- De schermvullende weergave */
+/* minmax(0,1fr) en niet gewoon 1fr: een fr-rij wordt nooit kleiner dan zijn
+   inhoud, dus een grote foto duwde de rij buiten het scherm en er viel een stuk
+   af. Met minmax(0,...) mag de rij wel krimpen en past de foto zich aan.
+   Om dezelfde reden staat overal min-height:0 en min-width:0. */
+.lightbox{ position:fixed; inset:0; z-index:100; display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:var(--space-3); padding:var(--space-4); background:rgba(12,12,20,.94); backdrop-filter:blur(6px) }
+.lightbox[hidden]{ display:none }
+.lightbox__bar{ display:flex; align-items:center; justify-content:space-between; color:#fff; font-family:var(--font-head); font-size:15px; opacity:.8 }
+/* De foto staat hier los van de indeling (position:absolute) en wordt met
+   margin:auto gecentreerd. Dat is niet ingewikkeld doen: het is de enige manier
+   waarop max-height:100% echt iets betekent.
+   Deed de foto mee in de indeling, dan bepaalde HIJ de hoogte van zijn eigen
+   vak, en dan zegt max-height:100% niets meer dan "ik mag zo hoog worden als ik
+   ben". De browser negeert dat en er valt een stuk buiten beeld.
+   Nu heeft dit vak een eigen hoogte (van de minmax(0,1fr) hierboven) en past de
+   foto zich daaraan aan. */
+.lightbox__figuur{ position:relative; min-height:0; min-width:0 }
+.lightbox__figuur img, .lightbox__figuur video{ position:absolute; inset:0; margin:auto;
+  max-width:100%; max-height:100%; width:auto; height:auto;
+  border-radius:var(--radius-lg); box-shadow:none; background:transparent }
+.lightbox__tekst{ color:#fff; opacity:.75; text-align:center; font-size:14px; max-width:var(--text-max); margin-inline:auto; min-height:1.4em }
+.lightbox__knop{ position:absolute; top:50%; transform:translateY(-50%); width:52px; height:52px; display:grid; place-items:center; border:0; border-radius:50%; background:rgba(255,255,255,.14); color:#fff; font-size:24px; cursor:pointer; transition:background var(--dur) linear }
+.lightbox__knop:hover{ background:rgba(255,255,255,.28) }
+.lightbox__knop[disabled]{ opacity:.25; cursor:default }
+.lightbox__knop--vorige{ left:var(--space-4) }
+.lightbox__knop--volgende{ right:var(--space-4) }
+.lightbox__sluit{ width:44px; height:44px; border:0; border-radius:50%; background:rgba(255,255,255,.14); color:#fff; font-size:20px; cursor:pointer }
+.lightbox__sluit:hover{ background:rgba(255,255,255,.28) }
+@media (max-width:720px){
+  .lightbox__knop{ width:44px; height:44px; font-size:20px }
+  .lightbox__knop--vorige{ left:6px }
+  .lightbox__knop--volgende{ right:6px }
+}
 /* Twee kolommen: links twee liggende foto's op elkaar, rechts een staande die
    over beide rijen loopt en onderaan gelijk afsluit.
    Waarom die foto in een <div class="hoog"> zit en niet gewoon een <img> is:

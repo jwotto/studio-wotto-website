@@ -97,9 +97,110 @@
     body.appendChild(p);
   }
 
+  /* ---------- Klik een foto, blader er schermvullend doorheen ----------
+     Pakt elke <img> in de tekst, in de volgorde waarin ze staan. De opmaak
+     verandert dus niet: alles blijft staan waar het staat. Werkt JavaScript
+     niet, dan zie je gewoon de foto's zoals altijd.
+     Het bijschrift is de figcaption als die er is, anders de alt-tekst. */
+  function galerij() {
+    const thumbs = [...document.querySelectorAll('.article-body img')];
+    if (thumbs.length < 1) return;
+    thumbs.forEach(i => i.classList.add('kanGroot'));
+
+    const bijschrift = img => {
+      const fig = img.closest('figure');
+      const cap = fig && fig.querySelector('figcaption');
+      return (cap ? cap.textContent : img.alt || '').trim();
+    };
+
+    const box = document.createElement('div');
+    box.className = 'lightbox';
+    box.hidden = true;
+    box.innerHTML =
+      '<div class="lightbox__bar"><span class="lightbox__teller"></span>'
+      + '<button class="lightbox__sluit" type="button" aria-label="Sluiten">✕</button></div>'
+      + '<div class="lightbox__figuur"></div>'
+      + '<p class="lightbox__tekst"></p>'
+      + '<button class="lightbox__knop lightbox__knop--vorige" type="button" aria-label="Vorige">←</button>'
+      + '<button class="lightbox__knop lightbox__knop--volgende" type="button" aria-label="Volgende">→</button>';
+    document.body.appendChild(box);
+
+    const figuur = box.querySelector('.lightbox__figuur');
+    const tekst  = box.querySelector('.lightbox__tekst');
+    const teller = box.querySelector('.lightbox__teller');
+    const vorige = box.querySelector('.lightbox__knop--vorige');
+    const volgende = box.querySelector('.lightbox__knop--volgende');
+    const sluitKnop = box.querySelector('.lightbox__sluit');
+    let nu = 0, vanwaar = null;
+
+    function toon(i) {
+      nu = (i + thumbs.length) % thumbs.length;
+      const img = thumbs[nu];
+      const t = bijschrift(img);
+      figuur.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="' + esc(img.alt || '') + '">';
+      tekst.textContent = t;
+      teller.textContent = (nu + 1) + ' / ' + thumbs.length;
+      vorige.disabled = volgende.disabled = thumbs.length < 2;
+    }
+
+    function open(i, trigger) {
+      vanwaar = trigger;
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+      toon(i);
+      sluitKnop.focus();
+    }
+
+    function sluit() {
+      box.hidden = true;
+      figuur.innerHTML = '';
+      document.body.style.overflow = '';
+      if (vanwaar) vanwaar.focus();          // terug naar de foto waar je vandaan kwam
+    }
+
+    thumbs.forEach((img, i) => {
+      img.addEventListener('click', () => open(i, img));
+      // ook bereikbaar zonder muis
+      img.tabIndex = 0;
+      img.setAttribute('role', 'button');
+      img.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i, img); }
+      });
+    });
+    vorige.addEventListener('click', () => toon(nu - 1));
+    volgende.addEventListener('click', () => toon(nu + 1));
+    sluitKnop.addEventListener('click', sluit);
+    // Klik je naast de foto, dan ga je eruit. Let op: alles behalve de foto zelf
+    // en de knoppen telt als "naast", dus ook het bijschrift en de balk bovenin.
+    // Een simpele check op e.target === box zou alleen werken op de smalle rand
+    // eromheen, want de vakken erbinnen vangen de klik af.
+    box.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') return;
+      sluit();
+    });
+    document.addEventListener('keydown', e => {
+      if (box.hidden) return;
+      if (e.key === 'Escape') sluit();
+      if (e.key === 'ArrowLeft') toon(nu - 1);
+      if (e.key === 'ArrowRight') toon(nu + 1);
+    });
+
+    // vegen op een telefoon
+    let x0 = null;
+    box.addEventListener('touchstart', e => { x0 = e.changedTouches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const d = e.changedTouches[0].clientX - x0;
+      if (Math.abs(d) > 50) toon(nu + (d < 0 ? 1 : -1));
+      x0 = null;
+    }, { passive: true });
+  }
+
   function initSite() {
     huurChip();
     byline();
+    galerij();
     const header = document.getElementById('header');
     const toggle = document.getElementById('navToggle');
     const logo   = document.getElementById('brandLogo');
