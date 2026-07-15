@@ -178,6 +178,7 @@ h3{ font-family:var(--font-head); font-weight:600; line-height:1.15; margin:0 }
 .btn--light{ background:var(--cream); color:var(--ink); border-color:transparent; box-shadow:var(--shadow-sm) }
 .btn--ghost-light{ background:transparent; color:var(--cream); border-color:rgba(255,255,255,.6) }
 .btn i{ font-size:20px }
+.btn-row{ display:flex; flex-wrap:wrap; gap:var(--space-3); margin-top:var(--space-6) }   /* knoppen naast elkaar */
 
 
 /* ============================================================
@@ -352,6 +353,12 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 .article-body::after{ content:""; display:block; clear:both }   /* houdt de floats binnen het blok */
 .article-body .float-right{ float:right; width:44%; max-width:460px; margin:6px 0 var(--space-4) var(--space-6) }
 .article-body .float-left{ float:left; width:44%; max-width:460px; margin:6px var(--space-6) var(--space-4) 0 }
+/* Zwevende foto's zijn vierkant, net als de projectkaarten (stijl.md) */
+.article-body img.float-left, .article-body img.float-right{ aspect-ratio:1/1; object-fit:cover }
+
+/* Extra foto's onderaan, naast elkaar over de volle breedte */
+.article-body .gallery{ clear:both; display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:var(--space-7) }
+.article-body .gallery img{ width:100%; max-width:none; height:auto; margin:0 }
 @media (max-width:720px){
   .article-body .float-left, .article-body .float-right{ float:none; width:100%; max-width:100%; margin:var(--space-6) auto }
   .article-body .video-embed{ width:100%; max-width:100% }   /* filmpje altijd volle breedte en zichtbaar op mobiel */

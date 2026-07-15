@@ -1,6 +1,10 @@
 # ============================================================
 # Studio Wotto - Apache-instellingen (Vimexx)
 # ============================================================
+
+# Kapotte link? Toon onze eigen 404 in plaats van de kale Apache-melding.
+ErrorDocument 404 /404.html
+
 # Dit bestand werkt ALLEEN op Vimexx (Apache). Live Server en de
 # GitHub-preview negeren het volledig, dus het kan hier veilig staan
 # tot je live gaat.

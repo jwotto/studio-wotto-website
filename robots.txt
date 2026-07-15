@@ -1,2 +1,34 @@
+# ============================================================
+# Studio Wotto - robots.txt
+# ============================================================
+# Dit bestand vertelt zoekmachines wat ze WEL of NIET mogen ophalen.
+#
+# Let op: het werkt alleen vanaf de root van een domein. Op de
+# GitHub-preview staat het in een submap en wordt het dus nooit gelezen.
+# Pas op studiowotto.com telt het echt mee.
+#
+# Er staat bewust GEEN "Disallow" meer in. Dat is geen slordigheid:
+# Disallow betekent "niet ophalen", en een pagina die Google niet mag
+# ophalen kan hij ook niet lezen. Dan ziet hij de "noindex" in je
+# pagina's niet en kan de URL alsnog kaal in de resultaten belanden.
+# Wat de site nu uit Google houdt is die noindex, en dat is precies
+# het juiste gereedschap. Bij het live gaan haal je die weg.
+#
+# AI-assistenten (ChatGPT, Claude, Perplexity) sturen hun eigen bots.
+# Die vallen onder de * hieronder en mogen er dus bewust in, want we
+# willen juist gevonden worden als iemand vraagt wie interactieve
+# installaties maakt. Wil je dat ooit niet meer, dan blokkeer je ze
+# per stuk, bijvoorbeeld:
+#
+#   User-agent: GPTBot          <- OpenAI
+#   User-agent: OAI-SearchBot   <- zoeken binnen ChatGPT
+#   User-agent: ClaudeBot       <- Anthropic
+#   User-agent: PerplexityBot   <- Perplexity
+#   User-agent: Google-Extended <- Gemini (niet Google Zoeken zelf)
+#   Disallow: /
+# ============================================================
+
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://www.studiowotto.com/sitemap.xml

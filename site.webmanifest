@@ -1,0 +1,14 @@
+{
+  "name": "Studio Wotto",
+  "short_name": "Wotto",
+  "description": "Interactieve installaties, muzikale webapps en podiumtechniek.",
+  "lang": "nl",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#FF5757",
+  "background_color": "#FFFEFB",
+  "icons": [
+    { "src": "favicons/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "favicons/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
