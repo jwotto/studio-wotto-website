@@ -7,5 +7,4 @@ exclude:
   - content-structuur.md
   - "oude blogs en pagina's"
   - moodboard
-  - content/build-manifest.py
-  - content/update-manifest.bat
+  - tools

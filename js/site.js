@@ -184,10 +184,11 @@
   }
 
   /* ---------- 3. Content laden en tonen ----------
-     Elke map in content/ is een project of blog. We lezen manifest.json
-     (de lijst mappen), halen per item de kenmerken uit de <meta>-tags,
-     en vullen de lijsten/carousels op de pagina. Zo verschijnt een nieuw
-     item vanzelf op de goede plek zodra het in het manifest staat. */
+     Elk content-item is een eigen map in werk/ (bijv. /werk/ramses3000/).
+     De map is neutraal: de <meta name="wotto:type"> in de HTML bepaalt of
+     het een project of een blog is, zodat de URL nooit hoeft te wijzigen
+     als je dat omzet. We lezen content.json (de lijst mappen), halen per
+     item de kenmerken uit de meta-tags, en vullen de lijsten/carousels. */
   function slugify(s){ return (s || '').trim().toLowerCase().replace(/\s+/g, '-'); }
   function esc(s){ return (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   const PILAAR_LABEL = { installaties:'Interactieve installaties', webapps:'Muzikale webapps & games', podium:'Podium & instrumenten' };
@@ -205,16 +206,16 @@
       excerpt: m('excerpt'),
       datum: m('datum'),
       featured: /^(ja|true|1)$/i.test(m('featured')),
-      url: base + 'content/' + slug + '/',
-      coverUrl: base + 'content/' + slug + '/' + cover
+      url: base + 'werk/' + slug + '/',
+      coverUrl: base + 'werk/' + slug + '/' + cover
     };
   }
 
   function loadItems(){
-    return fetch(base + 'content/manifest.json')
+    return fetch(base + 'content.json')
       .then(r => r.ok ? r.json() : [])
       .then(slugs => Promise.all((slugs || []).map(slug =>
-        fetch(base + 'content/' + slug + '/index.html')
+        fetch(base + 'werk/' + slug + '/index.html')
           .then(r => r.text())
           .then(html => parseItem(slug, html))
           .catch(err => { console.error('Content laden mislukt:', slug, err); return null; })
