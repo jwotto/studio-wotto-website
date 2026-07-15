@@ -280,7 +280,9 @@
       list.sort((a, b) => (b.datum || '').localeCompare(a.datum || ''));
       if (el.dataset.limit) list = list.slice(0, +el.dataset.limit);
       const inCarousel = el.classList.contains('carousel__track');
-      el.innerHTML = list.map(i => renderCard(i, inCarousel)).join('');
+      // Niets gevonden? Toon de boodschap uit data-empty in plaats van een gat.
+      el.innerHTML = list.map(i => renderCard(i, inCarousel)).join('')
+        || (el.dataset.empty ? '<p class="list-empty">' + esc(el.dataset.empty) + '</p>' : '');
     });
   }
 
