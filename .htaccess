@@ -50,8 +50,8 @@
   # De oude workshops-overzichtspagina (/workshops/ blijft gelijk, die hoeft niet)
   RedirectMatch 301 ^/techniek-workshops(/.*)?$ /workshops/
 
-  # Nog toe te voegen zodra die pagina's er zijn:
-  # RedirectMatch 301 ^/over-studio-wotto(/.*)?$ /over-ons/
-  # RedirectMatch 301 ^/contact(/.*)?$ /contact/
+  # --- Pagina's -------------------------------------------------
+  # /contact/ heet nog precies zo, die hoeft dus geen redirect.
+  RedirectMatch 301 ^/over-studio-wotto(/.*)?$ /over-ons/
 
 </IfModule>
