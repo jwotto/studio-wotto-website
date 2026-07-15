@@ -9,7 +9,8 @@ include:
 
 exclude:
   - stijl.md
-  - content-structuur.md
+  - README.md
+  - seo-route.md
   - "oude blogs en pagina's"
   - moodboard
   - tools

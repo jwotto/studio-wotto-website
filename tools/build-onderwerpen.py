@@ -241,15 +241,26 @@ def main():
     for i in items:
         f = BASE / "werk" / i["slug"] / "index.html"
         h = f.read_text(encoding="utf-8")
-        label, plink = PILAAR.get(i["pilaar"], (i["pilaar"], i["pilaar"]))
-        r = ['        <a class="chip" href="../../%s/">%s</a>' % (plink, esc(label))]
+        # Een item hoeft geen pijler te hebben. Een blog over jureren op een
+        # festival gaat nergens over installaties, webapps of podium. Zonder
+        # deze controle kreeg zo'n item een lege chip naar "../..//".
+        r = []
+        if i["pilaar"] in PILAAR:
+            label, plink = PILAAR[i["pilaar"]]
+            r.append('        <a class="chip" href="../../%s/">%s</a>' % (plink, esc(label)))
+        elif i["pilaar"]:
+            print("  !! %s heeft onbekende pijler: %s" % (i["slug"], i["pilaar"]))
         for s in i["subs"]:
             if s not in namen:
                 print("  !! %s heeft onbekend onderwerp: %s" % (i["slug"], s))
                 continue
             r.append('        <a class="chip" href="../../onderwerp/%s/">%s</a>' % (slug(s), esc(s)))
-        h2, n = re.subn(r'(<div class="detail-chips">\n).*?(\n      </div>)',
-                        lambda m: m.group(1) + "\n".join(r) + m.group(2), h, count=1, flags=re.S)
+        # Let op de vorm van deze regex: een item kan NUL chips hebben (geen
+        # pijler en geen onderwerpen). Dan staat er <div ...></div> met alleen
+        # witruimte ertussen, en een patroon dat een regeleinde verwacht mist 'm.
+        binnenin = ("\n" + "\n".join(r) + "\n      ") if r else "\n      "
+        h2, n = re.subn(r'(<div class="detail-chips">).*?(</div>)',
+                        lambda m: m.group(1) + binnenin + m.group(2), h, count=1, flags=re.S)
         if n != 1:
             print("  !! detail-chips niet gevonden in %s" % i["slug"])
         else:

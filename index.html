@@ -296,7 +296,10 @@
     <div class="section-head"><h2>Recente blogs</h2></div>
     <div class="carousel">
       <div class="carousel__viewport">
-        <div class="carousel__track" data-list="blog" data-featured="true"></div>
+        <!-- "Recente blogs" betekent recent, dus geen data-featured hier. De lijst
+             sorteert al op wotto:datum, nieuwste eerst, dus een nieuwe blog
+             verschijnt hier vanzelf. Uitlichten met de hand hoeft niet meer. -->
+        <div class="carousel__track" data-list="blog" data-limit="6"></div>
         <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>
         <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><i class="ph-bold ph-arrow-right"></i></button>
       </div>

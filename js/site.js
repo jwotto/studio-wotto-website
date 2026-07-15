@@ -257,7 +257,12 @@
       featured: /^(ja|true|1)$/i.test(m('featured')),
       huur: /^(ja|true|1)$/i.test(m('huur')),          // staat dit stuk te huur op locatie?
       url: base + 'werk/' + slug + '/',
-      coverUrl: base + 'werk/' + slug + '/' + cover
+      coverUrl: base + 'werk/' + slug + '/' + cover,
+      // Optioneel: een kort, geluidloos filmpje dat op de kaart afspeelt in
+      // plaats van de foto. Alleen voor loops. Goed gecomprimeerd is zo'n
+      // filmpje lichter dan de foto zelf. De cover blijft nodig: als poster,
+      // als deel-thumbnail, en voor wie geen beweging wil zien.
+      videoUrl: m('videocover') ? base + 'werk/' + slug + '/' + m('videocover') : ''
     };
   }
 
@@ -279,9 +284,17 @@
     const onder = item.type === 'project'
       ? '<div class="project__theme">' + esc(PILAAR_LABEL[item.pilaar] || '') + '</div>'
       : '<p class="project__excerpt">' + esc(item.excerpt) + '</p>';
+    // Bewegende cover, maar alleen als iemand daar geen last van heeft. Wie in
+    // zijn systeem heeft staan dat hij minder beweging wil (dat is een echte
+    // instelling, o.a. tegen misselijkheid), krijgt gewoon de foto.
+    const stil = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const beeld = (item.videoUrl && !stil)
+      ? '<video src="' + item.videoUrl + '" poster="' + item.coverUrl + '" preload="none"'
+        + ' autoplay loop muted playsinline aria-label="' + esc(item.titel) + '"></video>'
+      : '<img src="' + item.coverUrl + '" alt="' + esc(item.titel) + '" loading="lazy">';
     return '<article class="project' + (inCarousel ? ' carousel__item' : '') + '">'
       + '<a href="' + item.url + '">'
-      + '<div class="project__img"><img src="' + item.coverUrl + '" alt="' + esc(item.titel) + '" loading="lazy"></div>'
+      + '<div class="project__img">' + beeld + '</div>'
       + '<h3>' + esc(item.titel) + '</h3>' + onder
       + '</a></article>';
   }
