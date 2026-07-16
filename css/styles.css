@@ -494,6 +494,18 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 .article-body .byline{ clear:both; margin-top:var(--space-7); padding-top:var(--space-4); border-top:2px dotted currentColor; font-family:var(--font-head); font-weight:600; font-size:15px; opacity:.75 }
 .article-body .byline a{ text-decoration:underline; text-underline-offset:2px }
 
+/* Projectinformatie: compact infoblok onder een projectpagina */
+.article-body .projectinfo{ clear:both; margin-top:var(--space-7); padding-top:var(--space-5); border-top:2px dotted currentColor }
+.article-body .projectinfo h2{ margin-top:0 }
+.article-body .projectinfo dl{ display:grid; grid-template-columns:auto 1fr; gap:var(--space-3) var(--space-6); margin-top:var(--space-4) }
+.article-body .projectinfo dt{ font-family:var(--font-head); font-weight:600; opacity:.6 }
+.article-body .projectinfo dd{ margin:0 }
+.article-body .projectinfo dd a{ text-decoration:underline; text-underline-offset:2px }
+@media (max-width:600px){
+  .article-body .projectinfo dl{ grid-template-columns:1fr; gap:0 }
+  .article-body .projectinfo dt{ margin-top:var(--space-4) }
+}
+
 
 /* ============================================================
    19. RESPONSIVE & REDUCED MOTION
