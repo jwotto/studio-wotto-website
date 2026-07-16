@@ -10,9 +10,18 @@ ErrorDocument 404 /404.html
 # Google je site niet als meerdere versies ziet.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # www weg: www.studiowotto.com -> studiowotto.com
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # http -> https. De tweede voorwaarde is cruciaal: op Vimexx handelt een laag
+  # vóór de server de SSL af, waardoor Apache %{HTTPS} altijd als "off" ziet, ook
+  # bij een https-verzoek. Zonder de X-Forwarded-Proto-check stuurt hij dan https
+  # naar https door, eindeloos (redirect-loop). Nu alleen doorsturen als het
+  # verzoek echt via http binnenkwam.
   RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
