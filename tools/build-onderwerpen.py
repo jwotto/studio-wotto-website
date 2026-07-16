@@ -20,7 +20,7 @@ Welk item welk onderwerp krijgt, staat NIET hier maar in de
 """
 import json, pathlib, re, shutil, sys
 
-SITE = "https://www.studiowotto.com"
+SITE = "https://studiowotto.com"
 BASE = pathlib.Path(__file__).resolve().parent.parent
 
 # ---------------------------------------------------------------- de lijst

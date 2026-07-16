@@ -1,0 +1,49 @@
+name: Deploy naar Vimexx
+
+# Bij elke push naar main worden de sitebestanden via FTP naar Vimexx gekopieerd.
+# Zo hoef je nooit handmatig te FTP-en: pushen is publiceren.
+#
+# EENMALIG INSTELLEN: zet je Vimexx-FTP-gegevens als secrets in GitHub
+# (Settings -> Secrets and variables -> Actions -> New repository secret):
+#   FTP_SERVER    de FTP-hostnaam van Vimexx (bijv. ftp.studiowotto.com)
+#   FTP_USERNAME  je FTP-gebruikersnaam
+#   FTP_PASSWORD  je FTP-wachtwoord
+#
+# server-dir hieronder is de map op Vimexx waar de site in moet. Het FTP-account
+# admin@studiowotto.com landt al in domains/studiowotto.com/, dus daaronder is
+# de webmap public_html/. Klopt dat na de eerste deploy niet, dan land je ergens
+# anders: kijk met een FTP-programma waar je uitkomt en pas server-dir aan.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # je kunt 'm ook met de hand starten via de Actions-tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v4
+
+      - name: Naar Vimexx via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: public_html/
+          # Wat NIET mee naar de live site gaat: de dev-bestanden en bronmappen.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            README.md
+            seo-route.md
+            stijl.md
+            content-structuur.md
+            bijschriften.txt
+            _config.yml
+            tools/**
+            moodboard/**
+            oude blogs en pagina's/**

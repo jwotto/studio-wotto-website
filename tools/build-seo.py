@@ -13,7 +13,7 @@ aan, niet de HTML, anders ben je je wijziging de volgende keer kwijt.
 """
 import json, pathlib, re, sys
 
-SITE = "https://www.studiowotto.com"
+SITE = "https://studiowotto.com"
 BASE = pathlib.Path(__file__).resolve().parent.parent
 ORG = SITE + "/#organization"
 WEB = SITE + "/#website"

@@ -31,4 +31,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.studiowotto.com/sitemap.xml
+Sitemap: https://studiowotto.com/sitemap.xml

@@ -5,6 +5,17 @@
 # Kapotte link? Toon onze eigen 404 in plaats van de kale Apache-melding.
 ErrorDocument 404 /404.html
 
+# Eén adres, en beveiligd. Alles komt uit op https://studiowotto.com (zonder
+# www). www.studiowotto.com en http:// sturen door naar dat ene adres, zodat
+# Google je site niet als meerdere versies ziet.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 # Dit bestand werkt ALLEEN op Vimexx (Apache). Live Server en de
 # GitHub-preview negeren het volledig, dus het kan hier veilig staan
 # tot je live gaat.

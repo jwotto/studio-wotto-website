@@ -183,7 +183,7 @@ Op drie plekken staat hij op een ander niveau:
 ```
 Live Server        http://127.0.0.1:5500/
 GitHub Pages       https://jwotto.github.io/studio-wotto-website/
-Vimexx (straks)    https://www.studiowotto.com/
+Vimexx (straks)    https://studiowotto.com/
 ```
 
 `site.js` leidt zijn eigen locatie af uit het script-adres:
