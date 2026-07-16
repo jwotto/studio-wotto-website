@@ -8,7 +8,7 @@ include:
   - .htaccess
 
 exclude:
-  - stijl.md
+  - bijschriften.txt
   - README.md
   - seo-route.md
   - "oude blogs en pagina's"

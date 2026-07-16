@@ -107,7 +107,10 @@
     if (thumbs.length < 1) return;
     thumbs.forEach(i => i.classList.add('kanGroot'));
 
+    // Het bijschrift in de grote weergave: eerst een eigen data-cap (jouw
+    // zichtbare bijschrift), anders de figcaption van een video, anders de alt.
     const bijschrift = img => {
+      if (img.dataset.cap) return img.dataset.cap.trim();
       const fig = img.closest('figure');
       const cap = fig && fig.querySelector('figcaption');
       return (cap ? cap.textContent : img.alt || '').trim();

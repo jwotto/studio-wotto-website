@@ -114,21 +114,51 @@ Zet foto's en filmpjes in `werk/<slug>/` en draai `python tools/build.py`. Dan:
 
 - **Alles boven 1600px wordt verkleind.** Ook je cover, en juist die staat op
   elke lijstpagina. Een cameraorigineel van 7 MB werd zo 180 kB.
+- **Foto's als PNG** (die eigenlijk gewoon foto's zijn) horen JPG te worden, dat
+  scheelt tot 90%. PNG blijft alleen voor logo's en schermafdrukken, want JPG
+  maakt tekst wazig.
 - **Twee of meer ongebruikte bestanden** worden een galerij onderaan het item.
   Ongebruikt betekent: staat nog nergens in je tekst. Je zwevende foto, de
   poster van een filmpje en je `videocover` blijven er dus buiten, die zie je al.
 - **Eén los bestand** krijgt geen galerij. Het script zegt het alleen, want een
-  galerij van één foto is onzin: die hoort zwevend in je tekst en waar precies
-  kan een script niet bedenken.
+  galerij van één foto is onzin: die hoort zwevend in je tekst.
 - **Een eigen galerij blijft van jou.** Het script beheert alleen wat het zelf
   tussen zijn markers heeft neergezet.
-- **De alt-tekst komt uit de bestandsnaam.** Schrijf je zelf een betere, dan
-  blijft die staan. Noem je bestanden dus fatsoenlijk, dat scheelt je werk.
+
+**Elke foto heeft twee teksten**, twee losse dingen:
+
+- `alt="..."` — beschrijving voor Google en schermlezers. Altijd. Dit maakt je
+  vindbaar in Google Afbeeldingen. Lang en beschrijvend, zoekwoorden waar ze
+  natuurlijk passen.
+- `data-cap="..."` — kort, zichtbaar bijschrift dat je ziet als je een foto
+  aanklikt. Optioneel: leeg = valt terug op de alt.
 
 Elke foto in de tekst is aanklikbaar en gaat schermvullend open, met pijltjes,
-toetsenbord en vegen. Het bijschrift daaronder is de figcaption als die er is,
-anders de alt-tekst. Dat is dus een tweede reden om die goed te schrijven.
-Zonder JavaScript zie je gewoon je foto's, er gaat niets stuk.
+toetsenbord en vegen. Het bijschrift dat je daar ziet: eerst de `data-cap`,
+anders de figcaption van een video, anders de alt. Zonder JavaScript zie je
+gewoon je foto's, er gaat niets stuk.
+
+Wil je de bijschriften nakijken? Draai `python tools/bijschriften.py`, dat
+maakt `bijschriften.txt` met per foto de alt en de cap op een rij. Pas aan,
+laat Claude het terugzetten, en gooi het bestand daarna weer weg. Het is geen
+vaste bron (dat is de HTML), alleen een werkblad dat je op elk moment opnieuw
+maakt. Zo kan het niet verouderen.
+
+### Werkwijze bij nieuwe foto's (voor Claude)
+
+Zet Jan-Willem foto's of video's in een map, dan doet Claude dit, en **checkt
+altijd eerst bij Jan-Willem voordat het definitief is**:
+
+1. **Elke foto echt bekijken** met de Read-tool. Niet gokken wat erop staat.
+2. Verkleinen, hernoemen naar zoekwoorden, video's comprimeren + poster eruit.
+3. Een `alt` (voor Google) en een `cap` (zichtbaar) schrijven op basis van wat
+   er echt op de foto staat.
+4. `width`/`height` uit het bestand halen, niet verzinnen.
+5. **Terugkoppelen aan Jan-Willem en laten checken.** Claude kan geen namen,
+   plekken of merken verifiëren. In deze sessie ging dat een paar keer mis:
+   een verzonnen afmeting, een naam op het verkeerde gezicht, "videosynthesizer"
+   waar het een mengtafel was. Dus: Claude vult in, Jan-Willem controleert.
+   De correcties gaan via `bijschriften.txt`.
 
 ### 4. Header en footer staan op één plek
 
