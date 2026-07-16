@@ -1,5 +1,6 @@
 # WordPress-export & andere XML (privé blog-/commentdata)
 *.xml
+!sitemap.xml          # de sitemap MOET wel mee: die heeft Google nodig
 
 # Moodboard-referenties (niet van ons, alleen intern)
 moodboard/
