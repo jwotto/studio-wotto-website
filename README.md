@@ -176,15 +176,10 @@ en dan ziet hij er gewoon uit**, inclusief vormgeving.
 Relatieve paden in een partial worden bij het inladen omgerekend tegen de
 partial zelf, dus `../projecten/` klopt vanaf elke maplaag.
 
-### 5. Waarom de site overal werkt
+### 5. Waarom de site op elke plek werkt
 
-Op drie plekken staat hij op een ander niveau:
-
-```
-Live Server        http://127.0.0.1:5500/
-GitHub Pages       https://jwotto.github.io/studio-wotto-website/
-Vimexx (straks)    https://studiowotto.com/
-```
+De site draait live op `https://studiowotto.com/` (Vimexx), en jij bekijkt 'm
+lokaal met Live Server op `http://127.0.0.1:5500/`. Twee plekken, ander niveau.
 
 `site.js` leidt zijn eigen locatie af uit het script-adres:
 
@@ -192,8 +187,9 @@ Vimexx (straks)    https://studiowotto.com/
 const base = document.currentScript.src.replace(/js\/site\.js(?:\?.*)?$/, '');
 ```
 
-Daarom werken de partials, `content.json` en de covers overal. **Gebruik dus
-geen absolute paden** die met `/` beginnen: die breken op GitHub Pages.
+Daarom werken de partials, `content.json` en de covers op allebei zonder
+aanpassing. **Gebruik dus geen absolute paden** die met `/` beginnen: die zouden
+op Live Server (waar de site in een submap kan staan) breken.
 
 De enige uitzondering is `404.html`. Apache serveert die op elke kapotte URL
 terwijl het adres in de balk blijft staan, dus relatieve paden zouden daar naar
@@ -244,13 +240,14 @@ betekent en gevonden moet worden? Dán YouTube.
 **`&amp;` telt in HTML als 5 tekens**, maar Google toont er 1. Let daarop bij
 de 60-tekengrens van een titel.
 
-**`.htaccess` doet niets op Live Server en niets op GitHub Pages.** Alleen
-Apache leest het, dus alleen Vimexx. Er staan 23 redirects in van de oude
-WordPress-URL's, plus de 404.
+**`.htaccess` doet niets op Live Server.** Alleen Apache leest het, dus alleen
+Vimexx. Er staan 23 redirects in van de oude WordPress-URL's, de www- en
+https-afdwinging, plus de 404. Lokaal zie je dus nooit wat het doet; dat merk je
+pas live.
 
-**`robots.txt` telt alleen vanaf een domeinroot.** Op GitHub Pages staat hij in
-een submap en wordt hij dus nooit gelezen. Wat de preview nu uit Google houdt,
-is de `noindex` in elke pagina.
+**`robots.txt` telt alleen vanaf een domeinroot.** Op `studiowotto.com` staat
+hij op de root en wordt hij gelezen. Er staat geen `noindex` meer in de pagina's
+(die zat er alleen in tijdens de GitHub-preview, om die uit Google te houden).
 
 ---
 
@@ -290,9 +287,33 @@ Twee keer draaien geeft exact hetzelfde resultaat, dus je kunt het altijd doen.
 
 ## Online zetten
 
-Nu: elke push naar `main` gaat automatisch naar
-`jwotto.github.io/studio-wotto-website/`. Dat is een preview, en hij staat op
-`noindex`.
+De site is live op **https://studiowotto.com** (Vimexx). Publiceren is niets
+meer dan pushen:
 
-Straks: de map naar Vimexx. Zie de lanceerlijst in `seo-route.md`. Het eerste
-punt daar is de `noindex` weghalen, en zonder dat doet de rest er niet toe.
+```
+git push
+```
+
+Elke push naar `main` start `.github/workflows/deploy.yml`. Die kopieert de site
+via FTP naar Vimexx (`public_html/`). Binnen een minuut staat je wijziging
+online. Je hoeft dus nooit met de hand te FTP-en. Wil je zien of het lukte, of
+'m met de hand starten: de **Actions**-tab op GitHub.
+
+Wat NIET mee naar de live site gaat, staat in de `exclude`-lijst onderin
+`deploy.yml`: de dev-bestanden (dit README, `stijl.md`, `seo-route.md`,
+`content-structuur.md`, `bijschriften.txt`, `_config.yml`) en de bronmappen
+(`tools/`, `moodboard/`, `oude blogs en pagina's/`).
+
+**Eenmalig ingesteld, hoef je niet meer aan te komen:**
+
+- De FTP-inloggegevens staan als *secrets* in GitHub (Settings → Secrets and
+  variables → Actions): `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`. Als
+  *secret*, niet als *variable*, anders vindt de deploy ze niet.
+- `.htaccess` regelt op Vimexx de redirects van de oude WordPress-URL's, dwingt
+  `www` weg en `https` af, en wijst 404's naar `404.html`.
+- De sitemap staat aangemeld in Google Search Console als
+  `https://studiowotto.com/sitemap.xml`.
+
+Nieuw item toevoegen dat vroeger op de oude WordPress-site stond? Zet er een
+redirect-regel bij in `.htaccess` (zie de uitleg daar), anders krijgt iemand die
+de oude link volgt een 404.
