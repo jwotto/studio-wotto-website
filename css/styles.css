@@ -394,6 +394,20 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 .article-body figure video{ margin:0 }
 .article-body figcaption{ margin-top:var(--space-3); font-size:14px; opacity:.7 }
 
+/* Autoplay-video met "tik voor geluid". De video speelt vanzelf, gedempt en in
+   een lus (net als de bewegende covers op de kaarten). js/site.js zet het badge
+   erin en regelt de klik. De figure wordt de positioneer-context; het badge
+   staat in de bovenhoek van het beeld, dus los van de figcaption eronder. */
+.article-body figure.heeft-film{ position:relative }
+.article-body video.film{ cursor:pointer }
+.film-badge{ position:absolute; top:var(--space-3); right:var(--space-3);
+  display:inline-flex; align-items:center; gap:6px; padding:7px 12px;
+  border:0; border-radius:999px; background:rgba(12,12,20,.72); color:#fff;
+  cursor:pointer; font-family:var(--font-head); font-weight:600; font-size:13px;
+  line-height:1; backdrop-filter:blur(4px); box-shadow:0 2px 8px rgba(0,0,0,.28) }
+.film-badge svg{ flex:none }
+.film-badge[hidden]{ display:none }
+
 /* Video in de tekst: volle tekstbreedte. Zwevende video (float-left/right) blijft smal. */
 .article-body .video-embed{ position:relative; width:100%; margin:var(--space-6) 0; aspect-ratio:16/9; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md) }
 .article-body .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
@@ -479,6 +493,10 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 }
 @media (max-width:720px){
   .article-body .float-left, .article-body .float-right{ float:none; width:100%; max-width:100%; margin:var(--space-6) auto }
+  /* Ook een staande (9:16) video vult op mobiel de volle breedte. Zonder deze
+     regel wint de smallere .staand-regel hierboven op specificiteit en blijft
+     het filmpje op 30% hangen: een postzegeltje midden op het scherm. */
+  .article-body .float-left.staand, .article-body .float-right.staand{ width:100%; max-width:100% }
   .article-body .video-embed{ width:100%; max-width:100% }   /* filmpje altijd volle breedte en zichtbaar op mobiel */
 }
 .article-body h2{ font-size:26px; margin-top:var(--space-7) }   /* tussenkop in een lange tekst */

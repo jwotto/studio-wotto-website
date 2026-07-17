@@ -200,10 +200,91 @@
     }, { passive: true });
   }
 
+  /* ---------- Filmpjes: autoplay zonder geluid, tik voor geluid ----------
+     De projectvideo's (class="film") spelen vanzelf af, gedempt en in een lus,
+     net als de bewegende covers op de kaarten. Eén tik zet het geluid aan en
+     brengt de bediening in beeld, zodat je kunt pauzeren of terugspoelen. Wie
+     in zijn systeem minder beweging wil, krijgt geen autoplay maar de poster
+     met bediening. Zonder JavaScript speelt de video gewoon gedempt door: dat
+     is een nette terugval, geen kapotte pagina. */
+  const SPEAKER_SVG =
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">'
+    + '<path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>'
+    + '<path d="M16 9l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+  function filmpjes() {
+    const stil = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.article-body video.film').forEach(v => {
+      const fig = v.closest('figure') || v.parentElement;
+      if (fig) fig.classList.add('heeft-film');
+
+      // Minder beweging gewenst: niet automatisch spelen, wel bediening tonen.
+      if (stil) {
+        v.removeAttribute('autoplay');
+        v.controls = true;
+        v.pause();
+        return;
+      }
+
+      v.muted = true;   // borgen dat de autoplay ook op mobiel mag starten
+
+      const badge = document.createElement('button');
+      badge.type = 'button';
+      badge.className = 'film-badge';
+      badge.setAttribute('aria-label', 'Geluid aanzetten');
+      badge.innerHTML = SPEAKER_SVG + '<span>Tik voor geluid</span>';
+      if (fig) fig.appendChild(badge);
+
+      // Geluid aan + bediening erbij. Vanaf nu handelt de speler zelf klikken
+      // af (play/pauze), dus onze eigen klik-om-te-ontdempen trekt zich terug.
+      function aan() {
+        v.muted = false;
+        v.volume = 1;
+        v.controls = true;
+        v.play().catch(() => {});
+      }
+      v.addEventListener('click', () => { if (!v.controls) aan(); });
+      badge.addEventListener('click', e => { e.stopPropagation(); aan(); });
+      // Dempt iemand later weer via de eigen knop van de speler, dan komt het
+      // badge terug als hint.
+      v.addEventListener('volumechange', () => { badge.hidden = !v.muted; });
+
+      v.tabIndex = 0;
+      v.addEventListener('keydown', e => {
+        if ((e.key === 'Enter' || e.key === ' ') && !v.controls) { e.preventDefault(); aan(); }
+      });
+    });
+  }
+
+  /* ---------- Externe links in een nieuw tabblad ----------
+     Alles wat naar een andere site wijst (social media, verwijzingen, enz.)
+     opent in een nieuw tabblad, zodat de bezoeker studiowotto niet verlaat.
+     Interne links en links naar je eigen (toekomstige) studiowotto-domein
+     blijven gewoon in hetzelfde tabblad. Draait op elke <a>, ook op de links
+     uit de partials en de kaarten, dus nieuwe externe links krijgen dit
+     vanzelf: je hoeft nooit met de hand target="_blank" te typen.
+     rel="noopener noreferrer" hoort erbij: zonder dat kan de nieuwe pagina via
+     window.opener aan jouw tab zitten, en het houdt de verwijzer privé. */
+  function externeLinks() {
+    const hier = location.host;
+    document.querySelectorAll('a[href]').forEach(a => {
+      if (a.protocol !== 'http:' && a.protocol !== 'https:') return;  // mailto:, tel:, #: met rust laten
+      if (!a.host || a.host === hier) return;                         // interne link
+      if (/studiowotto/i.test(a.host)) return;                        // eigen domein telt als intern
+      if (a.target) return;                                           // al bewust ingesteld? niet overschrijven
+      a.target = '_blank';
+      const rels = new Set((a.rel || '').split(/\s+/).filter(Boolean));
+      rels.add('noopener'); rels.add('noreferrer');
+      a.rel = [...rels].join(' ');
+    });
+  }
+
   function initSite() {
     huurChip();
     byline();
     galerij();
+    filmpjes();
+    externeLinks();
     const header = document.getElementById('header');
     const toggle = document.getElementById('navToggle');
     const logo   = document.getElementById('brandLogo');
@@ -212,7 +293,7 @@
     // hash-links in header en footer terug naar de homepage.
     document.querySelectorAll('.header a[href^="#"], .footer a[href^="#"]').forEach(a => {
       const id = a.getAttribute('href').slice(1);
-      if (id && !document.getElementById(id)) a.setAttribute('href', base + 'index.html#' + id);
+      if (id && !document.getElementById(id)) a.setAttribute('href', base + '#' + id);
     });
 
     function closeMenu(){
