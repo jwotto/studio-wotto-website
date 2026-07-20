@@ -25,6 +25,33 @@ ErrorDocument 404 /404.html
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
+# ============================================================
+# Cache: wat mag de browser bewaren, en hoe lang?
+# ============================================================
+# Zonder deze regels verzint de browser het zelf, en die vuistregel is grofweg
+# "hoe ouder het bestand, hoe langer ik het bewaar". Daardoor zie je na een
+# aanpassing uren later nog de oude versie, en op een telefoon kun je dat niet
+# even met Ctrl+F5 forceren.
+#
+# HTML, CSS, JS en content.json: no-cache. Dat betekent niet "niet bewaren",
+# maar "bewaren en elke keer even navragen of er iets nieuws is". De server
+# antwoordt dan meestal met een kaal "niks veranderd" van een paar honderd
+# bytes. Je ziet dus altijd meteen de laatste versie, en het kost bijna niets.
+#
+# Foto's en filmpjes: een week bewaren zonder navragen. Die zijn zwaar en
+# wijzigen zelden. Vervang je er toch een onder dezelfde naam, dan ziet een
+# terugkerende bezoeker dat binnen een week vanzelf. Wil je het meteen: geef het
+# nieuwe bestand een andere naam, wat toch al de gewoonte is omdat de
+# bestandsnaam je zoekwoorden bevat.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js|json|xml)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|webm|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
 # Dit bestand werkt ALLEEN op Vimexx (Apache). Live Server en de
 # GitHub-preview negeren het volledig, dus het kan hier veilig staan
 # tot je live gaat.
