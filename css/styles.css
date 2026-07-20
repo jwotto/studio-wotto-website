@@ -199,9 +199,9 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
    8. KAARTEN  (diensten + blogs): transparant + outline
    ============================================================ */
 .grid{ display:grid; gap:var(--space-6); grid-template-columns:repeat(auto-fit,minmax(270px,1fr)) }
-/* Vaste twee kolommen, en onder de 768px alles onder elkaar. Voor rijtjes met
-   een klein, vast aantal kaarten (Wat we doen), waar auto-fit een scheve rij
-   van 3+1 zou maken. De projectrasters blijven gewoon .grid gebruiken. */
+/* Vaste twee kolommen, en onder de 768px alles onder elkaar. Voor rijtjes van
+   precies twee blokken (Kom langs op de contactpagina), waar auto-fit ze bij
+   een breed scherm uit elkaar zou trekken. De rest gebruikt gewoon .grid. */
 .grid--two{ grid-template-columns:1fr }
 @media (min-width:768px){ .grid--two{ grid-template-columns:repeat(2,1fr) } }
 .list-empty{ margin:0; font-size:var(--text-md); opacity:.85 }   /* lijst zonder resultaten */
@@ -339,6 +339,9 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 
 /* Klein 'Talks & workshops'-strookje onder de 3 pijlers (in de blauwe sectie) */
 .workshops-note{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--space-4); margin-top:var(--space-7); padding-top:var(--space-6); border-top:2px dotted currentColor }
+/* Twee strookjes onder elkaar (huren + workshops) hoeven niet allebei de volle
+   ruimte erboven: de stippellijn scheidt ze al. */
+.workshops-note + .workshops-note{ margin-top:var(--space-5) }
 .workshops-note h3{ font-size:20px }
 .workshops-note p{ margin:6px 0 0; opacity:.9; max-width:52ch }
 
@@ -370,7 +373,19 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 /* ============================================================
    17. ZWEVENDE DECORATIE  (game/muziek-iconen, monochroom)
    ============================================================ */
-.deco{ position:absolute; z-index:0; pointer-events:none; display:inline-block; line-height:1; color:inherit; opacity:.9; transition:transform .7s var(--ease-bounce); will-change:transform }
+.deco{ position:absolute; z-index:0; pointer-events:none; display:inline-block; line-height:1; color:inherit; opacity:.9; transition:transform .7s var(--ease-bounce), opacity .25s linear; will-change:transform }
+/* js/site.js meet na of een icoon tegen tekst of beeld aan komt en zet deze
+   klasse erop. Weghalen mag niet met display:none: dan wordt het icoon 0 bij 0
+   groot, meet het script daarna "geen botsing" en knippert hij aan en uit. */
+.deco--weg{ opacity:0 }
+
+/* Variant: het icoon hangt aan de kop in plaats van aan de rand van de sectie.
+   De kop wordt daarvoor inline-block, zodat zijn vak om de tekst heen sluit en
+   het icoon er altijd náást staat, hoe breed het scherm ook is. De maat is een
+   em, dus hij krimpt mee met de kop. Deze variant slaat de botsingscontrole in
+   site.js over: hij hangt aan de tekst en kan er dus niet achter belanden. */
+h2.kop-deco{ position:relative; display:inline-block }
+.deco--kop{ position:absolute; left:100%; top:.12em; margin-left:.34em; font-size:.78em }
 
 
 /* ============================================================
@@ -386,12 +401,25 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 .article-body{ max-width:var(--content-max); margin-inline:auto }
 .article-body .lead{ margin-top:var(--space-4) }
 .article-body img{ display:block; width:100%; max-width:460px; margin:var(--space-6) auto; border-radius:var(--radius-lg); box-shadow:var(--shadow-md) }
+/* Is er maar één beeld, dan hoort het over de volle breedte. Op 460px staat het
+   gecentreerd met lucht links en rechts, en dat is precies de lege plek die we
+   niet willen. Zet 'vol' op zo'n losse foto. Beeld in een galerij en zwevend
+   beeld houden hun eigen maat. */
+.article-body img.vol{ max-width:100% }
+/* Een losse foto in de kolom (dus zonder float-klasse) moet onder een zwevend
+   beeld door. Raakt hij het nog net, dan wordt zijn regel versmald en staat hij
+   niet meer midden in de kolom maar een stuk naar links. Niet op [class] testen:
+   site.js hangt er voor de lightbox zelf een klasse aan. */
+.article-body > img:not(.float-left):not(.float-right){ clear:both }
 /* Zelf gehoste video (<video>, geen embed van YouTube of Vimeo). Krijgt dezelfde
    behandeling als een foto. Scheelt tientallen verzoeken naar een ander domein,
    en zonder poster+preload="none" kost hij niets tot iemand op play drukt. */
 .article-body video{ display:block; width:100%; height:auto; margin:var(--space-6) 0; border-radius:var(--radius-lg); box-shadow:var(--shadow-md); background:var(--ink) }
 .article-body figure{ margin:var(--space-6) 0 }
 .article-body figure video{ margin:0 }
+/* Zit er een foto in een figure, dan regelt de figure de ruimte eromheen al.
+   Zonder dit zou de eigen marge van de foto een gat maken onder het bijschrift. */
+.article-body figure img{ margin:0 }
 .article-body figcaption{ margin-top:var(--space-3); font-size:14px; opacity:.7 }
 
 /* Autoplay-video met "tik voor geluid". De video speelt vanzelf, gedempt en in
@@ -407,6 +435,12 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
   line-height:1; backdrop-filter:blur(4px); box-shadow:0 2px 8px rgba(0,0,0,.28) }
 .film-badge svg{ flex:none }
 .film-badge[hidden]{ display:none }
+/* In een galerij op een breed scherm opent een tik het beeld schermvullend, en
+   daar zit de bediening en het geluid al. Deze knop is dan overbodig. Op een
+   smal scherm is er geen schermvullende weergave, dus daar blijft hij staan. */
+@media (min-width:721px){
+  .article-body .gallery .film-badge{ display:none }
+}
 
 /* Video in de tekst: volle tekstbreedte. Zwevende video (float-left/right) blijft smal. */
 .article-body .video-embed{ position:relative; width:100%; margin:var(--space-6) 0; aspect-ratio:16/9; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md) }
@@ -428,9 +462,57 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 /* Zwevende foto's zijn vierkant, net als de projectkaarten (stijl.md) */
 .article-body img.float-left, .article-body img.float-right{ aspect-ratio:1/1; object-fit:cover }
 
-/* Extra foto's onderaan, naast elkaar over de volle breedte */
-.article-body .gallery{ clear:both; display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:var(--space-7) }
+/* Extra foto's onderaan. Twee naast elkaar, want bij meer worden het
+   postzegels en zie je van een foto niets meer terug. */
+.article-body .gallery{ clear:both; display:grid; gap:var(--space-4); grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:var(--space-7) }
+/* Behalve bij een oneven aantal: dan zouden twee kolommen er één alleen laten
+   staan op de laatste rij, en dat oogt als een vergissing. Bij drie beelden
+   passen ze samen op één rij. De eis "minstens drie" moet er echt bij staan:
+   anders geldt dit ook voor één losse foto, en die regel wint dan van de regel
+   daaronder omdat :has() de zwaarte van zijn zwaarste argument overneemt.
+   Om diezelfde reden moet .gallery--kolommen hier expliciet buiten blijven. Die
+   deelt zijn rijen zelf in, maar werd door deze regel (zwaarder door dat tweede
+   :has()) alsnog op drie kolommen gezet. De staande foto pakte dan de middelste
+   kolom over twee rijen en links en rechts bleef de tweede rij leeg.
+   Tel hier exact drie. Deed je dat op "oneven", dan pakte deze regel ook een
+   galerij van vijf, en omdat hij door zijn tweede :has() zwaarder is dan de
+   vijf-regel hieronder won hij daar: drie kolommen, terwijl de tegels nog drie
+   en twee kolommen wilden spannen. Dat past niet, dus viel elke tegel op zijn
+   eigen regel links uitgelijnd. */
+.article-body .gallery:not(.gallery--kolommen):not(.gallery--opmaat):has(> :nth-child(3)):not(:has(> :nth-child(4))){ grid-template-columns:repeat(3,minmax(0,1fr)) }
+/* Bij vijf zou zelfs dat een halve rij overlaten. Die puzzelen we: twee groot
+   op de bovenste rij, drie kleiner eronder. Allebei de rijen zijn dan vol en
+   het blok sluit onderaan gelijk af. Het raster telt daarvoor zes kolommen,
+   waarin een half beeld er drie pakt en een derde beeld er twee. */
+.article-body .gallery:not(.gallery--kolommen):has(> :nth-child(5)):not(:has(> :nth-child(6))){ grid-template-columns:repeat(6,minmax(0,1fr)) }
+.article-body .gallery:not(.gallery--kolommen):has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(-n+2){ grid-column:span 3 }
+.article-body .gallery:not(.gallery--kolommen):has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(n+3){ grid-column:span 2 }
+/* Staat er beeld van verschillende vorm in één rij, dan wordt het minst slanke
+   beeld korter dan zijn buren en valt er een gat onder. Bijsnijden doen we niet,
+   dus lossen we het op met de kolombreedte: geef elk beeld een kolom zo breed
+   als zijn eigen verhouding. Dan worden alle tegels even hoog en loopt de rij
+   toch precies vol. De fr-waarden in --kolommen zijn simpelweg breedte/hoogte
+   van elk beeld, dus 720x1280 wordt 0.5625fr en 1066x1600 wordt 0.666fr. */
+.article-body .gallery--opmaat{ grid-template-columns:var(--kolommen) }
+/* Twee galerijen onder elkaar horen als één blok te lezen. Dan geen grote
+   sectie-afstand ertussen, maar dezelfde tussenruimte als tussen de tegels. */
+.article-body .gallery + .gallery{ margin-top:var(--space-4) }
 .article-body .gallery img{ width:100%; max-width:none; height:auto; margin:0 }
+/* Een figure heeft normaal ruimte boven en onder. In een galerij niet: dan zou
+   een filmpje 32px lager beginnen dan de foto's ernaast en staat de rij scheef. */
+.article-body .gallery figure{ margin:0 }
+/* Geen tekst onder de tegels. Het bijschrift lees je pas als je een beeld
+   openklikt, in de schermvullende weergave. In het raster zou het ook de tegels
+   ongelijk hoog maken zodra niet elk beeld er een heeft. Op de telefoon ligt het
+   andersom: daar staat elk beeld over de volle breedte en is er geen
+   schermvullende weergave, dus daar zetten we het bijschrift juist wel onder het
+   beeld. Zie de media query onderaan dit blok. */
+.article-body .gallery figcaption{ display:none }
+
+/* Foto's houden hun eigen verhouding: niets wordt in een vierkant geperst.
+   Daarom hoort in één galerij materiaal van dezelfde vorm. Loopt een set door
+   elkaar (liggend én staand), gebruik dan .gallery--kolommen hieronder: daar
+   krijgt de staande foto een eigen kolom en sluit het blok alsnog gelijk af. */
 
 /* ---- Klik een foto en zie hem groot. js/site.js pakt elke <img> in de tekst,
    dus de opmaak hierboven verandert niet: alles blijft staan waar het staat.
@@ -480,12 +562,30 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
    een gat tussen de liggende foto's. Door de foto absoluut in een lege div te
    zetten telt hij niet meer mee: de liggende bepalen de hoogte, en de staande
    vult op wat er is. */
+/* Deze indeling deelt zijn eigen rijen in en regelt zijn eigen hoogtes: dus
+   altijd twee kolommen, ook bij een oneven aantal, en geen vast vak per foto.
+   De puzzelregels hierboven laten deze galerij nu met rust (:not), dus hier is
+   één selector genoeg. */
 .article-body .gallery--kolommen{ grid-template-columns:1fr 1fr }
+.article-body .gallery--kolommen img{ aspect-ratio:auto }
 .article-body .gallery--kolommen .hoog{ grid-row:span 2; position:relative; overflow:hidden;
   border-radius:var(--radius-lg); box-shadow:var(--shadow-md) }
 .article-body .gallery--kolommen .hoog img{ position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; border-radius:0; box-shadow:none }
 @media (max-width:720px){
+  /* Op een telefoon krijgt elke galerij één kolom: foto's over de volle breedte
+     onder elkaar. Naast elkaar zouden ze postzegels worden, en juist bij een
+     staande foto valt er dan niets meer te zien. En omdat er niets meer naast
+     staat hoeft er ook niets meer bijgesneden te worden: je ziet de hele foto. */
+  /* Let op: dezelfde selectors als hierboven, anders wint de regel voor drie
+     kolommen hier alsnog. Die is specifieker geworden door zijn tweede :has(). */
+  .article-body .gallery,
+  .article-body .gallery:not(.gallery--kolommen):not(.gallery--opmaat):has(> :nth-child(3)):not(:has(> :nth-child(4))),
+  .article-body .gallery:not(.gallery--kolommen):has(> :nth-child(5)):not(:has(> :nth-child(6))){ grid-template-columns:1fr }
+  .article-body .gallery > *{ grid-column:auto !important }
+  /* Volle breedte en geen schermvullende weergave, dus hier hoort het bijschrift
+     gewoon onder het beeld te staan. */
+  .article-body .gallery figcaption{ display:block }
   .article-body .gallery--kolommen{ grid-template-columns:1fr }
   .article-body .gallery--kolommen .hoog{ grid-row:auto; position:static; box-shadow:none; border-radius:0 }
   .article-body .gallery--kolommen .hoog img{ position:static; height:auto;

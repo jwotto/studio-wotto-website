@@ -8,7 +8,8 @@ JIJ SLEEPT FOTO'S EN FILMPJES IN werk/<slug>/, DIT DOET DE REST:
 
   1. Elke foto breder dan 1600px wordt verkleind. Een cameraorigineel is zo
      7 MB, en dat wil je niet op een kaartje van 340px. Dit gebeurt altijd,
-     ook bij je cover.
+     ook bij je cover. Staande telefoonfoto's worden meteen rechtgezet: die
+     zijn vaak liggend opgeslagen met alleen een EXIF-vlaggetje erbij.
   2. Staan er twee of meer bestanden die nergens in je tekst gebruikt worden,
      dan komt er onderaan een galerij. Wat er niet in komt: de foto die al
      zwevend in je tekst staat, de poster van een filmpje, en de video van je
@@ -65,7 +66,7 @@ def bestaande_alts(html):
 
 def main():
     try:
-        from PIL import Image
+        from PIL import Image, ImageOps
     except ImportError:
         print("!! Pillow ontbreekt: pip install pillow")
         return 1
@@ -80,7 +81,14 @@ def main():
             if p.suffix.lower() not in BEELD:
                 continue
             im = Image.open(p)
-            if im.width <= MAX_BREED and im.height <= MAX_BREED:
+            # Een staande telefoonfoto is vaak liggend opgeslagen met een
+            # EXIF-vlaggetje "draai me nog even". Bij het opslaan hieronder gaat
+            # dat vlaggetje verloren en zou de foto voorgoed op zijn kant liggen.
+            # Dus draaien we de pixels zelf, dan klopt ook width/height meteen.
+            gedraaid = ImageOps.exif_transpose(im)
+            draait = gedraaid.size != im.size
+            im = gedraaid
+            if im.width <= MAX_BREED and im.height <= MAX_BREED and not draait:
                 continue
             kb0 = p.stat().st_size / 1024
             if p.suffix.lower() in (".jpg", ".jpeg"):

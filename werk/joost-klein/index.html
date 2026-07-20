@@ -121,6 +121,49 @@
 
       <p>Ik ben trots dat deze stage prop op het Pukkelpop podium heeft gestaan. Zo word ik langzaam bekend als die guy die iets met muziek en technologie doet.</p>
 
+      <!-- Twee rijen die samen één blok vormen (de galerijen sluiten met
+           .gallery + .gallery op elkaar aan). Bovenste rij: twee 9:16-beelden,
+           dus gewoon twee gelijke kolommen. De 3D-render heeft geen geluid, dus
+           geen class="film": die zou er een tik-voor-geluid-knop aan hangen en
+           daar zit niets op. -->
+      <div class="gallery">
+        <figure>
+          <video src="joost-klein-boksbeugel-3d-ontwerp.mp4" poster="joost-klein-boksbeugel-3d-ontwerp-poster.jpg"
+                 width="720" height="1280" autoplay loop muted playsinline preload="metadata"></video>
+          <figcaption>Twee varianten in Fusion 360, voordat er iets geprint is.</figcaption>
+        </figure>
+        <figure>
+          <img src="joost-klein-boksbeugel-op-microfoonstandaard.jpg" width="901" height="1600" loading="lazy" decoding="async"
+               alt="De 3D-geprinte boksbeugel om een Shure-microfoon op een standaard, met een tweede exemplaar om de statiefbuis geklikt"
+               data-cap="Twee exemplaren, een om de microfoon en een om de standaard">
+          <figcaption>Twee exemplaren, een om de microfoon en een om de standaard.</figcaption>
+        </figure>
+      </div>
+
+      <!-- Tweede rij: twee video's en de podiumfoto. Die foto is 2:3 en dus
+           minder slank dan de 9:16-video's, dus krijgt hij een bredere kolom.
+           Zo worden alle drie de tegels even hoog en loopt de rij precies vol,
+           zonder dat er iets bijgesneden wordt. De fr-waarden zijn gewoon
+           breedte/hoogte per beeld: 720/1280 = 0.5625 en 1066/1600 = 0.666. -->
+      <div class="gallery gallery--opmaat" style="--kolommen:0.5625fr 0.5625fr 0.666fr">
+        <figure>
+          <video src="joost-klein-boksbeugel-zwart-gelakt.mp4" poster="joost-klein-boksbeugel-zwart-gelakt-poster.jpg"
+                 width="720" height="1280" autoplay loop muted playsinline preload="metadata" class="film"></video>
+          <figcaption>Hoogglans zwart gelakt, laag voor laag opgebouwd.</figcaption>
+        </figure>
+        <figure>
+          <video src="joost-klein-boksbeugel-op-de-microfoon.mp4" poster="joost-klein-boksbeugel-op-de-microfoon-poster.jpg"
+                 width="720" height="1280" autoplay loop muted playsinline preload="metadata" class="film"></video>
+          <figcaption>En zo klikt hij om de microfoon.</figcaption>
+        </figure>
+        <figure>
+          <img src="joost-klein-pukkelpop-microfoon-boksbeugel.jpg" width="1066" height="1600" loading="lazy" decoding="async"
+               alt="Joost Klein op het podium van Pukkelpop, met de zwarte 3D-geprinte boksbeugel om zijn microfoon geklikt"
+               data-cap="Op het podium van Pukkelpop">
+          <figcaption>Op het podium van Pukkelpop.</figcaption>
+        </figure>
+      </div>
+
       <p class="credit">📸 Pukkelpop-foto's door Jente Vanbrabant</p>
       <!-- Projectinformatie: compact infoblok voor lezer en zoekmachine -->
       <section class="projectinfo" aria-label="Projectinformatie">

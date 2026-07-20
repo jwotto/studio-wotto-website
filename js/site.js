@@ -97,23 +97,55 @@
     body.appendChild(p);
   }
 
-  /* ---------- Klik een foto, blader er schermvullend doorheen ----------
-     Pakt elke <img> in de tekst, in de volgorde waarin ze staan. De opmaak
-     verandert dus niet: alles blijft staan waar het staat. Werkt JavaScript
-     niet, dan zie je gewoon de foto's zoals altijd.
-     Het bijschrift is de figcaption als die er is, anders de alt-tekst. */
-  function galerij() {
-    const thumbs = [...document.querySelectorAll('.article-body img')];
-    if (thumbs.length < 1) return;
-    thumbs.forEach(i => i.classList.add('kanGroot'));
+  /* ---------- Bijschrift onder een tegel ----------
+     In het raster staat geen tekst onder de tegels, maar op een smal scherm
+     staat elk beeld over de volle breedte en hoort het bijschrift er gewoon
+     onder. Die tekst staat al in data-cap (die de schermvullende weergave ook
+     gebruikt), dus die hoef je niet een tweede keer in de HTML te zetten: hier
+     komt er een figure met figcaption omheen. De CSS bepaalt wanneer je hem
+     ziet, dus in het raster blijft hij verborgen. Filmpjes hebben hun figcaption
+     al in de HTML staan en worden overgeslagen. */
+  function tegelBijschriften() {
+    document.querySelectorAll('.article-body .gallery img[data-cap]').forEach(img => {
+      if (img.closest('figure')) return;            // heeft er al een
+      const tekst = img.dataset.cap.trim();
+      if (!tekst) return;
+      const fig = document.createElement('figure');
+      const cap = document.createElement('figcaption');
+      cap.textContent = tekst;
+      img.parentNode.insertBefore(fig, img);
+      fig.appendChild(img);
+      fig.appendChild(cap);
+    });
+  }
 
-    // Het bijschrift in de grote weergave: eerst een eigen data-cap (jouw
-    // zichtbare bijschrift), anders de figcaption van een video, anders de alt.
-    const bijschrift = img => {
-      if (img.dataset.cap) return img.dataset.cap.trim();
-      const fig = img.closest('figure');
+  /* ---------- Klik een foto, blader er schermvullend doorheen ----------
+     Pakt elke <img> in de tekst plus de filmpjes die in een galerij staan, in de
+     volgorde waarin ze staan. Foto's en filmpjes zitten dus in dezelfde reeks:
+     je bladert er in één keer doorheen. De opmaak verandert niet, alles blijft
+     staan waar het staat. Werkt JavaScript niet, dan zie je gewoon de beelden.
+     Hier hoort ook het bijschrift thuis: in het raster staat er geen tekst onder
+     de tegels, die lees je pas als je een beeld openklikt.
+     Zwevende filmpjes in de lopende tekst blijven erbuiten, die houden hun eigen
+     "tik voor geluid". */
+  function galerij() {
+    const thumbs = [...document.querySelectorAll('.article-body img, .article-body .gallery video')];
+    if (thumbs.length < 1) return;
+
+    // Op een telefoon staat elk beeld al over de volle breedte, met het
+    // bijschrift er gewoon onder. Schermvullend bladeren voegt daar niets toe,
+    // dus daar zetten we deze weergave uit. Let op: niet één keer bij het laden
+    // kijken, maar meeluisteren. Draai je je telefoon of sleep je je venster
+    // smaller, dan gaat hij alsnog uit (en andersom weer aan).
+    const smal = window.matchMedia('(max-width:720px)');
+
+    // Het bijschrift in de grote weergave: eerst een eigen data-cap, anders de
+    // figcaption uit de figure eromheen, anders de alt-tekst.
+    const bijschrift = el => {
+      if (el.dataset.cap) return el.dataset.cap.trim();
+      const fig = el.closest('figure');
       const cap = fig && fig.querySelector('figcaption');
-      return (cap ? cap.textContent : img.alt || '').trim();
+      return (cap ? cap.textContent : el.alt || '').trim();
     };
 
     const box = document.createElement('div');
@@ -138,15 +170,25 @@
 
     function toon(i) {
       nu = (i + thumbs.length) % thumbs.length;
-      const img = thumbs[nu];
-      const t = bijschrift(img);
-      figuur.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="' + esc(img.alt || '') + '">';
+      const el = thumbs[nu];
+      const t = bijschrift(el);
+      if (el.tagName === 'VIDEO') {
+        // Schermvullend wil je het filmpje echt kunnen horen en terugspoelen,
+        // dus hier mét bediening en geluid. In het raster speelt hij gedempt.
+        const poster = el.getAttribute('poster');
+        figuur.innerHTML = '<video src="' + esc(el.getAttribute('src')) + '"'
+          + (poster ? ' poster="' + esc(poster) + '"' : '')
+          + ' controls autoplay playsinline></video>';
+      } else {
+        figuur.innerHTML = '<img src="' + el.getAttribute('src') + '" alt="' + esc(el.alt || '') + '">';
+      }
       tekst.textContent = t;
       teller.textContent = (nu + 1) + ' / ' + thumbs.length;
       vorige.disabled = volgende.disabled = thumbs.length < 2;
     }
 
     function open(i, trigger) {
+      if (smal.matches) return;      // smal scherm: alles staat al vullend
       vanwaar = trigger;
       box.hidden = false;
       document.body.style.overflow = 'hidden';
@@ -161,13 +203,25 @@
       if (vanwaar) vanwaar.focus();          // terug naar de foto waar je vandaan kwam
     }
 
-    thumbs.forEach((img, i) => {
-      img.addEventListener('click', () => open(i, img));
-      // ook bereikbaar zonder muis
-      img.tabIndex = 0;
-      img.setAttribute('role', 'button');
-      img.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i, img); }
+    // Aan of uit, afhankelijk van de schermbreedte. Is er niets te openen, dan
+    // ook geen klikbare cursor, geen tabstop en geen knop-rol voor een
+    // schermlezer: anders beloof je iets wat niet gebeurt.
+    function stemAf() {
+      const uit = smal.matches;
+      thumbs.forEach(el => {
+        el.classList.toggle('kanGroot', !uit);
+        if (uit) { el.removeAttribute('role'); el.removeAttribute('tabindex'); }
+        else { el.setAttribute('role', 'button'); el.tabIndex = 0; }
+      });
+      if (uit && !box.hidden) sluit();   // stond hij open, dan gaat hij dicht
+    }
+    stemAf();
+    smal.addEventListener('change', stemAf);
+
+    thumbs.forEach((el, i) => {
+      el.addEventListener('click', () => open(i, el));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i, el); }
       });
     });
     vorige.addEventListener('click', () => toon(nu - 1));
@@ -214,6 +268,7 @@
 
   function filmpjes() {
     const stil = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const smal = window.matchMedia('(max-width:720px)');
     document.querySelectorAll('.article-body video.film').forEach(v => {
       const fig = v.closest('figure') || v.parentElement;
       if (fig) fig.classList.add('heeft-film');
@@ -227,6 +282,13 @@
       }
 
       v.muted = true;   // borgen dat de autoplay ook op mobiel mag starten
+
+      // Staat het filmpje in een galerij, dan opent een tik op een breed scherm
+      // de schermvullende weergave en zit daar de bediening én het geluid al.
+      // Deze knop is daar dus overbodig; de CSS verbergt hem boven 720px. Op een
+      // smal scherm is er geen schermvullende weergave, dus daar blijft hij
+      // staan en is dit de enige manier om het filmpje te horen.
+      const inGalerij = !!v.closest('.gallery');
 
       const badge = document.createElement('button');
       badge.type = 'button';
@@ -243,7 +305,12 @@
         v.controls = true;
         v.play().catch(() => {});
       }
-      v.addEventListener('click', () => { if (!v.controls) aan(); });
+      // In een galerij op een breed scherm is de klik van de schermvullende
+      // weergave, niet van ons: dan hier niets doen.
+      v.addEventListener('click', () => {
+        if (inGalerij && !smal.matches) return;
+        if (!v.controls) aan();
+      });
       badge.addEventListener('click', e => { e.stopPropagation(); aan(); });
       // Dempt iemand later weer via de eigen knop van de speler, dan komt het
       // badge terug als hint.
@@ -282,6 +349,7 @@
   function initSite() {
     huurChip();
     byline();
+    tegelBijschriften();   // vóór galerij(): die pakt de tegels zoals ze dan staan
     galerij();
     filmpjes();
     externeLinks();
@@ -333,13 +401,72 @@
       decos.forEach((d, i) => {
         const dir = (i % 2) ? 1 : -1;
         const rot = y * (0.22 + (i % 4) * 0.05) * dir;
-        d.style.transition = 'none';
+        d.style.transition = 'opacity .25s linear';   // draaien volgt de scroll direct, faden mag wel zacht
         d.style.transform = 'rotate(' + rot.toFixed(1) + 'deg)';
       });
       clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
-        decos.forEach(d => { d.style.transition = 'transform .7s var(--ease-bounce)'; d.style.transform = 'rotate(0deg)'; });
+        decos.forEach(d => { d.style.transition = 'transform .7s var(--ease-bounce), opacity .25s linear'; d.style.transform = 'rotate(0deg)'; });
       }, 130);
+    }
+
+    /* Zwevende figuurtjes gaan nooit achter de inhoud staan
+       -----------------------------------------------------
+       Een icoon staat absoluut geplaatst in procenten van zijn sectie, maar de
+       tekst zit in een container van maximaal 1200px. Op een breed scherm valt
+       left:6% dus in de lege marge ernaast. Maak je het venster smaller, dan is
+       die marge op en schuift de tekst onder het icoon. Een vaste breakpoint
+       zou een gok zijn: de ene sectie is breder dan de andere, en de logoband
+       bij de klanten loopt op elk formaat van rand tot rand. Dus meten we het
+       na. Overlapt een icoon een inhoudsblok, dan faden we hem weg; is er weer
+       ruimte, dan komt hij terug.
+       Draait bij het laden, na het inladen van de kaarten en bij resize. Niet
+       bij scrollen: dan verschuift het beeld, niet de indeling. */
+    const DECO_LUCHT = 10;   // pixels ademruimte die een icoon om zich heen wil
+    const DECO_BOTST = 'h1,h2,h3,h4,p,li,dl,figure,img,video,.btn,.chip,.card,.project,.carousel__viewport,.clients';
+    const DECO_TEKST = /^(H1|H2|H3|H4|P|LI|DL)$/;
+    // Een kop of alinea is een blok zo breed als de container, ook als er maar
+    // twee woorden in staan of als de tekst gecentreerd is. Zouden we dat blok
+    // meten, dan zou een icoon naast "Onze projecten" al botsen met de lege
+    // helft ernaast. Daarom meten we bij tekst de regels zelf (getClientRects
+    // geeft de regelvakken) en alleen bij beeld en kaarten het hele element.
+    function vakken(el){
+      if (DECO_TEKST.test(el.tagName)){
+        const r = document.createRange();
+        r.selectNodeContents(el);
+        return [...r.getClientRects()];
+      }
+      return [el.getBoundingClientRect()];
+    }
+    function checkDecos(){
+      if (!decos.length) return;
+      // De golfranden hangen met translateY boven hun eigen sectie uit en liggen
+      // dus in de sectie erbóven; de header ligt over de hero heen. Allebei niet
+      // te vinden binnen de sectie van het icoon, dus die meten we apart.
+      const vast = [...document.querySelectorAll('.wave-top'), header]
+        .filter(Boolean).map(el => el.getBoundingClientRect());
+      const perSectie = new Map();
+      decos.forEach(d => {
+        if (d.classList.contains('deco--kop')) return;   // hangt aan de kop, botst nooit
+        const sec = d.closest('.section');
+        if (!sec) return;
+        if (!perSectie.has(sec)){
+          perSectie.set(sec, [...sec.querySelectorAll(DECO_BOTST)]
+            .flatMap(vakken)
+            .filter(r => r.width > 0 && r.height > 0)
+            .concat(vast));
+        }
+        // Het icoon draait mee met de scroll, en een gedraaid vierkant heeft een
+        // grotere omhullende rechthoek. We rekenen daarom terug naar het
+        // ongedraaide vak rond het middelpunt: anders zou hetzelfde icoon bij de
+        // ene scrollstand wel botsen en bij de andere niet.
+        const b = d.getBoundingClientRect();
+        const mx = (b.left + b.right) / 2, my = (b.top + b.bottom) / 2;
+        const hw = d.offsetWidth / 2 + DECO_LUCHT, hh = d.offsetHeight / 2 + DECO_LUCHT;
+        const botst = perSectie.get(sec).some(o =>
+          mx - hw < o.right && mx + hw > o.left && my - hh < o.bottom && my + hh > o.top);
+        d.classList.toggle('deco--weg', botst);
+      });
     }
 
     // Mobiel: header verbergt bij scrollen omlaag, verschijnt bij omhoog
@@ -360,8 +487,21 @@
     addEventListener('scroll', () => {
       if (!ticking){ ticking = true; requestAnimationFrame(() => { if (header && header.classList.contains('nav-open')) closeMenu(); syncHeader(); updateHeaderVisibility(); spinDecos(); ticking = false; }); }
     }, {passive:true});
-    addEventListener('resize', () => { syncHeader(); updateHeaderVisibility(); });
+    // Resize meet de iconen opnieuw na: precies bij het slepen van je venster
+    // schuift de tekst onder ze door. Via requestAnimationFrame, zodat we bij
+    // het slepen één keer per beeld meten in plaats van per resize-event.
+    let decoTicking = false;
+    addEventListener('resize', () => {
+      syncHeader();
+      updateHeaderVisibility();
+      if (!decoTicking){ decoTicking = true; requestAnimationFrame(() => { checkDecos(); decoTicking = false; }); }
+    });
     syncHeader();
+    checkDecos();
+    // Nog een keer als alle foto's binnen zijn: die kunnen de indeling nog
+    // verschuiven nadat het script al gedraaid heeft.
+    addEventListener('load', checkDecos);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkDecos);
 
     // Carousels - pijltjes scrollen per kaart; verbergen als alles al past
     document.querySelectorAll('.carousel').forEach(car => {

@@ -231,6 +231,96 @@ iconografie.
   SHAPES, de toetsen-illustratie). Fills blijven vlak; een speelse, verzadigde
   slagschaduw of gekleurde rand mag, maar géén pastel verloop.
 
+### Foto's in een artikel: galerijen
+
+**De hoofdregel: een galerij is altijd een vullend vlak.** Nooit een gat, nooit
+een halve rij, nooit één losse foto die gecentreerd in de kolom staat met lucht
+links en rechts. Onderaan sluit het blok gelijk af.
+
+**Nooit de verhouding van een foto aanpassen.** Beeld houdt zijn eigen vorm. Niet
+bijsnijden en niet in een vierkant persen om een rij vol te krijgen. Komt een rij
+niet uit, dan los je dat op met de *indeling*, niet met de vorm van het beeld.
+
+**Video's tellen gewoon mee als beeld.** Een filmpje is in een galerij een tegel
+zoals elke andere: het telt mee voor het aantal en het moet dezelfde vorm hebben
+als de foto's ernaast, anders loopt de rij scheef. Een video in een `<figure>`
+met bijschrift telt als één tegel.
+
+**In het raster staat geen tekst onder de tegels.** Het bijschrift lees je pas
+als je een beeld openklikt en het schermvullend te zien krijgt. Zo blijft het
+raster rustig, en het scheelt gedoe: een bijschrift maakt een tegel hoger, dus
+een beeld mét tekst naast een beeld zonder tekst zou meteen weer een gat geven.
+
+**Foto's en filmpjes zitten in dezelfde schermvullende reeks.** Klik je een tegel
+open, dan blader je door alles heen, ook door de video's. Een video speelt daar
+mét bediening en geluid; in het raster speelt hij gedempt door.
+
+**Op de telefoon werkt het andersom.** Daar staat elk beeld al over de volle
+breedte, dus schermvullend openen voegt niets toe en die weergave is er ook niet.
+Het bijschrift staat daar gewoon onder het beeld.
+
+In de praktijk hoef je hier weinig voor te doen. Zet op een foto gewoon je
+`data-cap`, zoals je toch al deed: de site maakt daar zelf het bijschrift van,
+zowel schermvullend als op de telefoon. Bij een filmpje zet je de tekst als
+`<figcaption>` in de `<figure>`, want daar hoort hij ook in de HTML thuis.
+
+Zo puzzel je:
+
+- **Liefst twee naast elkaar.** Dat is de standaard. Bij meer worden het
+  postzegels en zie je van een foto niets meer terug.
+- **Kom je niet uit, dan drie.** Bij een oneven aantal zouden twee kolommen er
+  één alleen laten staan op de laatste rij, en dat oogt als een vergissing. Bij
+  drie beelden passen ze samen op één rij.
+- **Bij vijf:** twee groot op de bovenste rij, drie kleiner eronder. Allebei de
+  rijen vol.
+- **Liggend en staand door elkaar:** gebruik `gallery--kolommen`. De liggende
+  foto's komen onder elkaar links, de staande krijgt rechts een eigen kolom over
+  alle rijen. Zo sluit het blok links én rechts gelijk af. Let op de volgorde in
+  de HTML: het raster vult van links naar rechts, dus de staande staat ertussen.
+- **Verschillen de verhoudingen binnen één rij?** Dan geef je de kolommen de
+  breedte van die verhoudingen. Zie hieronder bij "Kolommen op maat".
+- **Is er maar één beeld, zet het dan over de volle breedte** met `class="vol"`.
+  Dan loopt het van rand tot rand en heb je alsnog een vullend vlak. Zonder die
+  klasse staat een losse foto gecentreerd op 460px, met lucht links en rechts, en
+  dat is precies de lege plek die niet mag. Laat zo'n foto ook *niet* zweven aan
+  het eind van een artikel: is de tekst ernaast korter dan de foto, dan blijft
+  daaronder een leeg blok staan tot het volgende blok begint.
+- **Op mobiel** staat alles onder elkaar over de volle breedte. Niets naast
+  elkaar, niets bijgesneden: je ziet de hele foto.
+
+De CSS telt het aantal zelf, dus je hoeft niets aan te passen als je een foto
+toevoegt of weghaalt. Alleen `gallery--kolommen` en `gallery--opmaat` kies je
+bewust zelf.
+
+#### Kolommen op maat
+
+Beeld van verschillende vorm in één rij loopt nooit gelijk af als de kolommen
+even breed zijn: het minst slanke beeld wordt bij dezelfde breedte het laagst en
+laat een gat onder zich. Bijsnijden doen we niet, dus lossen we het op met de
+breedte. **Geef elk beeld een kolom zo breed als zijn eigen verhouding**, dan
+worden alle tegels vanzelf even hoog en loopt de rij toch precies vol.
+
+Zet daarvoor `gallery--opmaat` op de galerij en vul `--kolommen` met de
+verhouding breedte/hoogte van elk beeld, in volgorde:
+
+```html
+<!-- 720x1280 = 0.5625, 720x1280 = 0.5625, 1066x1600 = 0.666 -->
+<div class="gallery gallery--opmaat" style="--kolommen:0.5625fr 0.5625fr 0.666fr">
+```
+
+Het rekenwerk is dus gewoon breedte gedeeld door hoogte. Omdat `fr` de ruimte
+verdeelt die na de tussenruimtes overblijft, kloppen de breedtes exact en worden
+de hoogtes exact gelijk.
+
+Wil je twee rijen met verschillende kolombreedtes, zet dan twee galerijen onder
+elkaar. Ze sluiten met dezelfde tussenruimte op elkaar aan als tussen de tegels,
+dus je leest het nog steeds als één blok.
+
+**Goede voorbeelden:** `werk/ramses3000/` en `werk/bouw-je-droombaan/` voor de
+kolommen-puzzel, en `werk/joost-klein/` voor kolommen op maat: een rij met twee
+staande video's van 9:16 en een podiumfoto van 2:3, die daardoor een bredere
+kolom krijgt en toch even hoog eindigt.
+
 ### Patronen & texturen
 
 - **Stippellijn (`dotted`)** in de volle kleur, als zachte variant i.p.v. een tint.
