@@ -235,6 +235,25 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 .carousel__track{ display:flex; align-items:flex-start; gap:var(--space-6); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding-block:12px; scrollbar-width:none; -ms-overflow-style:none }
 .carousel__track::-webkit-scrollbar{ display:none }
 .carousel__item{ flex:0 0 var(--card-w,100%); scroll-snap-align:start }   /* hele kaarten, geen peek */
+
+/* Met een muis is een scroll-strook niet uitnodigend, dus die mag je vastpakken
+   en meeslepen. Op een telefoon veeg je al, dus daar hoeft de cursor niet te
+   veranderen: vandaan de check op een echte muisaanwijzer. */
+@media (hover:hover) and (pointer:fine){
+  .carousel__track{ cursor:grab }
+  .carousel__track.sleept{ cursor:grabbing; user-select:none }
+}
+
+/* Zodra je de carousel voor het eerst ziet komen de kaarten van rechts binnen,
+   één voor één (js/site.js zet de vertraging per kaart). Dat vertelt meteen dat
+   er meer naast staat.
+   --wacht staat er al vóór dat moment op: anders staan de kaarten er gewoon en
+   springen ze bij het invliegen eerst wég, en dat zie je als een flits.
+   'backwards' houdt een kaart onzichtbaar tijdens zijn eigen vertraging, zodat
+   de trap netjes één voor één loopt. */
+/* Het "hier staat meer naast"-signaal is één kaart opschuiven zodra je de
+   carousel voor het eerst ziet. Dat regelt js/site.js met een gewone smooth
+   scroll, dus daar is hier geen opmaak voor nodig. */
 @media(min-width:640px){  .carousel{ --card-w:calc((100% - var(--space-6))/2) } }     /* 2 hele kaarten */
 @media(min-width:1024px){ .carousel{ --card-w:calc((100% - 2*var(--space-6))/3) } }   /* 3 hele kaarten */
 

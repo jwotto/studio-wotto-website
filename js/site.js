@@ -380,6 +380,26 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     }
 
+    /* De adresbalk van een mobiele browser kleurt mee met de sectie waar je bent.
+       Dat is dezelfde kleur die de header krijgt, dus die zetten we hier gelijk
+       mee. In de <head> van elke pagina staat theme-color op koraal; die stand
+       geldt tot dit script draait en blijft gelden als er geen JavaScript is.
+       Staat de meta er niet (een pagina die door een tool is gemaakt), dan maken
+       we hem alsnog aan. Alleen bij een echte verandering, want dit loopt mee met
+       elke scrollbeweging. */
+    let themaMeta = document.querySelector('meta[name="theme-color"]');
+    let themaKleur = '';
+    function zetThemaKleur(kleur){
+      if (!kleur || kleur === themaKleur) return;
+      themaKleur = kleur;
+      if (!themaMeta){
+        themaMeta = document.createElement('meta');
+        themaMeta.setAttribute('name', 'theme-color');
+        document.head.appendChild(themaMeta);
+      }
+      themaMeta.setAttribute('content', kleur);
+    }
+
     // Header kleurt mee met de sectie eronder; wit logo wordt zwart op lichte secties
     const blocks = [...document.querySelectorAll('[data-nav]')].filter(b => b !== header);
     function syncHeader(){
@@ -390,6 +410,7 @@
       const cs = getComputedStyle(active);
       header.style.setProperty('--hdr-bg', cs.backgroundColor);
       header.style.color = cs.color;
+      zetThemaKleur(cs.backgroundColor);
       if (logo) logo.style.filter = active.dataset.nav === 'light' ? 'none' : 'brightness(0)';
     }
 
@@ -574,15 +595,194 @@
         if (prev) prev.classList.toggle('on-dark', darkFor(prev, 'left'));
         if (next) next.classList.toggle('on-dark', darkFor(next, 'right'));
       }
+      /* ---- Oneindig doorscrollen ----
+         De reeks kaarten staat er drie keer: een kopie ervoor, de echte, en een
+         kopie erna. Je begint in de middelste. Scrol je voorbij een grens, dan
+         verspringt de scrollpositie met precies één reeksbreedte. Omdat de
+         kopieën identiek zijn zie je van die sprong niets, maar je kunt eindeloos
+         door in allebei de richtingen.
+         Alleen als er meer kaarten zijn dan er passen. Hoeveel er passen hangt
+         van de schermbreedte af, dus dit wordt bij resize opnieuw bekeken. */
+      const echte = [...track.children];
+      let reeksBreedte = 0;                 // 0 = geen lus actief
+
+      function sloopLus(){
+        track.querySelectorAll('[data-kloon]').forEach(k => k.remove());
+        reeksBreedte = 0;
+      }
+      function bouwLus(){
+        if (echte.length < 2) return;
+        const kopie = () => echte.map(el => {
+          const k = el.cloneNode(true);
+          k.dataset.kloon = '1';
+          // Uit de tab-volgorde en weg voor een schermlezer: anders loop je drie
+          // keer langs dezelfde projecten.
+          k.setAttribute('aria-hidden', 'true');
+          k.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+          return k;
+        });
+        const voor = kopie(), na = kopie();
+        // prepend met alle knopen tegelijk, niet één voor één met insertBefore:
+        // dan zou elke volgende kloon vóór de vorige belanden en stond de reeks
+        // ervoor achterstevoren.
+        track.prepend(...voor);
+        track.append(...na);
+        // De afstand tussen twee kopieën van dezelfde kaart is precies één reeks.
+        reeksBreedte = echte[0].offsetLeft - voor[0].offsetLeft;
+        zetDirect(reeksBreedte);
+      }
+      // Zonder animatie verspringen: scroll-behavior staat in de CSS op smooth,
+      // en een sprong die je ziet aankomen is geen sprong meer.
+      function zetDirect(x){
+        const oud = track.style.scrollBehavior;
+        track.style.scrollBehavior = 'auto';
+        track.scrollLeft = x;
+        track.style.scrollBehavior = oud;
+      }
+      function houdInHetMidden(){
+        if (!reeksBreedte) return;
+        let sprong = 0;
+        if (track.scrollLeft < reeksBreedte * 0.5) sprong = reeksBreedte;
+        else if (track.scrollLeft > reeksBreedte * 1.5) sprong = -reeksBreedte;
+        if (!sprong) return;
+        zetDirect(track.scrollLeft + sprong);
+        // Sleep je op dit moment met de muis, dan moet je vertrekpunt mee
+        // verspringen. Anders rekent de volgende muisbeweging nog vanaf de oude
+        // positie en klapt de strook terug.
+        if (sleep) sleep.links += sprong;
+      }
+      function herbouwLus(){
+        sloopLus();
+        if (track.scrollWidth > track.clientWidth + 4) bouwLus();
+        // Heeft het opschuiven nog niet plaatsgevonden (de carousel staat nog
+        // onder de vouw), dan zet de strook zich opnieuw een kaart vooruit.
+        zetKlaarVoorIntro();
+      }
+
       function update(){
+        // In een lus is er geen begin en geen eind, dus de pijlen blijven aan.
+        if (reeksBreedte){
+          if (prev) prev.disabled = false;
+          if (next) next.disabled = false;
+          return;
+        }
         if (prev) prev.disabled = track.scrollLeft <= 2;
         if (next) next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
       }
+
+      /* ---- Slepen met de muis ----
+         Vegen werkt op een telefoon vanzelf, maar met een muis is een
+         scroll-strook niet uitnodigend. Tijdens het slepen gaat scroll-snap uit,
+         want anders vecht het snappen tegen je hand; daarna klikt hij op de
+         dichtstbijzijnde kaart vast. Heb je echt gesleept, dan slikken we de klik
+         erna in: anders open je een project terwijl je alleen wilde scrollen. */
+      let sleep = null, netGesleept = false, zelfGedaan = false;
+      // Raakt de bezoeker de strook zelf aan, dan laat het invliegen hem verder
+      // met rust: dan weet hij het al.
+      ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(soort =>
+        track.addEventListener(soort, () => { zelfGedaan = true; }, { passive: true }));
+      function dichtstbijzijnde(){
+        const s = step(), basis = track.firstElementChild ? track.firstElementChild.offsetLeft : 0;
+        return Math.round((track.scrollLeft - basis) / s) * s + basis;
+      }
+      // Een kaart is een link met een foto erin, en daar heeft de browser zijn
+      // eigen sleepgedrag voor: "sleep deze afbeelding of link ergens heen". Dat
+      // kapen we hier, want anders neemt hij de muis over zodra je een foto
+      // vastpakt, krijgen wij geen bewegingen meer door en kun je alleen tussen
+      // de foto's slepen. Wat je ervoor inlevert: een projectfoto naar je
+      // bureaublad slepen kan niet meer. Rechtermuisknop opslaan werkt gewoon.
+      track.addEventListener('dragstart', e => e.preventDefault());
+      track.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        if (e.target.closest('.carousel__btn')) return;
+        sleep = { x: e.clientX, links: track.scrollLeft, ver: 0 };
+        track.classList.add('sleept');
+        track.style.scrollSnapType = 'none';
+        track.style.scrollBehavior = 'auto';
+      });
+      addEventListener('pointermove', e => {
+        if (!sleep) return;
+        const d = e.clientX - sleep.x;
+        sleep.ver = Math.max(sleep.ver, Math.abs(d));
+        track.scrollLeft = sleep.links - d;
+        e.preventDefault();                       // geen tekstselectie tijdens het slepen
+      });
+      // Acht pixels, niet vier: op een trackpad beweeg je tijdens een gewone klik
+      // bijna altijd een paar pixels, en dan zou een bedoelde klik als sleep
+      // gelden en het project niet opengaan.
+      const SLEEPGRENS = 8;
+      function stopSlepen(){
+        if (!sleep) return;
+        netGesleept = sleep.ver > SLEEPGRENS;
+        sleep = null;
+        track.classList.remove('sleept');
+        track.style.scrollSnapType = '';
+        track.style.scrollBehavior = '';
+        if (netGesleept) track.scrollTo({ left: dichtstbijzijnde(), behavior: 'smooth' });
+        setTimeout(() => { netGesleept = false; }, 0);
+      }
+      addEventListener('pointerup', stopSlepen);
+      addEventListener('pointercancel', stopSlepen);
+      // In de capture-fase, dus vóór de link zelf erop reageert.
+      track.addEventListener('click', e => {
+        if (netGesleept){ e.preventDefault(); e.stopPropagation(); }
+      }, true);
+
+      /* ---- Eén kaart opschuiven zodra je de carousel voor het eerst ziet ----
+         De strook begint één kaart verder dan waar hij hoort te staan en schuift
+         bij het eerste zicht die ene kaart terug. Je ziet dus een kaart naar
+         rechts wegschuiven terwijl er van links een binnenkomt, en je eindigt
+         precies goed: de eerste kaart op zijn plek. Zo weet je meteen dat er meer
+         naast staat, en dat het allebei de kanten op kan.
+         Eén keer per paginabezoek, en niet bij prefers-reduced-motion of als
+         IntersectionObserver ontbreekt: dan staat de strook meteen goed. */
+      const stil = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // viewport moet erbij: zonder dat element kijken we nergens naar, en dan
+      // zou de strook wél een kaart opgeschoven worden maar nooit terugschuiven.
+      const magSchuiven = !stil && 'IntersectionObserver' in window && !!viewport;
+      let introKlaar = false;
+      function zetKlaarVoorIntro(){
+        if (introKlaar || !magSchuiven) return;
+        if (!reeksBreedte && track.scrollWidth <= track.clientWidth + 4) return;
+        zetDirect(track.scrollLeft + step());
+      }
+      if (magSchuiven){
+        // Het klaarzetten zelf gebeurt in herbouwLus, want daar staat de lus pas.
+        // Pas schuiven als de kaarten hélemaal in beeld staan, niet als er een
+        // rand van te zien is: anders beweegt de strook terwijl je er nog naartoe
+        // scrollt en mis je het. Vandaar drempel 1 op de kaartenstrook zelf.
+        // Past die niet in je scherm (een liggende telefoon), dan zou drempel 1
+        // nooit gehaald worden en zou de strook een kaart verschoven blijven
+        // staan. Daarom telt vanaf 0,6 ook, maar alléén in dat geval.
+        const kijker = new IntersectionObserver((entries, obs) => {
+          entries.forEach(en => {
+            const past = en.boundingClientRect.height <= window.innerHeight;
+            if (!en.isIntersecting) return;
+            if (past ? en.intersectionRatio < 0.99 : en.intersectionRatio < 0.6) return;
+            obs.disconnect();
+            introKlaar = true;
+            // Zelf al aan het scrollen of slepen? Dan laat de strook je met rust,
+            // want dan weet je het al.
+            if (sleep || zelfGedaan) return;
+            track.scrollBy({ left: -step(), behavior: 'smooth' });
+          });
+        }, { threshold: [0.6, 0.99, 1] });
+        kijker.observe(viewport);
+      }
+
       prev && prev.addEventListener('click', () => track.scrollBy({left:-step(), behavior:'smooth'}));
       next && next.addEventListener('click', () => track.scrollBy({left: step(), behavior:'smooth'}));
-      track.addEventListener('scroll', () => { update(); tintBtns(); }, {passive:true});
-      addEventListener('resize', () => { update(); placeBtns(); tintBtns(); });
+      track.addEventListener('scroll', () => { houdInHetMidden(); update(); tintBtns(); }, {passive:true});
+      // De lus opnieuw bouwen kost 22 kaarten slopen en terugzetten, dus dat doen
+      // we niet bij elke pixel die je sleept aan je venster: pas als je stilstaat.
+      let resizeTimer;
+      addEventListener('resize', () => {
+        update(); placeBtns(); tintBtns();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(herbouwLus, 200);
+      });
       track.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => { measureItems(); placeBtns(); tintBtns(); }, {once:true}); });
+      herbouwLus();
       measureItems();
       placeBtns();
       update();
