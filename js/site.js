@@ -605,31 +605,60 @@
          van de schermbreedte af, dus dit wordt bij resize opnieuw bekeken. */
       const echte = [...track.children];
       let reeksBreedte = 0;                 // 0 = geen lus actief
+      let thuis = 0;                        // stand waarbij de echte reeks vooraan staat
+
+      // Eén kopie aan elke kant is genoeg. Dat is te danken aan
+      // scroll-snap-stop:always in de stylesheet: je legt nooit meer dan één
+      // kaart per veeg af, dus na elke kaart staat de strook even stil en kan de
+      // sprong daar ongemerkt gebeuren. Zonder die regel kwam je in één worp
+      // twintig kaarten ver en had je hier veel meer aanloop voor nodig.
+      // Zet je hem hoger, dan houden alleen de binnenste kopieën hun bewegende
+      // cover; zie kopie() hieronder.
+      const KOPIEEN_PER_KANT = 1;
 
       function sloopLus(){
         track.querySelectorAll('[data-kloon]').forEach(k => k.remove());
         reeksBreedte = 0;
+        thuis = 0;
       }
       function bouwLus(){
         if (echte.length < 2) return;
-        const kopie = () => echte.map(el => {
+        const kopie = binnenste => echte.map(el => {
           const k = el.cloneNode(true);
           k.dataset.kloon = '1';
-          // Uit de tab-volgorde en weg voor een schermlezer: anders loop je drie
-          // keer langs dezelfde projecten.
+          // Uit de tab-volgorde en weg voor een schermlezer: anders loop je
+          // meerdere keren langs dezelfde projecten.
           k.setAttribute('aria-hidden', 'true');
           k.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+          // Een bewegende cover is een <video>, en die kosten een telefoon
+          // geheugen. Alleen de kopieën naast de echte reeks houden hem: verder
+          // dan die kom je nooit als de strook stilstaat. De buitenste kopieën
+          // zie je alleen tijdens een snelle veeg, en dan is de posterfoto
+          // ruimschoots genoeg.
+          if (!binnenste) k.querySelectorAll('video').forEach(v => {
+            const foto = document.createElement('img');
+            foto.src = v.getAttribute('poster') || '';
+            foto.alt = '';
+            foto.loading = 'lazy';
+            foto.decoding = 'async';
+            v.replaceWith(foto);
+          });
           return k;
         });
-        const voor = kopie(), na = kopie();
-        // prepend met alle knopen tegelijk, niet één voor één met insertBefore:
-        // dan zou elke volgende kloon vóór de vorige belanden en stond de reeks
-        // ervoor achterstevoren.
-        track.prepend(...voor);
-        track.append(...na);
-        // De afstand tussen twee kopieën van dezelfde kaart is precies één reeks.
-        reeksBreedte = echte[0].offsetLeft - voor[0].offsetLeft;
-        zetDirect(reeksBreedte);
+        // prepend en append met alle knopen van een reeks tegelijk, niet één voor
+        // één met insertBefore: dan zou elke volgende kloon vóór de vorige
+        // belanden en stond de reeks achterstevoren. Tussen de reeksen onderling
+        // maakt de volgorde niet uit, die zijn identiek.
+        // De eerste ronde komt tegen de echte reeks aan te liggen, de volgende
+        // ronde daarbuiten. Vandaar dat alleen ronde 0 de binnenste is.
+        for (let i = 0; i < KOPIEEN_PER_KANT; i++){
+          track.prepend(...kopie(i === 0));
+          track.append(...kopie(i === 0));
+        }
+        // Waar de echte reeks begint is precies het aantal kopieën maal één reeks.
+        thuis = echte[0].offsetLeft;
+        reeksBreedte = thuis / KOPIEEN_PER_KANT;
+        zetDirect(thuis);
       }
       // Zonder animatie verspringen: scroll-behavior staat in de CSS op smooth,
       // en een sprong die je ziet aankomen is geen sprong meer.
@@ -642,14 +671,101 @@
       function houdInHetMidden(){
         if (!reeksBreedte) return;
         let sprong = 0;
-        if (track.scrollLeft < reeksBreedte * 0.5) sprong = reeksBreedte;
-        else if (track.scrollLeft > reeksBreedte * 1.5) sprong = -reeksBreedte;
+        if (track.scrollLeft < thuis - reeksBreedte * 0.5) sprong = reeksBreedte;
+        else if (track.scrollLeft > thuis + reeksBreedte * 0.5) sprong = -reeksBreedte;
         if (!sprong) return;
         zetDirect(track.scrollLeft + sprong);
         // Sleep je op dit moment met de muis, dan moet je vertrekpunt mee
         // verspringen. Anders rekent de volgende muisbeweging nog vanaf de oude
         // positie en klapt de strook terug.
         if (sleep) sleep.links += sprong;
+      }
+      /* Wannéér we verspringen luistert nauw. Doe je het op het moment dat je de
+         grens passeert, dan zit je midden in een veegbeweging: op een telefoon
+         scrolt die daarna nog na, en zet je de scrollpositie hard om, dan hakt de
+         browser die naloop af of tekent hij nog één beeldje vanaf de oude plek.
+         Dat is de hapering. Daarom wachten we tot de beweging klaar is. Dat kan
+         rustig, want na elke sprong heb je een volledige reeks speling, en dat
+         zijn elf kaarten: verder komt geen enkele veeg.
+         Twee uitzonderingen waarbij het wél meteen moet:
+         - je sleept met de muis. Dan is er geen naloop om af te hakken, en de
+           sprong moet bij zijn voordat je verder trekt.
+         - je bent echt vlak bij het einde van de gekloonde reeks. Dan is
+           verspringen minder erg dan tegen een muur aan lopen. Dat haal je alleen
+           met een uitzonderlijk harde veeg. */
+      /* ---- Onze eigen vloeiende beweging ----
+         De pijltjes, het invliegen en het vastklikken na het slepen sturen we
+         zelf, beeldje voor beeldje, in plaats van met behavior:'smooth'. Twee
+         redenen. Ten eerste de duur: die van de browser is een stuk trager en
+         valt niet in te stellen. Ten tweede, en dat is de belangrijkste: nu
+         weten we precies wanneer hij bezig is. Tijdens zo'n beweging mag je hem
+         niet opnieuw vastpakken, want dan volgt er nooit een rustig moment en
+         moet de lus alsnog midden in je beweging verspringen. Aan het eind staat
+         de strook gegarandeerd één beeldje stil, en juist daar doen we de sprong.
+         Scroll-snap moet er tijdens onze eigen beweging even uit, anders vecht
+         het vastklikken van de browser tegen wat wij aan het doen zijn. */
+      const SNAPDUUR = 220;                 // milliseconden, korter dan de browser doet
+      let animatie = 0;                     // 0 = wij bewegen niet
+      function zachtNaar(x){
+        if (animatie) cancelAnimationFrame(animatie);
+        const start = track.scrollLeft, afstand = x - start, t0 = performance.now();
+        track.style.scrollSnapType = 'none';
+        track.style.scrollBehavior = 'auto';
+        let klaar = false;
+        function afronden(){
+          if (klaar) return;
+          klaar = true;
+          if (animatie) cancelAnimationFrame(animatie);
+          animatie = 0;
+          track.scrollLeft = x;             // exact op de kaartgrens, nooit ertussenin
+          track.style.scrollSnapType = '';
+          track.style.scrollBehavior = '';
+          houdInHetMidden();                // het stille moment: nu mag de sprong
+          // Stond je al te wachten met je vinger op de strook? Dan pakken we hem
+          // nu alsnog op, vanaf waar je vinger op dit moment is. Anders zou je
+          // opnieuw moeten beginnen omdat je net iets te vroeg was.
+          if (wilSlepen && vinger){
+            wilSlepen = false;
+            startSlepen(vinger.x, vinger.y);
+          }
+        }
+        animatie = requestAnimationFrame(function stap(nu){
+          if (klaar) return;
+          const p = Math.min((nu - t0) / SNAPDUUR, 1);
+          track.scrollLeft = start + afstand * (1 - Math.pow(1 - p, 3));   // vlot weg, netjes afremmen
+          if (p < 1) animatie = requestAnimationFrame(stap); else afronden();
+        });
+        // Vangnet: in een tabblad op de achtergrond staat requestAnimationFrame
+        // stil, en dan zou de strook halverwege blijven hangen met snap uit.
+        setTimeout(afronden, SNAPDUUR + 400);
+      }
+      function zachtMet(d){ zachtNaar(track.scrollLeft + d); }
+
+      let stilTimer, vorigeStand = 0, vingerOpScherm = false;
+      track.addEventListener('touchstart', () => { vingerOpScherm = true; }, { passive: true });
+      addEventListener('touchend', () => { vingerOpScherm = false; }, { passive: true });
+      addEventListener('touchcancel', () => { vingerOpScherm = false; }, { passive: true });
+
+      function bijnaOp(){
+        const max = track.scrollWidth - track.clientWidth;
+        const rand = reeksBreedte * 0.15;
+        return track.scrollLeft < rand || track.scrollLeft > max - rand;
+      }
+      function naDeBeweging(){
+        if (!reeksBreedte) return;
+        if (sleep || bijnaOp()){ houdInHetMidden(); return; }
+        const snelheid = Math.abs(track.scrollLeft - vorigeStand);
+        vorigeStand = track.scrollLeft;
+        // De staart van een veeg: je vinger is los en het rolt nog maar een paar
+        // pixels per beeldje na. Dan hoeven we niet te wachten tot het écht
+        // stilstaat, want zo'n sprong valt daar niet meer op. Zo pakken we het
+        // gaatje tussen twee vegen, in plaats van het te missen omdat je alweer
+        // aan het volgende bezig bent.
+        // Ligt je vinger nog op het scherm, dan nooit: dan volgt de strook je
+        // vinger en zou je hem onder je duim zien wegspringen.
+        if (!vingerOpScherm && !animatie && snelheid < 3){ houdInHetMidden(); return; }
+        clearTimeout(stilTimer);
+        stilTimer = setTimeout(houdInHetMidden, 80);
       }
       function herbouwLus(){
         sloopLus();
@@ -673,17 +789,25 @@
       /* ---- Slepen met de muis ----
          Vegen werkt op een telefoon vanzelf, maar met een muis is een
          scroll-strook niet uitnodigend. Tijdens het slepen gaat scroll-snap uit,
-         want anders vecht het snappen tegen je hand; daarna klikt hij op de
-         dichtstbijzijnde kaart vast. Heb je echt gesleept, dan slikken we de klik
-         erna in: anders open je een project terwijl je alleen wilde scrollen. */
-      let sleep = null, netGesleept = false, zelfGedaan = false;
+         want anders vecht het snappen tegen je hand; bij loslaten klikt hij op de
+         dichtstbijzijnde kaart vast. Je mag zo ver trekken als je wilt: dat het
+         vegen op een telefoon bij één kaart stopt komt uit scroll-snap-stop, en
+         dat geldt hier niet omdat we de scrollpositie zelf sturen. Dat hoeft ook
+         niet, want na het loslaten staat de strook stil en dáár kan de lus
+         ongemerkt verspringen. Heb je echt gesleept, dan slikken we de klik erna
+         in: anders open je een project terwijl je alleen wilde scrollen. */
+      // vinger = waar de muis of vinger nu is, zolang hij neer is. Ook als we
+      // (nog) niet slepen, want tijdens onze eigen animatie wachten we even.
+      // wilSlepen = je hebt vastgepakt terwijl die animatie liep.
+      let sleep = null, netGesleept = false, zelfGedaan = false, vinger = null, wilSlepen = false;
       // Raakt de bezoeker de strook zelf aan, dan laat het invliegen hem verder
       // met rust: dan weet hij het al.
       ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(soort =>
         track.addEventListener(soort, () => { zelfGedaan = true; }, { passive: true }));
-      function dichtstbijzijnde(){
+      // De dichtstbijzijnde kaartgrens bij een willekeurige scrollstand.
+      function opKaart(x){
         const s = step(), basis = track.firstElementChild ? track.firstElementChild.offsetLeft : 0;
-        return Math.round((track.scrollLeft - basis) / s) * s + basis;
+        return Math.round((x - basis) / s) * s + basis;
       }
       // Een kaart is een link met een foto erin, en daar heeft de browser zijn
       // eigen sleepgedrag voor: "sleep deze afbeelding of link ergens heen". Dat
@@ -692,37 +816,103 @@
       // de foto's slepen. Wat je ervoor inlevert: een projectfoto naar je
       // bureaublad slepen kan niet meer. Rechtermuisknop opslaan werkt gewoon.
       track.addEventListener('dragstart', e => e.preventDefault());
-      track.addEventListener('pointerdown', e => {
-        if (e.pointerType !== 'mouse' || e.button !== 0) return;
-        if (e.target.closest('.carousel__btn')) return;
-        sleep = { x: e.clientX, links: track.scrollLeft, ver: 0 };
+      function startSlepen(x, y){
+        sleep = { x: x, y: y, links: track.scrollLeft, ver: 0, richting: 0, punten: [] };
         track.classList.add('sleept');
         track.style.scrollSnapType = 'none';
         track.style.scrollBehavior = 'auto';
+      }
+      track.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        if (e.target.closest('.carousel__btn')) return;
+        vinger = { x: e.clientX, y: e.clientY };
+        // Loopt onze eigen beweging nog? Dan niet meteen vastpakken, anders grijp
+        // je erin voordat hij op een kaartgrens staat en is er geen rustig moment
+        // voor de lus. Maar we onthouden wél dat je wilt slepen: zodra de
+        // animatie klaar is (hooguit 220 milliseconden) pakt hij alsnog op, en
+        // dan vanaf de plek waar je vinger op dat moment is. Zo hoef je niet
+        // opnieuw te beginnen als je te vroeg was.
+        if (animatie){ wilSlepen = true; return; }
+        startSlepen(e.clientX, e.clientY);
       });
       addEventListener('pointermove', e => {
+        if (vinger){ vinger.x = e.clientX; vinger.y = e.clientY; }
         if (!sleep) return;
-        const d = e.clientX - sleep.x;
-        sleep.ver = Math.max(sleep.ver, Math.abs(d));
-        track.scrollLeft = sleep.links - d;
-        e.preventDefault();                       // geen tekstselectie tijdens het slepen
+        const dx = e.clientX - sleep.x, dy = e.clientY - sleep.y;
+        // Eerst uitzoeken wat je van plan bent. Een verticale veeg op een
+        // telefoon is de pagina scrollen, niet de strook: daar blijven we vanaf.
+        // Zolang het te klein is om dat te zien doen we nog niets.
+        if (!sleep.richting){
+          if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+          sleep.richting = Math.abs(dx) > Math.abs(dy) ? 1 : 2;
+          if (sleep.richting === 2){ stopSlepen(true); return; }
+        }
+        sleep.ver = Math.max(sleep.ver, Math.abs(dx));
+        track.scrollLeft = sleep.links - dx;
+        // De laatste tiende seconde onthouden, zodat we bij loslaten weten hoe
+        // hard je aan het bewegen was. Een kort tikje is net zo goed een
+        // bedoeling als een lange haal.
+        const nu = performance.now();
+        sleep.punten.push({ x: e.clientX, t: nu });
+        while (sleep.punten.length > 2 && nu - sleep.punten[0].t > 100) sleep.punten.shift();
+        if (e.cancelable) e.preventDefault();     // geen tekstselectie tijdens het slepen
       });
       // Acht pixels, niet vier: op een trackpad beweeg je tijdens een gewone klik
       // bijna altijd een paar pixels, en dan zou een bedoelde klik als sleep
       // gelden en het project niet opengaan.
       const SLEEPGRENS = 8;
-      function stopSlepen(){
+      function stopSlepen(afbreken){
         if (!sleep) return;
-        netGesleept = sleep.ver > SLEEPGRENS;
+        const gesleept = !afbreken && sleep.richting === 1;
+        netGesleept = gesleept && sleep.ver > SLEEPGRENS;
+        const sleepStand = sleep.links, sleepPunten = sleep.punten;
         sleep = null;
         track.classList.remove('sleept');
-        track.style.scrollSnapType = '';
-        track.style.scrollBehavior = '';
-        if (netGesleept) track.scrollTo({ left: dichtstbijzijnde(), behavior: 'smooth' });
+        if (gesleept){
+          // Waar komt hij uit? Sleep je ver, dan gewoon naar de dichtstbijzijnde
+          // kaart: twee of drie kaarten in één haal mag. Maar een klein veegje
+          // moet ook tellen, anders veert hij terug en lijkt hij vastgeplakt.
+          // Daarom twee manieren om "ik wil verder" te zeggen: een klein stukje
+          // slepen (een twaalfde kaart, dus zo'n veertig pixels), of gewoon even
+          // vegen. Dat laatste meten we over de laatste tiende seconde van je
+          // beweging, zodat een tikje aan het eind ook telt.
+          // De twee getallen onderin bepalen hoe gretig hij is: hoger betekent
+          // dat je meer moeite moet doen voordat hij doorschuift. Ze staan
+          // bewust laag: een veegje moet gewoon meegaan.
+          const s = step();
+          const vanaf = opKaart(sleepStand);
+          const kaarten = (track.scrollLeft - vanaf) / s;
+          let vaart = 0;                       // pixels per milliseconde, in scrollrichting
+          if (sleepPunten.length > 1){
+            const eerste = sleepPunten[0], laatste = sleepPunten[sleepPunten.length - 1];
+            const dt = laatste.t - eerste.t;
+            if (dt > 0) vaart = -(laatste.x - eerste.x) / dt;
+          }
+          const kant = Math.abs(kaarten) > 0.001 ? Math.sign(kaarten) : Math.sign(vaart);
+          const stappen = Math.abs(kaarten) >= 0.5 ? Math.round(kaarten)
+                        : (Math.abs(vaart) > 0.15 || Math.abs(kaarten) > 0.08) ? kant
+                        : 0;
+          // Let op: scroll-snap hier NIET eerst terugzetten. Doe je dat wel, dan
+          // begint de browser meteen zijn eigen trage vastklik-animatie en loopt
+          // die over de onze heen. Je ziet dan de traagste van de twee, en dat is
+          // precies waarom slepen zwaarder aanvoelde dan de pijltjesknoppen.
+          // zachtNaar regelt snap zelf: uit tijdens de beweging, aan als hij
+          // exact op de kaartgrens staat.
+          zachtNaar(vanaf + stappen * s);
+        } else {
+          // Niets zijwaarts gedaan (een klik, of je scrolde de pagina verticaal):
+          // gewoon alles terugzetten zoals het was, zonder animatie.
+          track.style.scrollSnapType = '';
+          track.style.scrollBehavior = '';
+        }
         setTimeout(() => { netGesleept = false; }, 0);
       }
-      addEventListener('pointerup', stopSlepen);
-      addEventListener('pointercancel', stopSlepen);
+      // Let op de pijltjesfuncties: geef je stopSlepen rechtstreeks mee, dan komt
+      // het event als eerste argument binnen en is 'afbreken' altijd waar.
+      addEventListener('pointerup', () => { vinger = null; wilSlepen = false; stopSlepen(false); });
+      // pointercancel betekent dat de browser het gebaar heeft overgenomen,
+      // bijvoorbeeld omdat je toch verticaal ging scrollen. Dan niets doen.
+      addEventListener('pointercancel', () => { vinger = null; wilSlepen = false; stopSlepen(true); });
       // In de capture-fase, dus vóór de link zelf erop reageert.
       track.addEventListener('click', e => {
         if (netGesleept){ e.preventDefault(); e.stopPropagation(); }
@@ -764,15 +954,19 @@
             // Zelf al aan het scrollen of slepen? Dan laat de strook je met rust,
             // want dan weet je het al.
             if (sleep || zelfGedaan) return;
-            track.scrollBy({ left: -step(), behavior: 'smooth' });
+            zachtMet(-step());
           });
         }, { threshold: [0.6, 0.99, 1] });
         kijker.observe(viewport);
       }
 
-      prev && prev.addEventListener('click', () => track.scrollBy({left:-step(), behavior:'smooth'}));
-      next && next.addEventListener('click', () => track.scrollBy({left: step(), behavior:'smooth'}));
-      track.addEventListener('scroll', () => { houdInHetMidden(); update(); tintBtns(); }, {passive:true});
+      prev && prev.addEventListener('click', () => zachtMet(-step()));
+      next && next.addEventListener('click', () => zachtMet(step()));
+      track.addEventListener('scroll', () => { naDeBeweging(); update(); tintBtns(); }, {passive:true});
+      // Kent de browser scrollend, dan weet hij zelf precies wanneer de beweging
+      // klaar is, inclusief de naloop. Dat is nauwkeuriger dan onze eigen timer,
+      // die blijft ernaast staan voor browsers die het nog niet kennen.
+      if ('onscrollend' in window) track.addEventListener('scrollend', houdInHetMidden);
       // De lus opnieuw bouwen kost 22 kaarten slopen en terugzetten, dus dat doen
       // we niet bij elke pixel die je sleept aan je venster: pas als je stilstaat.
       let resizeTimer;

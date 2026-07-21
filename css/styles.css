@@ -221,6 +221,16 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 .project{ color:inherit }
 .project__img{ aspect-ratio:1/1; border-radius:var(--radius-lg); overflow:hidden; transition:transform var(--dur) var(--ease-bounce); box-shadow:var(--shadow-md) }
 .project__img img, .project__img video{ width:100%; height:100%; object-fit:cover; display:block }
+/* Een bewegende cover is een <video>, en die zet de browser op een eigen laag.
+   Die laag moet dan tijdens het scrollen elk beeldje opnieuw bijgeknipt worden
+   tot dit afgeronde vak. Loopt hij een beeldje achter, dan steekt hij even
+   buiten zijn kaart uit en zie je twee kaarten door elkaar heen bloeden. Twee
+   bewegende covers naast elkaar is het ergste geval.
+   Daarom: de video krijgt zijn ronde hoeken zelf, zodat er niets meer geknipt
+   hoeft te worden, en het vak eromheen krijgt een eigen laag (translateZ) zodat
+   het samen met zijn inhoud verschuift in plaats van erachteraan. */
+.project__img{ transform:translateZ(0) }
+.project__img video{ border-radius:inherit }
 .project:hover .project__img{ transform:translateY(-6px) rotate(-.7deg) }
 .project h3{ margin-top:var(--space-4); font-size:24px }
 .project__theme{ display:inline-block; margin-top:8px; font-family:var(--font-head); font-weight:600; font-size:13px; letter-spacing:.07em; text-transform:uppercase; opacity:.8 }
@@ -234,11 +244,24 @@ a.chip:hover{ transform:translateY(-2px); border-style:solid; background:color-m
 .carousel__viewport{ position:relative }
 .carousel__track{ display:flex; align-items:flex-start; gap:var(--space-6); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding-block:12px; scrollbar-width:none; -ms-overflow-style:none }
 .carousel__track::-webkit-scrollbar{ display:none }
-.carousel__item{ flex:0 0 var(--card-w,100%); scroll-snap-align:start }   /* hele kaarten, geen peek */
+/* scroll-snap-stop:always = één kaart per veeg, hoe hard je ook gooit. Dat is
+   niet alleen rustiger om te bedienen, het is ook wat de oneindige lus soepel
+   houdt: tussen elke kaart staat de strook even helemaal stil, en juist op zo'n
+   moment kan js/site.js ongemerkt terugspringen naar het midden van de reeks.
+   Zonder deze regel kun je in één worp twintig kaarten ver komen, en dan moet
+   die sprong midden in je beweging gebeuren. Dát is wat je als hapering ziet. */
+.carousel__item{ flex:0 0 var(--card-w,100%); scroll-snap-align:start; scroll-snap-stop:always }   /* hele kaarten, geen peek */
+
+/* touch-action:pan-y = verticaal scrollen laat je aan de browser (dat is de
+   pagina), zijwaarts doen wij zelf in js/site.js. Dat moet, want zolang de
+   browser het zijwaarts scrollen zelf afhandelt kunnen we niet afdwingen dat je
+   pas opnieuw mag vastpakken als de vastklik-animatie klaar is. Nu voelt slepen
+   op een telefoon en met de muis precies hetzelfde. */
+.carousel__track{ touch-action:pan-y }
 
 /* Met een muis is een scroll-strook niet uitnodigend, dus die mag je vastpakken
    en meeslepen. Op een telefoon veeg je al, dus daar hoeft de cursor niet te
-   veranderen: vandaan de check op een echte muisaanwijzer. */
+   veranderen: vandaar de check op een echte muisaanwijzer. */
 @media (hover:hover) and (pointer:fine){
   .carousel__track{ cursor:grab }
   .carousel__track.sleept{ cursor:grabbing; user-select:none }
