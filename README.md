@@ -106,6 +106,24 @@ vanzelf loopt. Alleen voor loops zonder geluid. `cover` blijft nodig: als
 poster, als deel-thumbnail, en voor wie in zijn systeem minder beweging heeft
 aangezet (dat controleert `site.js`).
 
+Dit is een **apart, kort lusje** naast de video in het artikel, niet dezelfde
+mp4. Een kaartje is klein en staat er vaak met meerdere naast elkaar, dus je
+wilt geen filmpje van 11 seconden van een megabyte. Maak er een korte, stille,
+lichte versie van: ongeveer 5 seconden, rond de 500x500, zonder audio. Noem 'm
+`<slug>-kaart.mp4`. Ter vergelijking: de volle zapper-video is 11 sec en 1,1 MB,
+het kaartje 5 sec en 76 kB. Er is geen tool voor, je maakt 'm met de ffmpeg die
+al meekomt met de build (`imageio-ffmpeg`):
+
+```
+python -c "import imageio_ffmpeg as f;print(f.get_ffmpeg_exe())"   # pad naar ffmpeg
+ffmpeg -ss 3 -t 5 -i werk/<slug>/<video>.mp4 -an -vf scale=500:500 \
+       -c:v libx264 -crf 30 -preset slow -pix_fmt yuv420p -movflags +faststart \
+       werk/<slug>/<slug>-kaart.mp4
+```
+
+Kies met `-ss` het startmoment waar de meeste beweging in zit. De video mét
+geluid blijft gewoon in de tekst staan, met een play-knop.
+
 De chips onderin een item hoef je niet te typen, die komen uit `subjects`.
 
 ### 3. Foto's: slepen en bouwen
