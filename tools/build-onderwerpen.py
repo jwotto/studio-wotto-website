@@ -89,7 +89,9 @@ def esc(s):
 
 def lees_items():
     """Alle items met hun pijler en onderwerpen, uit de metatags zelf."""
-    slugs = json.load(open(BASE / "content.json", encoding="utf-8"))
+    # content.json bevat hele items; hier is alleen de mapnaam nodig, want de
+    # rest wordt hieronder alsnog uit de pagina zelf gelezen.
+    slugs = [i["slug"] for i in json.load(open(BASE / "content.json", encoding="utf-8"))]
     uit = []
     for s in slugs:
         h = (BASE / "werk" / s / "index.html").read_text(encoding="utf-8")

@@ -16,11 +16,8 @@
 <meta property="og:url" content="https://studiowotto.com/blog/">
 <meta property="og:image" content="https://studiowotto.com/werk/2025-terugblik/2025-terugblik.jpg">
 <meta name="twitter:card" content="summary_large_image">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preload" href="../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../favicon.ico" sizes="32x32">
@@ -48,6 +45,8 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-envelope-simple" viewBox="0 0 256 256"><path d="M224,44H32A12,12,0,0,0,20,56V192a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A12,12,0,0,0,224,44ZM193.15,68,128,127.72,62.85,68ZM44,188V83.28l75.89,69.57a12,12,0,0,0,16.22,0L212,83.28V188Z"/></symbol><symbol id="ph-game-controller" viewBox="0 0 256 256"><path d="M176,116H152a12,12,0,0,1,0-24h24a12,12,0,0,1,0,24ZM104,92h-4V88a12,12,0,0,0-24,0v4H72a12,12,0,0,0,0,24h4v4a12,12,0,0,0,24,0v-4h4a12,12,0,0,0,0-24ZM244.76,202.94a40,40,0,0,1-61,5.35,7,7,0,0,1-.53-.56L144.67,164H111.33L72.81,207.73c-.17.19-.35.38-.53.56A40,40,0,0,1,4.62,173.05a1.18,1.18,0,0,1,0-.2L21,88.79A63.88,63.88,0,0,1,83.88,36H172a64.08,64.08,0,0,1,62.93,52.48,1.8,1.8,0,0,1,0,.19l16.36,84.17a1.77,1.77,0,0,1,0,.2A39.74,39.74,0,0,1,244.76,202.94ZM172,140a40,40,0,0,0,0-80H83.89A39.9,39.9,0,0,0,44.62,93.06a1.55,1.55,0,0,0,0,.21l-16.34,84a16,16,0,0,0,13,18.44,16.07,16.07,0,0,0,13.86-4.21L96.9,144.07a12,12,0,0,1,9-4.07Zm55.76,37.31-7-35.95a63.84,63.84,0,0,1-44.27,22.46l24.41,27.72a16,16,0,0,0,26.85-14.23Z"/></symbol><symbol id="ph-heart" viewBox="0 0 256 256"><path d="M178,36c-20.09,0-37.92,7.93-50,21.56C115.92,43.93,98.09,36,78,36a66.08,66.08,0,0,0-66,66c0,72.34,105.81,130.14,110.31,132.57a12,12,0,0,0,11.38,0C138.19,232.14,244,174.34,244,102A66.08,66.08,0,0,0,178,36Zm-5.49,142.36A328.69,328.69,0,0,1,128,210.16a328.69,328.69,0,0,1-44.51-31.8C61.82,159.77,36,131.42,36,102A42,42,0,0,1,78,60c17.8,0,32.7,9.4,38.89,24.54a12,12,0,0,0,22.22,0C145.3,69.4,160.2,60,178,60a42,42,0,0,1,42,42C220,131.42,194.18,159.77,172.51,178.36Z"/></symbol><symbol id="ph-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol><symbol id="ph-waveform" viewBox="0 0 256 256"><path d="M60,96v64a12,12,0,0,1-24,0V96a12,12,0,0,1,24,0ZM88,20A12,12,0,0,0,76,32V224a12,12,0,0,0,24,0V32A12,12,0,0,0,88,20Zm40,32a12,12,0,0,0-12,12V192a12,12,0,0,0,24,0V64A12,12,0,0,0,128,52Zm40,32a12,12,0,0,0-12,12v64a12,12,0,0,0,24,0V96A12,12,0,0,0,168,84Zm40-16a12,12,0,0,0-12,12v96a12,12,0,0,0,24,0V80A12,12,0,0,0,208,68Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
+
 
 <!-- Golf-sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -55,38 +54,95 @@
     <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
 </defs></svg>
 
-<div data-include="header"></div>
+<!--ingebakken:header--><header class="header" id="header" data-partial data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="../logo's/cropped-avatar-logo-2-e1721815131329-300x202-web.webp" alt="Studio Wotto" width="119" height="80"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="../">Home</a></li>
+      <li><a href="../projecten/">Projecten</a></li>
+      <li><a href="./">Blog</a></li>
+      <!-- Over ons blijft zelf gewoon klikbaar; het uitklapmenu hangt eronder.
+           Op mobiel wordt het weggelaten, want daar bestaat hover niet. -->
+      <li class="has-sub">
+        <a href="../over-ons/">Over ons</a>
+        <ul class="sub">
+          <li><a href="../interactieve-installaties/">Interactieve installaties</a></li>
+          <li><a href="../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+          <li><a href="../podium/">Podium &amp; instrumenten</a></li>
+          <li><a href="../installatie-huren/">Installaties huren</a></li>
+          <li><a href="../workshops/">Talks &amp; workshops</a></li>
+        </ul>
+      </li>
+      <li><a href="../contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header><!--/ingebakken:header-->
+<main id="inhoud">
 
 <!-- ============ BLOG (bubblegum) ============ -->
 <section class="section section--bubblegum" data-nav="dark">
-  <i class="ph-bold ph-waveform deco" style="top:12%;left:6%;font-size:54px"></i>
-  <i class="ph-bold ph-game-controller deco" style="bottom:14%;right:7%;font-size:56px"></i>
+  <svg class="ph deco" style="top:12%;left:6%;font-size:54px" aria-hidden="true"><use href="#ph-waveform"/></svg>
+  <svg class="ph deco" style="bottom:14%;right:7%;font-size:56px" aria-hidden="true"><use href="#ph-game-controller"/></svg>
   <div class="container">
     <div class="section-head">
       <p class="kicker">Uit de studio</p>
       <h1>Blog</h1>
       <p class="lead">Verhalen over wat we maken, met wie, en wat er gebeurt als iemand anders ermee aan de slag gaat. Daar leren we zelf het meeste van.</p>
     </div>
-    <div class="grid" data-list="blog"></div>
+    <div class="grid" data-list="blog"><!--ingebakken--><article class="project"><a href="../werk/nintendo-zapper-muziekinstrument/"><div class="project__img" data-video="../werk/nintendo-zapper-muziekinstrument/nintendo-zapper-muziekinstrument-kaart-web.mp4"><img src="../werk/nintendo-zapper-muziekinstrument/nintendo-zapper-muziekinstrument-kaart.webp" alt="Een Nintendo Zapper als muziekinstrument" width="800" height="800" loading="lazy"></div><h2 class="project__titel">Een Nintendo Zapper als muziekinstrument</h2><p class="project__excerpt">Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.</p></a></article><article class="project"><a href="../werk/boek-vol-spelvouten/"><div class="project__img"><img src="../werk/boek-vol-spelvouten/boek-vol-spelvouten-kaart.webp" alt="Een boek vol spelvouten" width="640" height="800" loading="lazy"></div><h2 class="project__titel">Een boek vol spelvouten</h2><p class="project__excerpt">Een boek vol spelfouten, met bij elk exemplaar een rood pennetje. Een puzzelboek voor spellingspuristen.</p></a></article><article class="project"><a href="../werk/workshop-jeugdgevangenis/"><div class="project__img" data-video="../werk/workshop-jeugdgevangenis/drum-robot-kaart.mp4"><img src="../werk/workshop-jeugdgevangenis/workshop-jeugdgevangenis-kaart.webp" alt="Drie dagen in de gevangenis" width="800" height="800" loading="lazy"></div><h2 class="project__titel">Drie dagen in de gevangenis</h2><p class="project__excerpt">Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.</p></a></article><article class="project"><a href="../werk/crafted-festival/"><div class="project__img"><img src="../werk/crafted-festival/crafted-summa-fashion-projectie-kaart.webp" alt="Jureren op Crafted" width="800" height="800" loading="lazy"></div><h2 class="project__titel">Jureren op Crafted</h2><p class="project__excerpt">Een dag tussen het eindexamenwerk van Summa-studenten. De werken waren fantastisch, de verhalen erachter nog beter.</p></a></article><article class="project"><a href="../werk/robotstofzuiger-xp/"><div class="project__img" data-video="../werk/robotstofzuiger-xp/robotstofzuiger-loop-web.mp4"><img src="../werk/robotstofzuiger-xp/robotstofzuiger-xp-kaart.webp" alt="Wie wil mijn robotstofzuiger besturen?" width="800" height="800" loading="lazy"></div><h2 class="project__titel">Wie wil mijn robotstofzuiger besturen?</h2><p class="project__excerpt">Gamen met mijn neefjes bracht me op een idee dat net te slecht is om te maken, maar net te leuk om los te laten.</p></a></article><article class="project"><a href="../werk/lindenberg-cultuurhuis/"><div class="project__img"><img src="../werk/lindenberg-cultuurhuis/lindenberg-cultuurhuis-kaart.webp" alt="Workshops Lindenberg Cultuurhuis" width="451" height="800" loading="lazy"></div><h2 class="project__titel">Workshops Lindenberg Cultuurhuis</h2><p class="project__excerpt">Leerlingen maakten met de SideQuest Rave hun eigen soundtrack bij een zelfgemaakte film.</p></a></article><article class="project"><a href="../werk/makerdays-eindhoven-2025/"><div class="project__img"><img src="../werk/makerdays-eindhoven-2025/makerdays-eindhoven-2025-kaart.webp" alt="MAKERDAYS Eindhoven 2025" width="800" height="534" loading="lazy"></div><h2 class="project__titel">MAKERDAYS Eindhoven 2025</h2><p class="project__excerpt">Weer aanwezig bij de MAKERDAYS Eindhoven met de SideQuest Rave en de arcademachine, inmiddels bijna traditie.</p></a></article><article class="project"><a href="../werk/cpunt-mediafestival-2025/"><div class="project__img"><img src="../werk/cpunt-mediafestival-2025/cpunt-mediafestival-2025-kaart.webp" alt="Cpunt Mediafestival 2025" width="800" height="451" loading="lazy"></div><h2 class="project__titel">Cpunt Mediafestival 2025</h2><p class="project__excerpt">We werden ingezet als rustmoment, maar werden het drukste plekje van het mediafestival.</p></a></article><article class="project"><a href="../werk/2025-terugblik/"><div class="project__img"><img src="../werk/2025-terugblik/2025-terugblik-kaart.webp" alt="2025 terugblik" width="800" height="534" loading="lazy"></div><h2 class="project__titel">2025 terugblik</h2><p class="project__excerpt">In 2025 werkten we samen met Joost Klein en bouwden we installaties voor musea die nog niemand gezien had.</p></a></article><article class="project"><a href="../werk/drummende-gitaar/"><div class="project__img" data-video="../werk/drummende-gitaar/drummende-gitaar-kaart-web.mp4"><img src="../werk/drummende-gitaar/drummende-gitaar-kaart.webp" alt="De drummende gitaar" width="800" height="450" loading="lazy"></div><h2 class="project__titel">De drummende gitaar</h2><p class="project__excerpt">Een gitaar die ik niet alleen versterkte maar ook liet drummen. Achteraf het kantelpunt van muziek maken naar bouwen.</p></a></article><article class="project"><a href="../werk/makers-festival-twente/"><div class="project__img" data-video="../werk/makers-festival-twente/makers-festival-twente-kaart-web.mp4"><img src="../werk/makers-festival-twente/makers-festival-twente-kaart.webp" alt="Makers Festival Twente" width="800" height="800" loading="lazy"></div><h2 class="project__titel">Makers Festival Twente</h2><p class="project__excerpt">Vier dagen op het Makers Festival Twente met de arcadekast en de Side Quest Rave. Van giechelende kids tot ouders die weer kind durfden te zijn.</p></a></article><article class="project"><a href="../werk/mkrdays-2024/"><div class="project__img"><img src="../werk/mkrdays-2024/mkrdays-2024-kaart.webp" alt="The MKRDAYS Eindhoven" width="800" height="534" loading="lazy"></div><h2 class="project__titel">The MKRDAYS Eindhoven</h2><p class="project__excerpt">Twee dagen in het teken van de makers, met de Side Quest Rave en de arcade-kast op de fair.</p></a></article><article class="project"><a href="../werk/muzikale-speelplaats/"><div class="project__img"><img src="../werk/muzikale-speelplaats/muzikale-speelplaats-kaart.webp" alt="Een Muzikale Speelplaats voor Iedereen" width="800" height="601" loading="lazy"></div><h2 class="project__titel">Een Muzikale Speelplaats voor Iedereen</h2><p class="project__excerpt">Met de SideQuest Rave op het Nerdland Festival: samen muziek maken, ongeacht je muzikale achtergrond.</p></a></article><article class="project"><a href="../werk/maak-muziek-die-er-ook-mooi-uitziet/"><div class="project__img"><img src="../werk/maak-muziek-die-er-ook-mooi-uitziet/maak-muziek-die-er-ook-mooi-uitziet-kaart.webp" alt="Maak muziek die er ook mooi uitziet" width="776" height="661" loading="lazy"></div><h2 class="project__titel">Maak muziek die er ook mooi uitziet</h2><p class="project__excerpt">De uitdaging die ik gaf aan studenten van de KU Leuven, en de drumrobot die eruit voortkwam.</p></a></article><!--/ingebakken--></div>
   </div>
 </section>
 
 <!-- ============ GET IN TOUCH (koraal) ============ -->
 <section class="section section--coral touch" data-nav="light">
   <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-heart deco" style="top:18%;right:9%;font-size:50px"></i>
+  <svg class="ph deco" style="top:18%;right:9%;font-size:50px" aria-hidden="true"><use href="#ph-heart"/></svg>
   <div class="container">
     <p class="kicker">Get in touch</p>
     <h2>Iets moois maken samen?</h2>
     <p class="lead">Benieuwd of we samen iets kunnen maken? Bel of mail gerust, we denken graag mee.</p>
     <div class="touch__pills">
-      <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
-      <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+      <a class="btn btn--light" href="mailto:info@studiowotto.com"><svg class="ph" aria-hidden="true"><use href="#ph-envelope-simple"/></svg> info@studiowotto.com</a>
+      <a class="btn btn--light" href="tel:+31643474328"><svg class="ph" aria-hidden="true"><use href="#ph-phone"/></svg> +31 6 43474328</a>
     </div>
   </div>
 </section>
 
-<div data-include="footer"></div>
+</main>
+<!--ingebakken:footer--><footer class="footer" data-partial data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="../logo's/logo%20studio%20wotto%20white-web.webp" alt="Studio Wotto" width="1360" height="523">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h2 class="footer__kop">Wat we doen</h2><ul>
+        <li><a href="../interactieve-installaties/">Interactieve installaties</a></li>
+        <li><a href="../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+        <li><a href="../podium/">Podium &amp; instrumenten</a></li>
+        <li><a href="../installatie-huren/">Installaties huren</a></li>
+        <li><a href="../workshops/">Talks &amp; workshops</a></li></ul></div>
+      <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../projecten/">Projecten</a></li><li><a href="./">Blog</a></li>
+        <li><a href="../over-ons/">Over ons</a></li><li><a href="../contact/">Contact</a></li></ul></div>
+      <div><h2 class="footer__kop">Contact</h2><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Hurksestraat 19<br>5652 AH Eindhoven</li></ul></div>
+      <div><h2 class="footer__kop">Volg</h2><ul>
+        <li><a href="https://www.instagram.com/studio.wotto/">Instagram</a></li><li><a href="https://www.linkedin.com/company/studio-wotto/">LinkedIn</a></li><li><a href="https://www.youtube.com/@jwotto">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · studiowotto.com</span>
+      <!-- KVK en BTW-id horen hier: een zakelijke site in Nederland moet ze
+           makkelijk vindbaar hebben staan (art. 3:15d BW). Let op: dit is het
+           BTW-IDENTIFICATIEnummer, niet het oude BTW-nummer. -->
+      <span>KVK 66978106 · BTW NL002219337B86</span>
+      <span>Creatieve technologie uit Eindhoven</span>
+    </div>
+  </div>
+</footer><!--/ingebakken:footer-->
 
 <script src="../js/site.js"></script>
 </body>

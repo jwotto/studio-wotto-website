@@ -15,7 +15,9 @@ het bestand weer weg, het is altijd opnieuw te maken.
 import json, pathlib, re, html, sys
 
 SITE = pathlib.Path(__file__).resolve().parent.parent
-slugs = json.load(open(SITE / "content.json", encoding="utf-8"))
+# content.json bevat sinds de snelheidsronde hele items in plaats van losse
+# mapnamen. Hier is alleen de mapnaam nodig.
+slugs = [i["slug"] for i in json.load(open(SITE / "content.json", encoding="utf-8"))]
 
 L = [
     "BIJSCHRIFTEN PER AFBEELDING EN VIDEO",

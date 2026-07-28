@@ -61,7 +61,9 @@
     const a = document.createElement('a');
     a.className = 'chip chip--huur';
     a.href = base + 'installatie-huren/';
-    a.innerHTML = '<i class="ph-bold ph-truck"></i> Te huur';
+    // De tekening van het vrachtwagentje staat in de sprite bovenaan de pagina;
+    // tools/build-inbakken.py zet die er neer bij elk stuk dat te huur is.
+    a.innerHTML = '<svg class="ph" aria-hidden="true"><use href="#ph-truck"/></svg> Te huur';
     chips.appendChild(a);
   }
 
@@ -988,46 +990,31 @@
      Elk content-item is een eigen map in werk/ (bijv. /werk/ramses3000/).
      De map is neutraal: de <meta name="wotto:type"> in de HTML bepaalt of
      het een project of een blog is, zodat de URL nooit hoeft te wijzigen
-     als je dat omzet. We lezen content.json (de lijst mappen), halen per
-     item de kenmerken uit de meta-tags, en vullen de lijsten/carousels. */
-  function slugify(s){ return (s || '').trim().toLowerCase().replace(/\s+/g, '-'); }
+     als je dat omzet.
+
+     Normaal gesproken komt hier niets meer aan te pas: tools/build-inbakken.py
+     zet de kaartjes al bij het bouwen in de HTML. Dit blijft staan als vangnet
+     voor een pagina die nog niet gebouwd is, en voor filters die je in de
+     browser zou willen omzetten.
+
+     Vroeger haalde deze code alle 29 projectpagina's apart op om er de
+     meta-tags uit te lezen. Dat is nu één keer gedaan in build-manifest.py, dus
+     content.json bevat de kenmerken zelf en één verzoek is genoeg. */
   function esc(s){ return (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   const PILAAR_LABEL = { installaties:'Interactieve installaties', webapps:'Muzikale webapps & games', podium:'Podium & instrumenten' };
-
-  function parseItem(slug, html){
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const m = n => { const el = doc.querySelector('meta[name="wotto:' + n + '"]'); return el ? (el.getAttribute('content') || '').trim() : ''; };
-    const cover = m('cover') || 'cover.jpg';
-    return {
-      slug,
-      type: (m('type') || 'project').toLowerCase(),
-      pilaar: m('pilaar').toLowerCase(),
-      subjects: m('subjects').split(',').map(slugify).filter(Boolean),
-      titel: m('titel') || slug,
-      excerpt: m('excerpt'),
-      datum: m('datum'),
-      featured: /^(ja|true|1)$/i.test(m('featured')),
-      huur: /^(ja|true|1)$/i.test(m('huur')),          // staat dit stuk te huur op locatie?
-      url: base + 'werk/' + slug + '/',
-      coverUrl: base + 'werk/' + slug + '/' + cover,
-      // Optioneel: een kort, geluidloos filmpje dat op de kaart afspeelt in
-      // plaats van de foto. Alleen voor loops. Goed gecomprimeerd is zo'n
-      // filmpje lichter dan de foto zelf. De cover blijft nodig: als poster,
-      // als deel-thumbnail, en voor wie geen beweging wil zien.
-      videoUrl: m('videocover') ? base + 'werk/' + slug + '/' + m('videocover') : ''
-    };
-  }
 
   function loadItems(){
     return fetch(base + 'content.json')
       .then(r => r.ok ? r.json() : [])
-      .then(slugs => Promise.all((slugs || []).map(slug =>
-        fetch(base + 'werk/' + slug + '/index.html')
-          .then(r => r.text())
-          .then(html => parseItem(slug, html))
-          .catch(err => { console.error('Content laden mislukt:', slug, err); return null; })
-      )))
-      .then(items => items.filter(Boolean))
+      .then(items => (items || []).map(i => Object.assign({}, i, {
+        url: base + 'werk/' + i.slug + '/',
+        coverUrl: base + 'werk/' + i.slug + '/' + i.cover,
+        // Optioneel: een kort, geluidloos filmpje dat op de kaart afspeelt in
+        // plaats van de foto. Alleen voor loops. Goed gecomprimeerd is zo'n
+        // filmpje lichter dan de foto zelf. De cover blijft nodig: als poster,
+        // als deel-thumbnail, en voor wie geen beweging wil zien.
+        videoUrl: i.videocover ? base + 'werk/' + i.slug + '/' + (i.videocover_licht || i.videocover) : ''
+      })))
       .catch(err => { console.error('Manifest laden mislukt:', err); return []; });
   }
 
@@ -1047,12 +1034,16 @@
     return '<article class="project' + (inCarousel ? ' carousel__item' : '') + '">'
       + '<a href="' + item.url + '">'
       + '<div class="project__img">' + beeld + '</div>'
-      + '<h3>' + esc(item.titel) + '</h3>' + onder
+      + '<h3 class="project__titel">' + esc(item.titel) + '</h3>' + onder
       + '</a></article>';
   }
 
   function renderCollections(items){
     document.querySelectorAll('[data-list]').forEach(el => {
+      // Staat er al iets? Dan is dit een gebouwde pagina en heeft
+      // tools/build-inbakken.py de kaartjes er al in gezet. Niet overdoen: dat
+      // levert precies dezelfde HTML op, maar wel een tweede keer verspringen.
+      if (el.firstElementChild) return;
       // 'project' | 'blog' | 'workshop' | 'all', of meerdere: 'project,blog'
       const types = el.dataset.list.split(',').map(s => s.trim()).filter(Boolean);
       let list = items.filter(i => types.includes('all') || types.includes(i.type));
@@ -1069,9 +1060,134 @@
     });
   }
 
-  /* ---------- Start ---------- */
+  /* Bewegende cover op een ingebakken kaart.
+     De kaartjes komen uit de bouwstap en hebben altijd de stille foto, want bij
+     het bouwen weet je niet wie er komt kijken. Wie geen beweging wil zien (een
+     echte systeeminstelling, o.a. tegen misselijkheid) houdt die foto. De rest
+     krijgt hier het filmpje eroverheen. Verspringen kan niet: .project__img
+     heeft een vaste verhouding van 1/1, dus de doos is al even groot. */
+  function videoCovers(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const boxen = document.querySelectorAll('.project__img[data-video]');
+    // Zonder IntersectionObserver doen we niets. De foto blijft dan gewoon
+    // staan, en dat is een prima kaart.
+    if (!boxen.length || !('IntersectionObserver' in window)) return;
+
+    function start(box, klaar){
+      const img = box.querySelector('img');
+      if (!img || box.dataset.filmBezig) { if (klaar) klaar(); return; }
+      box.dataset.filmBezig = '1';
+
+      const v = document.createElement('video');
+      v.autoplay = v.loop = v.muted = v.playsInline = true;
+      v.preload = 'auto';                  // nu mag hij wel vooruit laden
+      v.poster = img.getAttribute('src');
+      v.setAttribute('aria-label', img.getAttribute('alt') || '');
+
+      // Pas wisselen als hij hem in één keer kan uitspelen. Dit is de hele
+      // truc: hiervoor stond er preload="none" mét autoplay, en dat is een
+      // tegenstrijdige opdracht. De browser mocht niet vooruit laden maar moest
+      // wel meteen spelen, dus speelde hij terwijl het bestand binnenkwam. Dat
+      // haperde, en met vijf filmpjes tegelijk vochten ze ook nog om dezelfde
+      // bandbreedte. Nu staat de foto er tot het filmpje echt klaar is.
+      let gewisseld = false;
+      function wissel(){
+        if (gewisseld) return;
+        gewisseld = true;
+        if (img.isConnected) {
+          img.replaceWith(v);
+          const p = v.play();
+          if (p && p.catch) p.catch(function(){});  // mag niet? dan blijft de poster
+        }
+        if (klaar) klaar();                         // de kopieën mogen nu ook
+      }
+
+      v.addEventListener('canplaythrough', wissel, { once: true });
+
+      // Vangnet. canplaythrough is een belofte van de browser dat hij het in één
+      // keer kan uitspelen, en die belofte doet hij op een krappe verbinding
+      // soms nooit. Dan blijft de kaart eeuwig stilstaan, en dat is erger dan
+      // een klein hikje. Na vier seconden nemen we genoegen met "hij kan
+      // vooruit spelen" (readyState 3).
+      setTimeout(function(){ if (v.readyState >= 3) wissel(); }, 4000);
+
+      v.addEventListener('error', function(){
+        box.dataset.filmBezig = '';
+        if (klaar) klaar();
+      }, { once: true });
+      v.src = box.dataset.video;
+    }
+
+    // Eerst één per bestand, de kopieën pas daarna.
+    // De carousel zet de reeks kaarten er drie keer neer om eindeloos te kunnen
+    // doorscrollen. Startten we die alle drie tegelijk, dan haalde de browser
+    // hetzelfde filmpje ook drie keer op: gemeten 3056 KB in plaats van 1178 KB.
+    // Een video-element trekt zich niets aan van een verzoek dat al onderweg is.
+    // Wachten we tot de eerste binnen is, dan komen de kopieën uit het
+    // cachegeheugen en kosten ze niets.
+    function startGroep(lijst){
+      const perBestand = new Map();
+      lijst.forEach(function(b){
+        const url = b.dataset.video;
+        if (!perBestand.has(url)) perBestand.set(url, []);
+        perBestand.get(url).push(b);
+      });
+      perBestand.forEach(function(boxen){
+        const kopieen = boxen.slice(1);
+        start(boxen[0], function(){
+          kopieen.forEach(function(b){ start(b); });
+        });
+      });
+    }
+
+    // WAT WE HIER IN DE GATEN HOUDEN, EN WAAROM NIET DE KAART ZELF
+    // Op /blog/ en /projecten/ staan de kaarten in een gewoon raster. Daar kun
+    // je per kaart kijken of hij in beeld komt, en dat is precies wat je wilt.
+    //
+    // Op de homepage staan ze in een carousel: een vak met overflow-x waar je
+    // zijwaarts doorheen veegt. Daar werkt kijken-per-kaart niet. Een browser
+    // rekent zichtbaarheid namelijk ook af tegen elk scrollend vak ertussen, en
+    // de marge die je meegeeft rekt alleen het venster op, niet dat vak. Een
+    // kaart die net buiten de carousel staat blijft dus onzichtbaar, hoe groot
+    // je die marge ook maakt. Gevolg: het filmpje begon pas te laden op het
+    // moment dat je de kaart al voor je neus had.
+    //
+    // Daarom kijken we bij een carousel naar de carousel zelf. Komt die in de
+    // buurt van het scherm, dan zetten we alles erin klaar. Dat zijn er in de
+    // praktijk drie of vier, en de kopieën die de carousel maakt voor het
+    // eindeloos doorscrollen wijzen naar hetzelfde bestand, dus die haalt de
+    // browser maar één keer op.
+    const groepen = new Map();
+    boxen.forEach(function(b){
+      const groep = b.closest('.carousel') || b;
+      if (!groepen.has(groep)) groepen.set(groep, []);
+      groepen.get(groep).push(b);
+    });
+
+    const kijker = new IntersectionObserver(function(regels){
+      regels.forEach(function(r){
+        if (!r.isIntersecting) return;
+        kijker.unobserve(r.target);
+        startGroep(groepen.get(r.target) || []);
+      });
+    }, { rootMargin: '400px' });
+
+    groepen.forEach(function(_, groep){ kijker.observe(groep); });
+  }
+
+  /* ---------- Start ----------
+     Op een gebouwde pagina staan de partials en de kaartjes al in de HTML. Dan
+     valt hier vrijwel alles weg: includePartials() vindt geen plekhouders meer
+     en content.json wordt alleen nog opgehaald als er echt een lege lijst staat. */
+  const leegLijstje = () => [...document.querySelectorAll('[data-list]')].some(el => !el.firstElementChild);
+
   includePartials()
-    .then(() => document.querySelector('[data-list]') ? loadItems() : [])
+    .then(() => leegLijstje() ? loadItems() : [])
     .then(items => renderCollections(items))
-    .then(initSite);
+    // videoCovers NA initSite: de carousel maakt daar kopieën van de kaarten om
+    // eindeloos te kunnen doorscrollen, en die kopieën moeten ook een filmpje
+    // krijgen. Andersom keek de kijker alleen naar de originelen en bleef de
+    // kaart die je in beeld kreeg stilstaan.
+    .then(initSite)
+    .then(videoCovers);
 })();

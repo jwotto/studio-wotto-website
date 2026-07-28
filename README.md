@@ -1,11 +1,16 @@
 # Studio Wotto: de website
 
-Platte HTML, CSS en een beetje JavaScript. **Geen build-stap, geen Node, geen
-framework.** Je opent een bestand, past het aan, en dat is wat er online staat.
-Openen met Live Server en je ziet het meteen.
+Platte HTML, CSS en een beetje JavaScript. **Geen Node, geen framework.** Je
+opent een bestand, past het aan, en dat is wat er online staat.
 
-Waar mikken we op en wat doe je bij nieuwe content: `seo-route.md`.
-Hoe het eruitziet en waarom: `stijl.md`.
+Wel één commando: `python tools/build.py`. Dat zet de header, de footer en de
+kaartjes in de pagina's, verkleint nieuwe foto's en werkt de sitemap bij. Draai
+het na elke aanpassing, dan zie je met Live Server meteen het echte resultaat.
+Waarom dat nodig werd: zie [Snelheid](#snelheid-wat-er-in-de-paginas-gebakken-wordt).
+
+Waar mikken we op en wat doe je bij nieuwe content: [seo-route.md](seo-route.md).
+Hoe het eruitziet en waarom: [stijl.md](stijl.md).
+**Waar je op moet letten als je iets toevoegt: [snelheid.md](snelheid.md).**
 
 ---
 
@@ -186,13 +191,25 @@ altijd eerst bij Jan-Willem voordat het definitief is**:
 <div data-include="header"></div>
 ```
 
-`site.js` haalt het bestand op en pakt daaruit alleen het element met
-`data-partial`. De rest van de partial (de `<head>`, het voorbeeldkader) wordt
-genegeerd. Dat is met opzet: **je kunt een partial los openen met Live Server
-en dan ziet hij er gewoon uit**, inclusief vormgeving.
+`tools/build-inbakken.py` pakt daaruit alleen het element met `data-partial` en
+zet dat in de pagina, tussen markeringen:
 
-Relatieve paden in een partial worden bij het inladen omgerekend tegen de
-partial zelf, dus `../projecten/` klopt vanaf elke maplaag.
+```html
+<!--ingebakken:header--> ...de header... <!--/ingebakken:header-->
+```
+
+De rest van de partial (de `<head>`, het voorbeeldkader) wordt genegeerd. Dat is
+met opzet: **je kunt een partial los openen met Live Server en dan ziet hij er
+gewoon uit**, inclusief vormgeving. Relatieve paden worden omgerekend naar de
+maplaag van de pagina, dus `../projecten/` klopt overal.
+
+**Je past de footer dus nog steeds op één plek aan.** Alleen: draai daarna
+`python tools/build.py`, anders staat de oude versie nog in de pagina's. Niet
+stuk, wel oud. Dezelfde afspraak als bij de onderwerp-pagina's.
+
+Vergeet je te bouwen op een nieuwe pagina? Dan valt `site.js` terug op de oude
+werkwijze en haalt de partial alsnog op bij de bezoeker. Je site is dus nooit
+kapot, alleen langzamer.
 
 ### 5. Waarom de site op elke plek werkt
 
@@ -277,20 +294,85 @@ Python, geen dependencies behalve Pillow. Draaien vanuit de projectmap.
 python tools/build.py
 ```
 
-Dat is het enige commando dat je nodig hebt. Het draait de drie stappen in de
+Dat is het enige commando dat je nodig hebt. Het draait de zes stappen in de
 juiste volgorde:
 
 | Stap | Wat het doet |
 |---|---|
-| `build-manifest.py` | schrijft `content.json`: welke items bestaan er. Slaat items zonder cover over. |
+| `build-manifest.py` | schrijft `content.json`: welke items bestaan er **en hun kenmerken**. Slaat items zonder cover over. |
 | `build-galerij.py` | verkleint te grote foto's en bouwt de galerij onder een item |
 | `build-onderwerpen.py` | onderwerp-pagina's, alle chip-wolken, en de chips op elk item |
 | `build-seo.py` | structured data op elke pagina + `sitemap.xml` |
+| `build-kaartbeeld.py` | maakt van elke cover een lichte `-kaart.webp` voor de kaartjes |
+| `build-kaartfilm.py` | maakt van elk kaartfilmpje een lichte `-web.mp4`. Het filmpje in het artikel zelf blijft ongemoeid |
+| `build-inbakken.py` | zet header, footer, kaartjes, iconen en `<main>` in de HTML |
+
+Daarna draait `check-snelheid.py` nog als controle. Die bouwt niets, maar kijkt
+het resultaat na op de regels uit [snelheid.md](snelheid.md): beeld zonder
+`width`/`height`, uitschieters in bestandsgrootte, kapotte verwijzingen, gaten in
+de kopvolgorde, titels die te lang of te kort zijn. **Hij blokkeert nooit iets.**
+Of een zware foto de moeite waard is, bepaal jij.
 
 **Draai ze niet los, of hou dan deze volgorde aan.** `build-onderwerpen.py`
 schrijft de onderwerp-pagina's helemaal opnieuw uit zijn sjabloon, en dat
 sjabloon bevat geen structured data. Draai je hem ná `build-seo.py`, dan staan
-die 13 pagina's er zonder. Daarom bestaat `build.py`.
+die 13 pagina's er zonder. En `build-inbakken.py` moet als laatste, want anders
+gooit stap 3 het inbakwerk weer weg. Daarom bestaat `build.py`.
+
+### Klusjes op aanvraag
+
+Deze horen niet in `build.py`, want ze hoeven bijna nooit:
+
+| Script | Wanneer |
+|---|---|
+| `haal-lettertypen.py` | een ander lettertype, of een nieuwe versie van Google overnemen |
+| `haal-iconen.py` | je gebruikt een nieuw Phosphor-icoon. `build-inbakken.py` waarschuwt als er één mist |
+| `verklein-logos.py` | een klantlogo toegevoegd of vervangen |
+| `bijschriften.py` | overzicht van alle bijschriften nalopen |
+| `check-snelheid.py` | los nakijken zonder te bouwen |
+
+### Snelheid: wat er in de pagina's gebakken wordt
+
+Hier zat een probleem dat je op je eigen snelle verbinding niet ziet. De pagina
+had vier gaten die JavaScript pas na het laden vulde: de header, de footer en de
+twee kaartenstroken. Voor die kaartjes werden ook nog **alle 29 projectpagina's
+apart opgehaald**, puur om er de metatags uit te lezen.
+
+Op een trage telefoonverbinding leverde dat drie problemen op:
+
+1. De pagina versprong zichtbaar, vier keer. Google meet dat als CLS en gaf er
+   0,467 voor, waar 0,1 de grens is. Dat kost een kwart van je snelheidsscore.
+2. Het duurde lang. 82 verzoeken en bijna 5 MB voordat de pagina stond.
+3. Wie geen JavaScript uitvoert zag een pagina zonder menu en zonder projecten.
+   Google draait je JavaScript wel, maar de AI-assistenten die tegenwoordig
+   websites lezen doen dat vaak niet.
+
+Wat er nu anders is:
+
+- **De kenmerken staan in `content.json`.** Eén klein bestand in plaats van 29
+  grote. De metatags in de pagina's blijven de bron; `build-manifest.py` leest ze.
+- **Header, footer, kaartjes en `<main>` staan in de HTML.** Geen gat, geen
+  versprong, en iedereen ziet dezelfde pagina.
+- **Lettertypen en iconen komen van je eigen server.** De `<link>`-regels naar
+  `fonts.googleapis.com` en `unpkg.com` blokkeerden het tekenen van de pagina tot
+  een vreemd domein antwoordde. In de bron schrijf je iconen nog gewoon als
+  `<i class="ph-bold ph-naam"></i>`; het bouwen maakt er een SVG van en zet
+  alleen de tekeningen die die pagina nodig heeft bovenaan.
+- **Covers en logo's hebben een lichte WebP** naast het origineel. Het
+  Summa-logo ging van 149 KB naar 8 KB: het stond op 3815 pixels breed en wordt
+  op vijftig getoond.
+
+Resultaat, gemeten met Lighthouse op mobiel: van 82 naar 37 verzoeken, van 4990
+naar 2215 KB, CLS van 0,083 naar 0, en geen enkel verzoek meer naar een ander
+domein. (Die 0,083 is de meting op localhost, waar geen netwerkvertraging is; op
+de echte server stond hij op 0,467.)
+
+Daarna waren de filmpjes op de kaarten het zwaarst. Die zijn met
+`build-kaartfilm.py` teruggebracht van 1646 naar 913 KB, waarbij alleen de twee
+uitschieters echt zijn aangepakt en de rest zijn kwaliteit hield. **De filmpjes
+in de artikelen zelf zijn niet aangeraakt**: die staan op `preload="none"` met
+een afspeelknop, dus ze kosten pas iets als iemand erop drukt, en dan wil je
+juist het volledige bestand. De uitleg staat in [snelheid.md](snelheid.md).
 
 Twee keer draaien geeft exact hetzelfde resultaat, dus je kunt het altijd doen.
 

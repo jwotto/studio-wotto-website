@@ -1,31 +1,602 @@
 [
-  "2025-terugblik",
-  "aura-bouw-lasers",
-  "boek-vol-spelvouten",
-  "bouw-je-droombaan",
-  "bouw-je-eigen-elektrische-gitaar",
-  "cpunt-mediafestival-2025",
-  "crackthenotes",
-  "crafted-festival",
-  "drummende-gitaar",
-  "interactieve-arcade-kast",
-  "joost-klein",
-  "lindenberg-cultuurhuis",
-  "maak-een-game",
-  "maak-muziek-die-er-ook-mooi-uitziet",
-  "maak-muziek-met-techniek",
-  "makerdays-eindhoven-2025",
-  "makers-festival-twente",
-  "mkrdays-2024",
-  "museum-speelklok",
-  "muzikale-speelplaats",
-  "nintendo-zapper-muziekinstrument",
-  "ramses3000",
-  "robotstofzuiger-xp",
-  "side-quest-rave",
-  "snes-videosynthesizer",
-  "tantu-beats",
-  "technomaker",
-  "workshop-jeugdgevangenis",
-  "workshop-soundsketch"
+  {
+    "slug": "nintendo-zapper-muziekinstrument",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "muziekinstrumenten",
+      "creatieve-technologie"
+    ],
+    "titel": "Een Nintendo Zapper als muziekinstrument",
+    "excerpt": "Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.",
+    "datum": "2026-07-27",
+    "featured": false,
+    "huur": false,
+    "cover": "nintendo-zapper-muziekinstrument.jpg",
+    "videocover": "nintendo-zapper-muziekinstrument-kaart.mp4",
+    "kaartmaat": [
+      800,
+      800
+    ],
+    "videocover_licht": "nintendo-zapper-muziekinstrument-kaart-web.mp4"
+  },
+  {
+    "slug": "boek-vol-spelvouten",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [],
+    "titel": "Een boek vol spelvouten",
+    "excerpt": "Een boek vol spelfouten, met bij elk exemplaar een rood pennetje. Een puzzelboek voor spellingspuristen.",
+    "datum": "2026-07-13",
+    "featured": false,
+    "huur": false,
+    "cover": "boek-vol-spelvouten.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      640,
+      800
+    ]
+  },
+  {
+    "slug": "workshop-jeugdgevangenis",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Drie dagen in de gevangenis",
+    "excerpt": "Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.",
+    "datum": "2026-06-30",
+    "featured": false,
+    "huur": false,
+    "cover": "workshop-jeugdgevangenis.jpg",
+    "videocover": "drum-robot-kaart.mp4",
+    "kaartmaat": [
+      800,
+      800
+    ]
+  },
+  {
+    "slug": "crafted-festival",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "educatie",
+      "festival"
+    ],
+    "titel": "Jureren op Crafted",
+    "excerpt": "Een dag tussen het eindexamenwerk van Summa-studenten. De werken waren fantastisch, de verhalen erachter nog beter.",
+    "datum": "2026-06-22",
+    "featured": false,
+    "huur": false,
+    "cover": "crafted-summa-fashion-projectie.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      800
+    ]
+  },
+  {
+    "slug": "robotstofzuiger-xp",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "gamification"
+    ],
+    "titel": "Wie wil mijn robotstofzuiger besturen?",
+    "excerpt": "Gamen met mijn neefjes bracht me op een idee dat net te slecht is om te maken, maar net te leuk om los te laten.",
+    "datum": "2026-06-15",
+    "featured": false,
+    "huur": false,
+    "cover": "robotstofzuiger-xp.jpg",
+    "videocover": "robotstofzuiger-loop.mp4",
+    "kaartmaat": [
+      800,
+      800
+    ],
+    "videocover_licht": "robotstofzuiger-loop-web.mp4"
+  },
+  {
+    "slug": "museum-speelklok",
+    "type": "project",
+    "pilaar": "installaties",
+    "subjects": [
+      "museum",
+      "muziektechnologie",
+      "interactieve-kunst",
+      "phygital"
+    ],
+    "titel": "Muziekmachines in Museum Speelklok",
+    "excerpt": "Vier schermen waarop je je eigen muziekmachine samenstelt. En dan draaien aan het rad, want zonder handbeweging geen muziek.",
+    "datum": "2026-04-14",
+    "featured": true,
+    "huur": false,
+    "cover": "museum-speelklok-muziekmachine.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      640,
+      800
+    ]
+  },
+  {
+    "slug": "lindenberg-cultuurhuis",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Workshops Lindenberg Cultuurhuis",
+    "excerpt": "Leerlingen maakten met de SideQuest Rave hun eigen soundtrack bij een zelfgemaakte film.",
+    "datum": "2026-02-27",
+    "featured": true,
+    "huur": false,
+    "cover": "lindenberg-cultuurhuis.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      451,
+      800
+    ]
+  },
+  {
+    "slug": "ramses3000",
+    "type": "project",
+    "pilaar": "podium",
+    "subjects": [
+      "muziektechnologie",
+      "creatieve-technologie",
+      "phygital",
+      "festival"
+    ],
+    "titel": "Ramses3000 videosynthesizer",
+    "excerpt": "Een instrument waarmee je geen muziek maakt maar beeld. Gekleurde vloeistof in een schaaltje, live bespeeld.",
+    "datum": "2026-02-06",
+    "featured": true,
+    "huur": false,
+    "cover": "ramses3000.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      529,
+      800
+    ]
+  },
+  {
+    "slug": "crackthenotes",
+    "type": "project",
+    "pilaar": "webapps",
+    "subjects": [
+      "gamification",
+      "muziektechnologie",
+      "games"
+    ],
+    "titel": "NoteCracker",
+    "excerpt": "Muzieknoten leren lezen door puzzels op te lossen. Denk aan Duolingo, maar dan voor de notenbalk.",
+    "datum": "2026-02-02",
+    "featured": true,
+    "huur": false,
+    "cover": "notecracker-puzzel-muzieknoten-lezen.png",
+    "videocover": "",
+    "kaartmaat": [
+      640,
+      800
+    ]
+  },
+  {
+    "slug": "tantu-beats",
+    "type": "project",
+    "pilaar": "podium",
+    "subjects": [
+      "creatieve-technologie",
+      "merkactivering",
+      "phygital"
+    ],
+    "titel": "Tantu Beats",
+    "excerpt": "We werkten samen met producer Tantu Beats aan een 3D-geprint FL Studio-logo als hart van een campagne.",
+    "datum": "2026-01-30",
+    "featured": true,
+    "huur": false,
+    "cover": "tantu-beats.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      800
+    ]
+  },
+  {
+    "slug": "makerdays-eindhoven-2025",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "festival",
+      "educatie"
+    ],
+    "titel": "MAKERDAYS Eindhoven 2025",
+    "excerpt": "Weer aanwezig bij de MAKERDAYS Eindhoven met de SideQuest Rave en de arcademachine, inmiddels bijna traditie.",
+    "datum": "2026-01-23",
+    "featured": true,
+    "huur": false,
+    "cover": "makerdays-eindhoven-2025.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      534
+    ]
+  },
+  {
+    "slug": "cpunt-mediafestival-2025",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "educatie",
+      "festival"
+    ],
+    "titel": "Cpunt Mediafestival 2025",
+    "excerpt": "We werden ingezet als rustmoment, maar werden het drukste plekje van het mediafestival.",
+    "datum": "2026-01-16",
+    "featured": true,
+    "huur": false,
+    "cover": "cpunt-mediafestival-2025.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      451
+    ]
+  },
+  {
+    "slug": "joost-klein",
+    "type": "project",
+    "pilaar": "podium",
+    "subjects": [
+      "muziekinstrumenten",
+      "creatieve-technologie",
+      "festival"
+    ],
+    "titel": "Joost Klein",
+    "excerpt": "Een boksbeugel die op zijn microfoon klikt, 3D-geprint en met de hand afgewerkt voor Pukkelpop 2025.",
+    "datum": "2026-01-15",
+    "featured": true,
+    "huur": false,
+    "cover": "joost-klein.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      571,
+      800
+    ]
+  },
+  {
+    "slug": "2025-terugblik",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [],
+    "titel": "2025 terugblik",
+    "excerpt": "In 2025 werkten we samen met Joost Klein en bouwden we installaties voor musea die nog niemand gezien had.",
+    "datum": "2026-01-09",
+    "featured": true,
+    "huur": false,
+    "cover": "2025-terugblik.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      534
+    ]
+  },
+  {
+    "slug": "bouw-je-droombaan",
+    "type": "project",
+    "pilaar": "installaties",
+    "subjects": [
+      "educatie",
+      "games",
+      "creatieve-technologie"
+    ],
+    "titel": "Bouw je eigen droombaan",
+    "excerpt": "Jongeren ontwerpen hun eigen racebaan en racen er daarna zelf overheen. Gemaakt met Summa College Techniek.",
+    "datum": "2025-09-15",
+    "featured": true,
+    "huur": false,
+    "cover": "bouw-je-droombaan.jpg",
+    "videocover": "bouw-je-droombaan-kaart.mp4",
+    "kaartmaat": [
+      800,
+      534
+    ],
+    "videocover_licht": "bouw-je-droombaan-kaart-web.mp4"
+  },
+  {
+    "slug": "aura-bouw-lasers",
+    "type": "project",
+    "pilaar": "podium",
+    "subjects": [
+      "geluidsontwerp",
+      "muziektechnologie",
+      "creatieve-technologie",
+      "festival"
+    ],
+    "titel": "Aura Bouw: geluid naar lasers",
+    "excerpt": "Samen met componist Aura Bouw vertaalden we geluid naar lasers. Elke trilling werd zichtbaar als vorm en beweging.",
+    "datum": "2025-09-15",
+    "featured": true,
+    "huur": false,
+    "cover": "aura-bouw-lasers.jpg",
+    "videocover": "aura-bouw-lasers-kaart.mp4",
+    "kaartmaat": [
+      800,
+      800
+    ],
+    "videocover_licht": "aura-bouw-lasers-kaart-web.mp4"
+  },
+  {
+    "slug": "drummende-gitaar",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "muziekinstrumenten",
+      "creatieve-technologie"
+    ],
+    "titel": "De drummende gitaar",
+    "excerpt": "Een gitaar die ik niet alleen versterkte maar ook liet drummen. Achteraf het kantelpunt van muziek maken naar bouwen.",
+    "datum": "2025-07-15",
+    "featured": false,
+    "huur": false,
+    "cover": "drummende-gitaar.jpg",
+    "videocover": "drummende-gitaar-kaart.mp4",
+    "kaartmaat": [
+      800,
+      450
+    ],
+    "videocover_licht": "drummende-gitaar-kaart-web.mp4"
+  },
+  {
+    "slug": "makers-festival-twente",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "festival",
+      "games",
+      "phygital",
+      "educatie"
+    ],
+    "titel": "Makers Festival Twente",
+    "excerpt": "Vier dagen op het Makers Festival Twente met de arcadekast en de Side Quest Rave. Van giechelende kids tot ouders die weer kind durfden te zijn.",
+    "datum": "2025-05-06",
+    "featured": false,
+    "huur": false,
+    "cover": "makers-festival-twente.jpg",
+    "videocover": "makers-festival-twente-kaart.mp4",
+    "kaartmaat": [
+      800,
+      800
+    ],
+    "videocover_licht": "makers-festival-twente-kaart-web.mp4"
+  },
+  {
+    "slug": "technomaker",
+    "type": "project",
+    "pilaar": "webapps",
+    "subjects": [
+      "gamification",
+      "muziektechnologie",
+      "muziekinstrumenten",
+      "geluidsontwerp"
+    ],
+    "titel": "Techno Maker",
+    "excerpt": "Maak je eigen elektronische beat in je browser. Niet om te produceren, maar om live te spelen.",
+    "datum": "2025-02-02",
+    "featured": true,
+    "huur": false,
+    "cover": "technomaker-step-sequencer-beat-maken.png",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      420
+    ]
+  },
+  {
+    "slug": "mkrdays-2024",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "festival",
+      "educatie"
+    ],
+    "titel": "The MKRDAYS Eindhoven",
+    "excerpt": "Twee dagen in het teken van de makers, met de Side Quest Rave en de arcade-kast op de fair.",
+    "datum": "2024-09-26",
+    "featured": true,
+    "huur": false,
+    "cover": "mkrdays-2024.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      534
+    ]
+  },
+  {
+    "slug": "workshop-soundsketch",
+    "type": "workshop",
+    "pilaar": "installaties",
+    "subjects": [
+      "educatie",
+      "geluidsontwerp",
+      "interactieve-kunst"
+    ],
+    "titel": "SoundSketch: teken je eigen geluid",
+    "excerpt": "Teken met een potlood en hoor je tekening. Grafiet geleidt, en hoe langer je lijn, hoe lager de toon.",
+    "datum": "2024-09-19",
+    "featured": true,
+    "huur": false,
+    "cover": "workshop-soundsketch.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      800
+    ]
+  },
+  {
+    "slug": "interactieve-arcade-kast",
+    "type": "project",
+    "pilaar": "installaties",
+    "subjects": [
+      "gamification",
+      "creatieve-technologie",
+      "games",
+      "interactieve-kunst",
+      "phygital"
+    ],
+    "titel": "Een arcade-kast voor jonge uitvinders",
+    "excerpt": "Ontwerp je eigen game-avatar en bouw je eigen controller in een interactieve arcade-kast die jongeren enthousiast maakt voor techniek.",
+    "datum": "2024-07-15",
+    "featured": true,
+    "huur": true,
+    "cover": "interactieve-arcade-kast.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      534
+    ]
+  },
+  {
+    "slug": "maak-muziek-met-techniek",
+    "type": "workshop",
+    "pilaar": "podium",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Muziek en techniek",
+    "excerpt": "Bouw je eigen muziekmachine met sequencers en tikkende elektronica, en maak een geluidskunstwerk dat er ook goed uitziet.",
+    "datum": "2024-07-08",
+    "featured": true,
+    "huur": false,
+    "cover": "maak-muziek-met-techniek.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      711
+    ]
+  },
+  {
+    "slug": "maak-een-game",
+    "type": "workshop",
+    "pilaar": "webapps",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Game ontwikkeling",
+    "excerpt": "Ontwerp en bouw je eigen videogame, speel 'm op een echte arcadekast en deel 'm online met je vrienden.",
+    "datum": "2024-07-08",
+    "featured": true,
+    "huur": false,
+    "cover": "maak-een-game.png",
+    "videocover": "",
+    "kaartmaat": [
+      738,
+      722
+    ]
+  },
+  {
+    "slug": "bouw-je-eigen-elektrische-gitaar",
+    "type": "workshop",
+    "pilaar": "podium",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Bouw je eigen elektrische gitaar",
+    "excerpt": "Bouw van gerecyclede materialen je eigen elektrische gitaar, en ontdek de techniek achter geluid.",
+    "datum": "2024-07-08",
+    "featured": true,
+    "huur": false,
+    "cover": "bouw-je-eigen-elektrische-gitaar.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      800
+    ]
+  },
+  {
+    "slug": "muzikale-speelplaats",
+    "type": "blog",
+    "pilaar": "installaties",
+    "subjects": [
+      "muziektechnologie",
+      "festival",
+      "educatie",
+      "phygital",
+      "muziekinstrumenten"
+    ],
+    "titel": "Een Muzikale Speelplaats voor Iedereen",
+    "excerpt": "Met de SideQuest Rave op het Nerdland Festival: samen muziek maken, ongeacht je muzikale achtergrond.",
+    "datum": "2024-07-04",
+    "featured": true,
+    "huur": false,
+    "cover": "muzikale-speelplaats.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      601
+    ]
+  },
+  {
+    "slug": "side-quest-rave",
+    "type": "project",
+    "pilaar": "installaties",
+    "subjects": [
+      "festival",
+      "muziektechnologie",
+      "muziekinstrumenten",
+      "phygital",
+      "gamification"
+    ],
+    "titel": "The Side Quest Rave",
+    "excerpt": "Een interactieve muziekinstallatie waarmee iedereen samen keiharde elektronische muziek maakt.",
+    "datum": "2024-03-29",
+    "featured": true,
+    "huur": true,
+    "cover": "side-quest-rave.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      534
+    ]
+  },
+  {
+    "slug": "maak-muziek-die-er-ook-mooi-uitziet",
+    "type": "blog",
+    "pilaar": "podium",
+    "subjects": [
+      "educatie"
+    ],
+    "titel": "Maak muziek die er ook mooi uitziet",
+    "excerpt": "De uitdaging die ik gaf aan studenten van de KU Leuven, en de drumrobot die eruit voortkwam.",
+    "datum": "2024-02-08",
+    "featured": true,
+    "huur": false,
+    "cover": "maak-muziek-die-er-ook-mooi-uitziet.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      776,
+      661
+    ]
+  },
+  {
+    "slug": "snes-videosynthesizer",
+    "type": "project",
+    "pilaar": "podium",
+    "subjects": [
+      "interactieve-kunst",
+      "games",
+      "creatieve-technologie",
+      "gamification"
+    ],
+    "titel": "Van Kapotte Super Nintendo naar Audiovisuele Kunst",
+    "excerpt": "Een kapotte Super Nintendo omgebouwd tot muziekgestuurde videosynthesizer, met live visuals via circuitbending en MIDI.",
+    "datum": "2023-01-15",
+    "featured": true,
+    "huur": false,
+    "cover": "snes-videosynthesizer.jpg",
+    "videocover": "snes-videosynthesizer-kaart.mp4",
+    "kaartmaat": [
+      800,
+      450
+    ],
+    "videocover_licht": "snes-videosynthesizer-kaart-web.mp4"
+  }
 ]

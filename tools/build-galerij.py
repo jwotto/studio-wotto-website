@@ -71,7 +71,8 @@ def main():
         print("!! Pillow ontbreekt: pip install pillow")
         return 1
 
-    slugs = json.load(open(SITE_DIR / "content.json", encoding="utf-8"))
+    # content.json bevat hele items; hier is alleen de mapnaam nodig.
+    slugs = [i["slug"] for i in json.load(open(SITE_DIR / "content.json", encoding="utf-8"))]
     totaal_gal = totaal_klein = totaal_kb = 0
 
     # ---- 1. Alles web-klaar maken. Dit staat los van de galerij: ook je cover

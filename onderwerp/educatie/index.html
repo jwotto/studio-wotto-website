@@ -14,13 +14,10 @@
 <meta property="og:title" content="Educatie">
 <meta property="og:description" content="Werk voor het onderwijs. Workshops en installaties waarmee leerlingen niet over techniek horen, maar er zelf iets mee maken.">
 <meta property="og:url" content="https://studiowotto.com/onderwerp/educatie/">
-<meta property="og:image" content="https://studiowotto.com/werk/bouw-je-droombaan/bouw-je-droombaan.jpg">
+<meta property="og:image" content="https://studiowotto.com/werk/workshop-jeugdgevangenis/workshop-jeugdgevangenis.jpg">
 <meta name="twitter:card" content="summary_large_image">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -48,6 +45,7 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-envelope-simple" viewBox="0 0 256 256"><path d="M224,44H32A12,12,0,0,0,20,56V192a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A12,12,0,0,0,224,44ZM193.15,68,128,127.72,62.85,68ZM44,188V83.28l75.89,69.57a12,12,0,0,0,16.22,0L212,83.28V188Z"/></symbol><symbol id="ph-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol><symbol id="ph-student" viewBox="0 0 256 256"><path d="M227.79,52.62l-96-32a11.85,11.85,0,0,0-7.58,0l-96,32A12,12,0,0,0,20,63.37,6.05,6.05,0,0,0,20,64v80a12,12,0,0,0,24,0V80.65l23.71,7.9a67.92,67.92,0,0,0,18.42,85A100.36,100.36,0,0,0,46,209.44a12,12,0,1,0,20.1,13.11C80.37,200.59,103,188,128,188s47.63,12.59,61.95,34.55a12,12,0,1,0,20.1-13.11,100.36,100.36,0,0,0-40.18-35.92,67.92,67.92,0,0,0,18.42-85l39.5-13.17a12,12,0,0,0,0-22.76Zm-99.79-8L186.05,64,128,83.35,70,64ZM172,120A44,44,0,1,1,90.94,96.29l33.27,11.09a11.89,11.89,0,0,0,7.58,0l33.27-11.09A43.85,43.85,0,0,1,172,120Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 <!-- Golf-sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -55,11 +53,35 @@
     <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
 </defs></svg>
 
-<div data-include="header"></div>
+<!--ingebakken:header--><header class="header" id="header" data-partial data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="../../logo's/cropped-avatar-logo-2-e1721815131329-300x202-web.webp" alt="Studio Wotto" width="119" height="80"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../projecten/">Projecten</a></li>
+      <li><a href="../../blog/">Blog</a></li>
+      <!-- Over ons blijft zelf gewoon klikbaar; het uitklapmenu hangt eronder.
+           Op mobiel wordt het weggelaten, want daar bestaat hover niet. -->
+      <li class="has-sub">
+        <a href="../../over-ons/">Over ons</a>
+        <ul class="sub">
+          <li><a href="../../interactieve-installaties/">Interactieve installaties</a></li>
+          <li><a href="../../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+          <li><a href="../../podium/">Podium &amp; instrumenten</a></li>
+          <li><a href="../../installatie-huren/">Installaties huren</a></li>
+          <li><a href="../../workshops/">Talks &amp; workshops</a></li>
+        </ul>
+      </li>
+      <li><a href="../../contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header><!--/ingebakken:header-->
+<main id="inhoud">
 
 <!-- ============ ONDERWERP (blauw) ============ -->
 <section class="section section--blue" data-nav="light">
-  <i class="ph-bold ph-student deco" style="top:14%;right:7%;font-size:56px"></i>
+  <svg class="ph deco" style="top:14%;right:7%;font-size:56px" aria-hidden="true"><use href="#ph-student"/></svg>
   <div class="container">
     <div class="section-head">
       <p class="kicker">Onderwerp</p>
@@ -90,7 +112,7 @@
   <div class="container">
     <div class="section-head"><h2>Alles over educatie</h2></div>
     <div class="grid" data-list="all" data-subject="educatie"
-         data-empty="Hier staat nog niets. Kijk eens bij een van de andere onderwerpen hierboven."></div>
+         data-empty="Hier staat nog niets. Kijk eens bij een van de andere onderwerpen hierboven."><!--ingebakken--><article class="project"><a href="../../werk/workshop-jeugdgevangenis/"><div class="project__img" data-video="../../werk/workshop-jeugdgevangenis/drum-robot-kaart.mp4"><img src="../../werk/workshop-jeugdgevangenis/workshop-jeugdgevangenis-kaart.webp" alt="Drie dagen in de gevangenis" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Drie dagen in de gevangenis</h3><p class="project__excerpt">Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.</p></a></article><article class="project"><a href="../../werk/crafted-festival/"><div class="project__img"><img src="../../werk/crafted-festival/crafted-summa-fashion-projectie-kaart.webp" alt="Jureren op Crafted" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Jureren op Crafted</h3><p class="project__excerpt">Een dag tussen het eindexamenwerk van Summa-studenten. De werken waren fantastisch, de verhalen erachter nog beter.</p></a></article><article class="project"><a href="../../werk/lindenberg-cultuurhuis/"><div class="project__img"><img src="../../werk/lindenberg-cultuurhuis/lindenberg-cultuurhuis-kaart.webp" alt="Workshops Lindenberg Cultuurhuis" width="451" height="800" loading="lazy"></div><h3 class="project__titel">Workshops Lindenberg Cultuurhuis</h3><p class="project__excerpt">Leerlingen maakten met de SideQuest Rave hun eigen soundtrack bij een zelfgemaakte film.</p></a></article><article class="project"><a href="../../werk/makerdays-eindhoven-2025/"><div class="project__img"><img src="../../werk/makerdays-eindhoven-2025/makerdays-eindhoven-2025-kaart.webp" alt="MAKERDAYS Eindhoven 2025" width="800" height="534" loading="lazy"></div><h3 class="project__titel">MAKERDAYS Eindhoven 2025</h3><p class="project__excerpt">Weer aanwezig bij de MAKERDAYS Eindhoven met de SideQuest Rave en de arcademachine, inmiddels bijna traditie.</p></a></article><article class="project"><a href="../../werk/cpunt-mediafestival-2025/"><div class="project__img"><img src="../../werk/cpunt-mediafestival-2025/cpunt-mediafestival-2025-kaart.webp" alt="Cpunt Mediafestival 2025" width="800" height="451" loading="lazy"></div><h3 class="project__titel">Cpunt Mediafestival 2025</h3><p class="project__excerpt">We werden ingezet als rustmoment, maar werden het drukste plekje van het mediafestival.</p></a></article><article class="project"><a href="../../werk/bouw-je-droombaan/"><div class="project__img" data-video="../../werk/bouw-je-droombaan/bouw-je-droombaan-kaart-web.mp4"><img src="../../werk/bouw-je-droombaan/bouw-je-droombaan-kaart.webp" alt="Bouw je eigen droombaan" width="800" height="534" loading="lazy"></div><h3 class="project__titel">Bouw je eigen droombaan</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project"><a href="../../werk/makers-festival-twente/"><div class="project__img" data-video="../../werk/makers-festival-twente/makers-festival-twente-kaart-web.mp4"><img src="../../werk/makers-festival-twente/makers-festival-twente-kaart.webp" alt="Makers Festival Twente" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Makers Festival Twente</h3><p class="project__excerpt">Vier dagen op het Makers Festival Twente met de arcadekast en de Side Quest Rave. Van giechelende kids tot ouders die weer kind durfden te zijn.</p></a></article><article class="project"><a href="../../werk/mkrdays-2024/"><div class="project__img"><img src="../../werk/mkrdays-2024/mkrdays-2024-kaart.webp" alt="The MKRDAYS Eindhoven" width="800" height="534" loading="lazy"></div><h3 class="project__titel">The MKRDAYS Eindhoven</h3><p class="project__excerpt">Twee dagen in het teken van de makers, met de Side Quest Rave en de arcade-kast op de fair.</p></a></article><article class="project"><a href="../../werk/workshop-soundsketch/"><div class="project__img"><img src="../../werk/workshop-soundsketch/workshop-soundsketch-kaart.webp" alt="SoundSketch: teken je eigen geluid" width="800" height="800" loading="lazy"></div><h3 class="project__titel">SoundSketch: teken je eigen geluid</h3><p class="project__excerpt">Teken met een potlood en hoor je tekening. Grafiet geleidt, en hoe langer je lijn, hoe lager de toon.</p></a></article><article class="project"><a href="../../werk/maak-muziek-met-techniek/"><div class="project__img"><img src="../../werk/maak-muziek-met-techniek/maak-muziek-met-techniek-kaart.webp" alt="Muziek en techniek" width="800" height="711" loading="lazy"></div><h3 class="project__titel">Muziek en techniek</h3><p class="project__excerpt">Bouw je eigen muziekmachine met sequencers en tikkende elektronica, en maak een geluidskunstwerk dat er ook goed uitziet.</p></a></article><article class="project"><a href="../../werk/maak-een-game/"><div class="project__img"><img src="../../werk/maak-een-game/maak-een-game-kaart.webp" alt="Game ontwikkeling" width="738" height="722" loading="lazy"></div><h3 class="project__titel">Game ontwikkeling</h3><p class="project__excerpt">Ontwerp en bouw je eigen videogame, speel 'm op een echte arcadekast en deel 'm online met je vrienden.</p></a></article><article class="project"><a href="../../werk/bouw-je-eigen-elektrische-gitaar/"><div class="project__img"><img src="../../werk/bouw-je-eigen-elektrische-gitaar/bouw-je-eigen-elektrische-gitaar-kaart.webp" alt="Bouw je eigen elektrische gitaar" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Bouw je eigen elektrische gitaar</h3><p class="project__excerpt">Bouw van gerecyclede materialen je eigen elektrische gitaar, en ontdek de techniek achter geluid.</p></a></article><article class="project"><a href="../../werk/muzikale-speelplaats/"><div class="project__img"><img src="../../werk/muzikale-speelplaats/muzikale-speelplaats-kaart.webp" alt="Een Muzikale Speelplaats voor Iedereen" width="800" height="601" loading="lazy"></div><h3 class="project__titel">Een Muzikale Speelplaats voor Iedereen</h3><p class="project__excerpt">Met de SideQuest Rave op het Nerdland Festival: samen muziek maken, ongeacht je muzikale achtergrond.</p></a></article><article class="project"><a href="../../werk/maak-muziek-die-er-ook-mooi-uitziet/"><div class="project__img"><img src="../../werk/maak-muziek-die-er-ook-mooi-uitziet/maak-muziek-die-er-ook-mooi-uitziet-kaart.webp" alt="Maak muziek die er ook mooi uitziet" width="776" height="661" loading="lazy"></div><h3 class="project__titel">Maak muziek die er ook mooi uitziet</h3><p class="project__excerpt">De uitdaging die ik gaf aan studenten van de KU Leuven, en de drumrobot die eruit voortkwam.</p></a></article><!--/ingebakken--></div>
   </div>
 </section>
 
@@ -102,13 +124,46 @@
     <h2>Iets moois maken samen?</h2>
     <p class="lead">Zoiets voor jouw plek? Bel of mail gerust, we denken graag mee.</p>
     <div class="touch__pills">
-      <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
-      <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+      <a class="btn btn--light" href="mailto:info@studiowotto.com"><svg class="ph" aria-hidden="true"><use href="#ph-envelope-simple"/></svg> info@studiowotto.com</a>
+      <a class="btn btn--light" href="tel:+31643474328"><svg class="ph" aria-hidden="true"><use href="#ph-phone"/></svg> +31 6 43474328</a>
     </div>
   </div>
 </section>
 
-<div data-include="footer"></div>
+</main>
+<!--ingebakken:footer--><footer class="footer" data-partial data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="../../logo's/logo%20studio%20wotto%20white-web.webp" alt="Studio Wotto" width="1360" height="523">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h2 class="footer__kop">Wat we doen</h2><ul>
+        <li><a href="../../interactieve-installaties/">Interactieve installaties</a></li>
+        <li><a href="../../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+        <li><a href="../../podium/">Podium &amp; instrumenten</a></li>
+        <li><a href="../../installatie-huren/">Installaties huren</a></li>
+        <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
+      <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
+        <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
+      <div><h2 class="footer__kop">Contact</h2><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Hurksestraat 19<br>5652 AH Eindhoven</li></ul></div>
+      <div><h2 class="footer__kop">Volg</h2><ul>
+        <li><a href="https://www.instagram.com/studio.wotto/">Instagram</a></li><li><a href="https://www.linkedin.com/company/studio-wotto/">LinkedIn</a></li><li><a href="https://www.youtube.com/@jwotto">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · studiowotto.com</span>
+      <!-- KVK en BTW-id horen hier: een zakelijke site in Nederland moet ze
+           makkelijk vindbaar hebben staan (art. 3:15d BW). Let op: dit is het
+           BTW-IDENTIFICATIEnummer, niet het oude BTW-nummer. -->
+      <span>KVK 66978106 · BTW NL002219337B86</span>
+      <span>Creatieve technologie uit Eindhoven</span>
+    </div>
+  </div>
+</footer><!--/ingebakken:footer-->
 
 <script src="../../js/site.js"></script>
 </body>

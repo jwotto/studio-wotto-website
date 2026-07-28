@@ -16,10 +16,8 @@
 <meta property="og:url" content="https://studiowotto.com/">
 <meta property="og:image" content="https://studiowotto.com/werk/side-quest-rave/side-quest-rave.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preload" href="fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -144,6 +142,8 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-app-window" viewBox="0 0 256 256"><path d="M216,36H40A20,20,0,0,0,20,56V200a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A20,20,0,0,0,216,36Zm-4,160H44V60H212ZM60,92a16,16,0,1,1,16,16A16,16,0,0,1,60,92Zm48,0a16,16,0,1,1,16,16A16,16,0,0,1,108,92Z"/></symbol><symbol id="ph-arrow-right" viewBox="0 0 256 256"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></symbol><symbol id="ph-dice-five" viewBox="0 0 256 256"><path d="M192,28H64A36,36,0,0,0,28,64V192a36,36,0,0,0,36,36H192a36,36,0,0,0,36-36V64A36,36,0,0,0,192,28Zm12,164a12,12,0,0,1-12,12H64a12,12,0,0,1-12-12V64A12,12,0,0,1,64,52H192a12,12,0,0,1,12,12ZM104,88A16,16,0,1,1,88,72,16,16,0,0,1,104,88Zm40,40a16,16,0,1,1-16-16A16,16,0,0,1,144,128Zm40-40a16,16,0,1,1-16-16A16,16,0,0,1,184,88Zm-80,80a16,16,0,1,1-16-16A16,16,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16,16,0,0,1,184,168Z"/></symbol><symbol id="ph-envelope-simple" viewBox="0 0 256 256"><path d="M224,44H32A12,12,0,0,0,20,56V192a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A12,12,0,0,0,224,44ZM193.15,68,128,127.72,62.85,68ZM44,188V83.28l75.89,69.57a12,12,0,0,0,16.22,0L212,83.28V188Z"/></symbol><symbol id="ph-equalizer" viewBox="0 0 256 256"><path d="M80,108a12,12,0,0,1-12,12H28a12,12,0,0,1,0-24H68A12,12,0,0,1,80,108ZM68,136H28a12,12,0,0,0,0,24H68a12,12,0,0,0,0-24Zm0,40H28a12,12,0,0,0,0,24H68a12,12,0,0,0,0-24Zm80-40H108a12,12,0,0,0,0,24h40a12,12,0,0,0,0-24Zm0,40H108a12,12,0,0,0,0,24h40a12,12,0,0,0,0-24Zm40-96h40a12,12,0,0,0,0-24H188a12,12,0,0,0,0,24Zm40,16H188a12,12,0,0,0,0,24h40a12,12,0,0,0,0-24Zm0,40H188a12,12,0,0,0,0,24h40a12,12,0,0,0,0-24Zm0,40H188a12,12,0,0,0,0,24h40a12,12,0,0,0,0-24Z"/></symbol><symbol id="ph-game-controller" viewBox="0 0 256 256"><path d="M176,116H152a12,12,0,0,1,0-24h24a12,12,0,0,1,0,24ZM104,92h-4V88a12,12,0,0,0-24,0v4H72a12,12,0,0,0,0,24h4v4a12,12,0,0,0,24,0v-4h4a12,12,0,0,0,0-24ZM244.76,202.94a40,40,0,0,1-61,5.35,7,7,0,0,1-.53-.56L144.67,164H111.33L72.81,207.73c-.17.19-.35.38-.53.56A40,40,0,0,1,4.62,173.05a1.18,1.18,0,0,1,0-.2L21,88.79A63.88,63.88,0,0,1,83.88,36H172a64.08,64.08,0,0,1,62.93,52.48,1.8,1.8,0,0,1,0,.19l16.36,84.17a1.77,1.77,0,0,1,0,.2A39.74,39.74,0,0,1,244.76,202.94ZM172,140a40,40,0,0,0,0-80H83.89A39.9,39.9,0,0,0,44.62,93.06a1.55,1.55,0,0,0,0,.21l-16.34,84a16,16,0,0,0,13,18.44,16.07,16.07,0,0,0,13.86-4.21L96.9,144.07a12,12,0,0,1,9-4.07Zm55.76,37.31-7-35.95a63.84,63.84,0,0,1-44.27,22.46l24.41,27.72a16,16,0,0,0,26.85-14.23Z"/></symbol><symbol id="ph-ghost" viewBox="0 0 256 256"><path d="M116,116a16,16,0,1,1-16-16A16,16,0,0,1,116,116Zm40-16a16,16,0,1,0,16,16A16,16,0,0,0,156,100Zm72,20v96a12,12,0,0,1-19.6,9.29L186.67,207.5l-21.74,17.79a12,12,0,0,1-15.2,0L128,207.5l-21.73,17.79a12,12,0,0,1-15.2,0L69.33,207.5,47.6,225.29A12,12,0,0,1,28,216V120a100,100,0,0,1,200,0Zm-24,0a76,76,0,0,0-152,0v70.68l9.73-8a12,12,0,0,1,15.2,0L98.67,200.5l21.73-17.79a12,12,0,0,1,15.2,0l21.73,17.79,21.74-17.79a12,12,0,0,1,15.2,0l9.73,8Z"/></symbol><symbol id="ph-heart" viewBox="0 0 256 256"><path d="M178,36c-20.09,0-37.92,7.93-50,21.56C115.92,43.93,98.09,36,78,36a66.08,66.08,0,0,0-66,66c0,72.34,105.81,130.14,110.31,132.57a12,12,0,0,0,11.38,0C138.19,232.14,244,174.34,244,102A66.08,66.08,0,0,0,178,36Zm-5.49,142.36A328.69,328.69,0,0,1,128,210.16a328.69,328.69,0,0,1-44.51-31.8C61.82,159.77,36,131.42,36,102A42,42,0,0,1,78,60c17.8,0,32.7,9.4,38.89,24.54a12,12,0,0,0,22.22,0C145.3,69.4,160.2,60,178,60a42,42,0,0,1,42,42C220,131.42,194.18,159.77,172.51,178.36Z"/></symbol><symbol id="ph-magic-wand" viewBox="0 0 256 256"><path d="M252,152a12,12,0,0,1-12,12H228v12a12,12,0,0,1-24,0V164H192a12,12,0,0,1,0-24h12V128a12,12,0,0,1,24,0v12h12A12,12,0,0,1,252,152ZM56,76H68V88a12,12,0,0,0,24,0V76h12a12,12,0,1,0,0-24H92V40a12,12,0,0,0-24,0V52H56a12,12,0,0,0,0,24ZM184,188h-4v-4a12,12,0,0,0-24,0v4h-4a12,12,0,0,0,0,24h4v4a12,12,0,0,0,24,0v-4h4a12,12,0,0,0,0-24ZM222.14,82.83,82.82,222.14a20,20,0,0,1-28.28,0L33.85,201.46a20,20,0,0,1,0-28.29L173.17,33.86a20,20,0,0,1,28.28,0l20.69,20.68A20,20,0,0,1,222.14,82.83ZM159,112,144,97,53.65,187.31l15,15Zm43.31-43.31-15-15L161,80l15,15Z"/></symbol><symbol id="ph-map-pin" viewBox="0 0 256 256"><path d="M128,60a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,60Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,124Zm0-112a92.1,92.1,0,0,0-92,92c0,77.36,81.64,135.4,85.12,137.83a12,12,0,0,0,13.76,0,259,259,0,0,0,42.18-39C205.15,170.57,220,136.37,220,104A92.1,92.1,0,0,0,128,12Zm31.3,174.71A249.35,249.35,0,0,1,128,216.89a249.35,249.35,0,0,1-31.3-30.18C80,167.37,60,137.31,60,104a68,68,0,0,1,136,0C196,137.31,176,167.37,159.3,186.71Z"/></symbol><symbol id="ph-microphone-stage" viewBox="0 0 256 256"><path d="M168,12A75.9,75.9,0,0,0,92.49,96.33L23.91,189.85a19.89,19.89,0,0,0,2,26l14.29,14.29a19.89,19.89,0,0,0,26,2l93.52-68.58A76,76,0,1,0,168,12Zm52,76a51.66,51.66,0,0,1-7.75,27.27L140.74,43.75A52,52,0,0,1,220,88ZM54.72,210.71l-9.43-9.43,56.19-76.63a76.46,76.46,0,0,0,29.87,29.87ZM116,88a51.63,51.63,0,0,1,7.75-27.27l71.51,71.51A52,52,0,0,1,116,88Z"/></symbol><symbol id="ph-music-note" viewBox="0 0 256 256"><path d="M211.45,52.51l-80-24A12,12,0,0,0,116,40V140.22A52,52,0,1,0,140,184V104.13l64.55,19.36A12,12,0,0,0,220,112V64A12,12,0,0,0,211.45,52.51ZM88,212a28,28,0,1,1,28-28A28,28,0,0,1,88,212ZM196,95.87l-56-16.8V56.13l56,16.8Z"/></symbol><symbol id="ph-music-notes" viewBox="0 0 256 256"><path d="M215.38,14.54a12,12,0,0,0-10.29-2.18l-128,32A12,12,0,0,0,68,56V159.35A40,40,0,1,0,92,196V113.37l104-26v40A40,40,0,1,0,220,164V24A12,12,0,0,0,215.38,14.54ZM52,212a16,16,0,1,1,16-16A16,16,0,0,1,52,212ZM92,88.63V65.37l104-26V62.63ZM180,180a16,16,0,1,1,16-16A16,16,0,0,1,180,180Z"/></symbol><symbol id="ph-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol><symbol id="ph-star" viewBox="0 0 256 256"><path d="M243,96a20.33,20.33,0,0,0-17.74-14l-56.59-4.57L146.83,24.62a20.36,20.36,0,0,0-37.66,0L87.35,77.44,30.76,82A20.45,20.45,0,0,0,19.1,117.88l43.18,37.24-13.2,55.7A20.37,20.37,0,0,0,79.57,233L128,203.19,176.43,233a20.39,20.39,0,0,0,30.49-22.15l-13.2-55.7,43.18-37.24A20.43,20.43,0,0,0,243,96ZM172.53,141.7a12,12,0,0,0-3.84,11.86L181.58,208l-47.29-29.08a12,12,0,0,0-12.58,0L74.42,208l12.89-54.4a12,12,0,0,0-3.84-11.86L41.2,105.24l55.4-4.47a12,12,0,0,0,10.13-7.38L128,41.89l21.27,51.5a12,12,0,0,0,10.13,7.38l55.4,4.47Z"/></symbol><symbol id="ph-vinyl-record" viewBox="0 0 256 256"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm0-128a44.05,44.05,0,0,0-44,44,12,12,0,0,1-24,0,68.07,68.07,0,0,1,68-68,12,12,0,0,1,0,24Zm68,44a68.07,68.07,0,0,1-68,68,12,12,0,0,1,0-24,44.05,44.05,0,0,0,44-44,12,12,0,0,1,24,0Zm-68,28a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"/></symbol><symbol id="ph-waveform" viewBox="0 0 256 256"><path d="M60,96v64a12,12,0,0,1-24,0V96a12,12,0,0,1,24,0ZM88,20A12,12,0,0,0,76,32V224a12,12,0,0,0,24,0V32A12,12,0,0,0,88,20Zm40,32a12,12,0,0,0-12,12V192a12,12,0,0,0,24,0V64A12,12,0,0,0,128,52Zm40,32a12,12,0,0,0-12,12v64a12,12,0,0,0,24,0V96A12,12,0,0,0,168,84Zm40-16a12,12,0,0,0-12,12v96a12,12,0,0,0,24,0V80A12,12,0,0,0,208,68Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
+
 
 <!-- ===== Golf-sprite ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -152,16 +152,40 @@
 </defs></svg>
 
 <!-- Gedeelde header (partials/header.html, ingeladen door js/site.js) -->
-<div data-include="header"></div>
+<!--ingebakken:header--><header class="header" id="header" data-partial data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="logo's/cropped-avatar-logo-2-e1721815131329-300x202-web.webp" alt="Studio Wotto" width="119" height="80"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="./">Home</a></li>
+      <li><a href="projecten/">Projecten</a></li>
+      <li><a href="blog/">Blog</a></li>
+      <!-- Over ons blijft zelf gewoon klikbaar; het uitklapmenu hangt eronder.
+           Op mobiel wordt het weggelaten, want daar bestaat hover niet. -->
+      <li class="has-sub">
+        <a href="over-ons/">Over ons</a>
+        <ul class="sub">
+          <li><a href="interactieve-installaties/">Interactieve installaties</a></li>
+          <li><a href="muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+          <li><a href="podium/">Podium &amp; instrumenten</a></li>
+          <li><a href="installatie-huren/">Installaties huren</a></li>
+          <li><a href="workshops/">Talks &amp; workshops</a></li>
+        </ul>
+      </li>
+      <li><a href="contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header><!--/ingebakken:header-->
+<main id="inhoud">
 
 <!-- ============ HERO (koraal) ============ -->
 <section class="section section--coral hero" id="top" data-nav="light">
-  <i class="ph-bold ph-game-controller deco" style="top:14%;right:7%;font-size:68px"></i>
-  <i class="ph-bold ph-ghost deco" style="bottom:16%;left:5%;font-size:60px"></i>
-  <i class="ph-bold ph-music-notes deco" style="top:24%;right:24%;font-size:40px"></i>
-  <i class="ph-bold ph-waveform deco" style="bottom:24%;right:15%;font-size:52px"></i>
+  <svg class="ph deco" style="top:14%;right:7%;font-size:68px" aria-hidden="true"><use href="#ph-game-controller"/></svg>
+  <svg class="ph deco" style="bottom:16%;left:5%;font-size:60px" aria-hidden="true"><use href="#ph-ghost"/></svg>
+  <svg class="ph deco" style="top:24%;right:24%;font-size:40px" aria-hidden="true"><use href="#ph-music-notes"/></svg>
+  <svg class="ph deco" style="bottom:24%;right:15%;font-size:52px" aria-hidden="true"><use href="#ph-waveform"/></svg>
   <div class="container">
-    <img class="hero__logo" src="logo's/logo%20studio%20wotto%20white.png" alt="Studio Wotto" width="1544" height="594">
+    <img class="hero__logo" src="logo's/logo%20studio%20wotto%20white-web.webp" alt="Studio Wotto" width="1360" height="523">
     <h1 class="hero__tag">Techniek om mee te spelen.</h1>
     <p class="lead">Wij maken interactieve installaties, muzikale webapps en muziekinstrumenten voor musea, scholen, festivals en artiesten. Op maat gebouwd of kant-en-klaar te huur, van het eerste idee tot een werkend resultaat.</p>
     <div class="hero__cta">
@@ -174,14 +198,14 @@
 <!-- ============ GESELECTEERDE PROJECTEN (zon) ============ -->
 <section class="section section--sun" id="projecten" data-nav="dark">
   <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-vinyl-record deco" style="bottom:11%;right:9%;font-size:60px"></i>
+  <svg class="ph deco" style="bottom:11%;right:9%;font-size:60px" aria-hidden="true"><use href="#ph-vinyl-record"/></svg>
   <div class="container container--wide">
-    <div class="section-head"><h2 class="kop-deco">Onze projecten<i class="ph-bold ph-dice-five deco deco--kop" aria-hidden="true"></i></h2></div>
+    <div class="section-head"><h2 class="kop-deco">Onze projecten<svg class="ph deco deco--kop" aria-hidden="true"><use href="#ph-dice-five"/></svg></h2></div>
     <div class="carousel">
       <div class="carousel__viewport">
-        <div class="carousel__track" data-list="project" data-featured="true"></div>
-        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><i class="ph-bold ph-arrow-right"></i></button>
-        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende projecten"><i class="ph-bold ph-arrow-right"></i></button>
+        <div class="carousel__track" data-list="project" data-featured="true"><!--ingebakken--><article class="project carousel__item"><a href="werk/museum-speelklok/"><div class="project__img"><img src="werk/museum-speelklok/museum-speelklok-muziekmachine-kaart.webp" alt="Muziekmachines in Museum Speelklok" width="640" height="800" loading="lazy"></div><h3 class="project__titel">Muziekmachines in Museum Speelklok</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project carousel__item"><a href="werk/ramses3000/"><div class="project__img"><img src="werk/ramses3000/ramses3000-kaart.webp" alt="Ramses3000 videosynthesizer" width="529" height="800" loading="lazy"></div><h3 class="project__titel">Ramses3000 videosynthesizer</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><article class="project carousel__item"><a href="werk/crackthenotes/"><div class="project__img"><img src="werk/crackthenotes/notecracker-puzzel-muzieknoten-lezen-kaart.webp" alt="NoteCracker" width="640" height="800" loading="lazy"></div><h3 class="project__titel">NoteCracker</h3><div class="project__theme">Muzikale webapps &amp; games</div></a></article><article class="project carousel__item"><a href="werk/tantu-beats/"><div class="project__img"><img src="werk/tantu-beats/tantu-beats-kaart.webp" alt="Tantu Beats" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Tantu Beats</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><article class="project carousel__item"><a href="werk/joost-klein/"><div class="project__img"><img src="werk/joost-klein/joost-klein-kaart.webp" alt="Joost Klein" width="571" height="800" loading="lazy"></div><h3 class="project__titel">Joost Klein</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><article class="project carousel__item"><a href="werk/bouw-je-droombaan/"><div class="project__img" data-video="werk/bouw-je-droombaan/bouw-je-droombaan-kaart-web.mp4"><img src="werk/bouw-je-droombaan/bouw-je-droombaan-kaart.webp" alt="Bouw je eigen droombaan" width="800" height="534" loading="lazy"></div><h3 class="project__titel">Bouw je eigen droombaan</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project carousel__item"><a href="werk/aura-bouw-lasers/"><div class="project__img" data-video="werk/aura-bouw-lasers/aura-bouw-lasers-kaart-web.mp4"><img src="werk/aura-bouw-lasers/aura-bouw-lasers-kaart.webp" alt="Aura Bouw: geluid naar lasers" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Aura Bouw: geluid naar lasers</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><article class="project carousel__item"><a href="werk/technomaker/"><div class="project__img"><img src="werk/technomaker/technomaker-step-sequencer-beat-maken-kaart.webp" alt="Techno Maker" width="800" height="420" loading="lazy"></div><h3 class="project__titel">Techno Maker</h3><div class="project__theme">Muzikale webapps &amp; games</div></a></article><article class="project carousel__item"><a href="werk/interactieve-arcade-kast/"><div class="project__img"><img src="werk/interactieve-arcade-kast/interactieve-arcade-kast-kaart.webp" alt="Een arcade-kast voor jonge uitvinders" width="800" height="534" loading="lazy"></div><h3 class="project__titel">Een arcade-kast voor jonge uitvinders</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project carousel__item"><a href="werk/side-quest-rave/"><div class="project__img"><img src="werk/side-quest-rave/side-quest-rave-kaart.webp" alt="The Side Quest Rave" width="800" height="534" loading="lazy"></div><h3 class="project__titel">The Side Quest Rave</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project carousel__item"><a href="werk/snes-videosynthesizer/"><div class="project__img" data-video="werk/snes-videosynthesizer/snes-videosynthesizer-kaart-web.mp4"><img src="werk/snes-videosynthesizer/snes-videosynthesizer-kaart.webp" alt="Van Kapotte Super Nintendo naar Audiovisuele Kunst" width="800" height="450" loading="lazy"></div><h3 class="project__titel">Van Kapotte Super Nintendo naar Audiovisuele Kunst</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><!--/ingebakken--></div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige projecten"><svg class="ph" aria-hidden="true"><use href="#ph-arrow-right"/></svg></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende projecten"><svg class="ph" aria-hidden="true"><use href="#ph-arrow-right"/></svg></button>
       </div>
       <div class="carousel__footer">
         <a class="btn btn--primary" href="projecten/">Alle projecten →</a>
@@ -193,8 +217,8 @@
 <!-- ============ WAT WE DOEN (blauw) ============ -->
 <section class="section section--blue" id="over" data-nav="light">
   <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-equalizer deco" style="top:12%;right:8%;font-size:58px"></i>
-  <i class="ph-bold ph-music-note deco" style="bottom:14%;left:6%;font-size:48px"></i>
+  <svg class="ph deco" style="top:12%;right:8%;font-size:58px" aria-hidden="true"><use href="#ph-equalizer"/></svg>
+  <svg class="ph deco" style="bottom:14%;left:6%;font-size:48px" aria-hidden="true"><use href="#ph-music-note"/></svg>
   <div class="container">
     <div class="section-head">
       <h2>Wat we doen</h2>
@@ -202,17 +226,17 @@
     </div>
     <div class="grid">
       <a class="card service" href="interactieve-installaties/"><div class="card__body">
-        <div class="service__icon"><i class="ph-bold ph-magic-wand"></i></div><h3>Interactieve installaties</h3>
+        <div class="service__icon"><svg class="ph" aria-hidden="true"><use href="#ph-magic-wand"/></svg></div><h3>Interactieve installaties</h3>
         <p>Werk dat terugpraat. Sensoren die jou herkennen en er iets creatiefs mee doen: een camera die muziek bij je kiest, of een arcadekast waarin jij de avatar bent. Voor musea, festivals en beurzen.</p>
         <p class="card__cta">Bekijk voorbeelden →</p>
       </div></a>
       <a class="card service" href="muzikale-webapps/"><div class="card__body">
-        <div class="service__icon"><i class="ph-bold ph-app-window"></i></div><h3>Muzikale webapps &amp; games</h3>
+        <div class="service__icon"><svg class="ph" aria-hidden="true"><use href="#ph-app-window"/></svg></div><h3>Muzikale webapps &amp; games</h3>
         <p>Muziek en games die meteen werken in je browser, op elk apparaat. Van een leerling in de klas tot een spel in de etalage.</p>
         <p class="card__cta">Bekijk voorbeelden →</p>
       </div></a>
       <a class="card service" href="podium/"><div class="card__body">
-        <div class="service__icon"><i class="ph-bold ph-microphone-stage"></i></div><h3>Podium &amp; instrumenten</h3>
+        <div class="service__icon"><svg class="ph" aria-hidden="true"><use href="#ph-microphone-stage"/></svg></div><h3>Podium &amp; instrumenten</h3>
         <p>Eenmalige objecten voor artiesten. Een instrument op maat, reactieve visuals of een prop voor die ene show.</p>
         <p class="card__cta">Bekijk voorbeelden →</p>
       </div></a>
@@ -252,36 +276,36 @@
 <!-- ============ KLANTEN (mint) ============ -->
 <section class="section section--mint" data-nav="dark">
   <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-star deco" style="top:52%;right:20%;font-size:46px"></i>
+  <svg class="ph deco" style="top:52%;right:20%;font-size:46px" aria-hidden="true"><use href="#ph-star"/></svg>
   <div class="container">
-    <div class="section-head"><h2 class="kop-deco">Onze klanten<i class="ph-bold ph-ghost deco deco--kop" aria-hidden="true"></i></h2><p class="lead">Samen met musea, artiesten, merken en scholen maken we speelse interactieve ervaringen die publiek activeren. Niet kijken, maar meedoen. We maakten eerder ervaringen voor:</p></div>
+    <div class="section-head"><h2 class="kop-deco">Onze klanten<svg class="ph deco deco--kop" aria-hidden="true"><use href="#ph-ghost"/></svg></h2><p class="lead">Samen met musea, artiesten, merken en scholen maken we speelse interactieve ervaringen die publiek activeren. Niet kijken, maar meedoen. We maakten eerder ervaringen voor:</p></div>
   </div>
   <div class="clients">
     <div class="clients__track">
-      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="Museum Speelklok" width="2157" height="826" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="FL Studio" width="1920" height="1080" loading="lazy" decoding="async">
-      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="Home Computer Museum" width="1200" height="315" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo_summa_college_png.png" alt="Summa College" width="3815" height="1379" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/effenaar_bw.png" alt="Effenaar" width="1128" height="259" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo%20tantu.png" alt="Tantu" width="433" height="180" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true" width="2157" height="826" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async">
-      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true" width="1200" height="315" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true" width="3815" height="1379" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true" width="1128" height="259" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true" width="433" height="180" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true" width="2157" height="826" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async">
-      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true" width="1200" height="315" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true" width="3815" height="1379" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true" width="1128" height="259" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true" width="433" height="180" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART.png" alt="" aria-hidden="true" width="2157" height="826" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_.png" alt="" aria-hidden="true" width="1920" height="1080" loading="lazy" decoding="async">
-      <img class="raw" src="logo's%20klanten/hcm_logo_bw.png" alt="" aria-hidden="true" width="1200" height="315" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo_summa_college_png.png" alt="" aria-hidden="true" width="3815" height="1379" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/effenaar_bw.png" alt="" aria-hidden="true" width="1128" height="259" loading="lazy" decoding="async">
-      <img src="logo's%20klanten/logo%20tantu.png" alt="" aria-hidden="true" width="433" height="180" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART-web.webp" alt="Museum Speelklok" width="261" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_-web.webp" alt="FL Studio" width="178" height="100" loading="lazy" decoding="async">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw-web.webp" alt="Home Computer Museum" width="381" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo_summa_college_png-web.webp" alt="Summa College" width="277" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/effenaar_bw-web.webp" alt="Effenaar" width="436" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo%20tantu-web.webp" alt="Tantu" width="241" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART-web.webp" alt="" aria-hidden="true" width="261" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_-web.webp" alt="" aria-hidden="true" width="178" height="100" loading="lazy" decoding="async">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw-web.webp" alt="" aria-hidden="true" width="381" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo_summa_college_png-web.webp" alt="" aria-hidden="true" width="277" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/effenaar_bw-web.webp" alt="" aria-hidden="true" width="436" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo%20tantu-web.webp" alt="" aria-hidden="true" width="241" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART-web.webp" alt="" aria-hidden="true" width="261" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_-web.webp" alt="" aria-hidden="true" width="178" height="100" loading="lazy" decoding="async">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw-web.webp" alt="" aria-hidden="true" width="381" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo_summa_college_png-web.webp" alt="" aria-hidden="true" width="277" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/effenaar_bw-web.webp" alt="" aria-hidden="true" width="436" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo%20tantu-web.webp" alt="" aria-hidden="true" width="241" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/MUSEUM-SPEELKLOK-LOGO-RGB-ZWART-web.webp" alt="" aria-hidden="true" width="261" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/fl_studio_logo-freelogovectors.net_-web.webp" alt="" aria-hidden="true" width="178" height="100" loading="lazy" decoding="async">
+      <img class="raw" src="logo's%20klanten/hcm_logo_bw-web.webp" alt="" aria-hidden="true" width="381" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo_summa_college_png-web.webp" alt="" aria-hidden="true" width="277" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/effenaar_bw-web.webp" alt="" aria-hidden="true" width="436" height="100" loading="lazy" decoding="async">
+      <img src="logo's%20klanten/logo%20tantu-web.webp" alt="" aria-hidden="true" width="241" height="100" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -289,17 +313,17 @@
 <!-- ============ BLOGS (bubblegum) ============ -->
 <section class="section section--bubblegum" id="blog" data-nav="dark">
   <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-game-controller deco" style="bottom:11%;right:9%;font-size:56px"></i>
+  <svg class="ph deco" style="bottom:11%;right:9%;font-size:56px" aria-hidden="true"><use href="#ph-game-controller"/></svg>
   <div class="container container--wide">
-    <div class="section-head"><h2 class="kop-deco">Recente blogs<i class="ph-bold ph-waveform deco deco--kop" aria-hidden="true"></i></h2></div>
+    <div class="section-head"><h2 class="kop-deco">Recente blogs<svg class="ph deco deco--kop" aria-hidden="true"><use href="#ph-waveform"/></svg></h2></div>
     <div class="carousel">
       <div class="carousel__viewport">
         <!-- "Recente blogs" betekent recent, dus geen data-featured hier. De lijst
              sorteert al op wotto:datum, nieuwste eerst, dus een nieuwe blog
              verschijnt hier vanzelf. Uitlichten met de hand hoeft niet meer. -->
-        <div class="carousel__track" data-list="blog" data-limit="6"></div>
-        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><i class="ph-bold ph-arrow-right"></i></button>
-        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><i class="ph-bold ph-arrow-right"></i></button>
+        <div class="carousel__track" data-list="blog" data-limit="6"><!--ingebakken--><article class="project carousel__item"><a href="werk/nintendo-zapper-muziekinstrument/"><div class="project__img" data-video="werk/nintendo-zapper-muziekinstrument/nintendo-zapper-muziekinstrument-kaart-web.mp4"><img src="werk/nintendo-zapper-muziekinstrument/nintendo-zapper-muziekinstrument-kaart.webp" alt="Een Nintendo Zapper als muziekinstrument" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Een Nintendo Zapper als muziekinstrument</h3><p class="project__excerpt">Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.</p></a></article><article class="project carousel__item"><a href="werk/boek-vol-spelvouten/"><div class="project__img"><img src="werk/boek-vol-spelvouten/boek-vol-spelvouten-kaart.webp" alt="Een boek vol spelvouten" width="640" height="800" loading="lazy"></div><h3 class="project__titel">Een boek vol spelvouten</h3><p class="project__excerpt">Een boek vol spelfouten, met bij elk exemplaar een rood pennetje. Een puzzelboek voor spellingspuristen.</p></a></article><article class="project carousel__item"><a href="werk/workshop-jeugdgevangenis/"><div class="project__img" data-video="werk/workshop-jeugdgevangenis/drum-robot-kaart.mp4"><img src="werk/workshop-jeugdgevangenis/workshop-jeugdgevangenis-kaart.webp" alt="Drie dagen in de gevangenis" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Drie dagen in de gevangenis</h3><p class="project__excerpt">Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.</p></a></article><article class="project carousel__item"><a href="werk/crafted-festival/"><div class="project__img"><img src="werk/crafted-festival/crafted-summa-fashion-projectie-kaart.webp" alt="Jureren op Crafted" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Jureren op Crafted</h3><p class="project__excerpt">Een dag tussen het eindexamenwerk van Summa-studenten. De werken waren fantastisch, de verhalen erachter nog beter.</p></a></article><article class="project carousel__item"><a href="werk/robotstofzuiger-xp/"><div class="project__img" data-video="werk/robotstofzuiger-xp/robotstofzuiger-loop-web.mp4"><img src="werk/robotstofzuiger-xp/robotstofzuiger-xp-kaart.webp" alt="Wie wil mijn robotstofzuiger besturen?" width="800" height="800" loading="lazy"></div><h3 class="project__titel">Wie wil mijn robotstofzuiger besturen?</h3><p class="project__excerpt">Gamen met mijn neefjes bracht me op een idee dat net te slecht is om te maken, maar net te leuk om los te laten.</p></a></article><article class="project carousel__item"><a href="werk/lindenberg-cultuurhuis/"><div class="project__img"><img src="werk/lindenberg-cultuurhuis/lindenberg-cultuurhuis-kaart.webp" alt="Workshops Lindenberg Cultuurhuis" width="451" height="800" loading="lazy"></div><h3 class="project__titel">Workshops Lindenberg Cultuurhuis</h3><p class="project__excerpt">Leerlingen maakten met de SideQuest Rave hun eigen soundtrack bij een zelfgemaakte film.</p></a></article><!--/ingebakken--></div>
+        <button class="carousel__btn carousel__btn--prev" data-dir="-1" aria-label="Vorige blogs"><svg class="ph" aria-hidden="true"><use href="#ph-arrow-right"/></svg></button>
+        <button class="carousel__btn carousel__btn--next" data-dir="1" aria-label="Volgende blogs"><svg class="ph" aria-hidden="true"><use href="#ph-arrow-right"/></svg></button>
       </div>
       <div class="carousel__footer">
         <a class="btn btn--primary" href="blog/">Naar de blog →</a>
@@ -311,23 +335,56 @@
 <!-- ============ GET IN TOUCH (koraal) ============ -->
 <section class="section section--coral touch" id="contact" data-nav="light">
   <div class="wave-top" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
-  <i class="ph-bold ph-music-notes deco" style="top:16%;left:8%;font-size:56px"></i>
-  <i class="ph-bold ph-heart deco" style="top:18%;right:9%;font-size:50px"></i>
-  <i class="ph-bold ph-equalizer deco" style="bottom:14%;left:16%;font-size:44px"></i>
+  <svg class="ph deco" style="top:16%;left:8%;font-size:56px" aria-hidden="true"><use href="#ph-music-notes"/></svg>
+  <svg class="ph deco" style="top:18%;right:9%;font-size:50px" aria-hidden="true"><use href="#ph-heart"/></svg>
+  <svg class="ph deco" style="bottom:14%;left:16%;font-size:44px" aria-hidden="true"><use href="#ph-equalizer"/></svg>
   <div class="container">
     <p class="kicker">Get in touch</p>
     <h2>Iets moois maken samen?</h2>
     <p class="lead">Benieuwd of we samen iets kunnen maken? Stuur ons gerust een bericht.</p>
     <div class="touch__pills">
-      <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
-      <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+      <a class="btn btn--light" href="mailto:info@studiowotto.com"><svg class="ph" aria-hidden="true"><use href="#ph-envelope-simple"/></svg> info@studiowotto.com</a>
+      <a class="btn btn--light" href="tel:+31643474328"><svg class="ph" aria-hidden="true"><use href="#ph-phone"/></svg> +31 6 43474328</a>
     </div>
-    <p style="margin-top:var(--space-6); display:inline-flex; align-items:center; gap:8px"><i class="ph-bold ph-map-pin"></i> Eindhoven, Noord-Brabant</p>
+    <p style="margin-top:var(--space-6); display:inline-flex; align-items:center; gap:8px"><svg class="ph" aria-hidden="true"><use href="#ph-map-pin"/></svg> Eindhoven, Noord-Brabant</p>
   </div>
 </section>
 
 <!-- Gedeelde footer (partials/footer.html, ingeladen door js/site.js) -->
-<div data-include="footer"></div>
+</main>
+<!--ingebakken:footer--><footer class="footer" data-partial data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="logo's/logo%20studio%20wotto%20white-web.webp" alt="Studio Wotto" width="1360" height="523">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h2 class="footer__kop">Wat we doen</h2><ul>
+        <li><a href="interactieve-installaties/">Interactieve installaties</a></li>
+        <li><a href="muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+        <li><a href="podium/">Podium &amp; instrumenten</a></li>
+        <li><a href="installatie-huren/">Installaties huren</a></li>
+        <li><a href="workshops/">Talks &amp; workshops</a></li></ul></div>
+      <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="projecten/">Projecten</a></li><li><a href="blog/">Blog</a></li>
+        <li><a href="over-ons/">Over ons</a></li><li><a href="contact/">Contact</a></li></ul></div>
+      <div><h2 class="footer__kop">Contact</h2><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Hurksestraat 19<br>5652 AH Eindhoven</li></ul></div>
+      <div><h2 class="footer__kop">Volg</h2><ul>
+        <li><a href="https://www.instagram.com/studio.wotto/">Instagram</a></li><li><a href="https://www.linkedin.com/company/studio-wotto/">LinkedIn</a></li><li><a href="https://www.youtube.com/@jwotto">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · studiowotto.com</span>
+      <!-- KVK en BTW-id horen hier: een zakelijke site in Nederland moet ze
+           makkelijk vindbaar hebben staan (art. 3:15d BW). Let op: dit is het
+           BTW-IDENTIFICATIEnummer, niet het oude BTW-nummer. -->
+      <span>KVK 66978106 · BTW NL002219337B86</span>
+      <span>Creatieve technologie uit Eindhoven</span>
+    </div>
+  </div>
+</footer><!--/ingebakken:footer-->
 
 <script src="js/site.js"></script>
 </body>

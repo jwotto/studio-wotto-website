@@ -14,13 +14,10 @@
 <meta property="og:title" content="Interactieve kunst">
 <meta property="og:description" content="Kunst die reageert. Installaties waarin het publiek het werk afmaakt, en die pas tot leven komen als iemand anders eraan begint.">
 <meta property="og:url" content="https://studiowotto.com/onderwerp/interactieve-kunst/">
-<meta property="og:image" content="https://studiowotto.com/werk/interactieve-arcade-kast/interactieve-arcade-kast.jpg">
+<meta property="og:image" content="https://studiowotto.com/werk/museum-speelklok/museum-speelklok-muziekmachine.jpg">
 <meta name="twitter:card" content="summary_large_image">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -48,6 +45,7 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-envelope-simple" viewBox="0 0 256 256"><path d="M224,44H32A12,12,0,0,0,20,56V192a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V56A12,12,0,0,0,224,44ZM193.15,68,128,127.72,62.85,68ZM44,188V83.28l75.89,69.57a12,12,0,0,0,16.22,0L212,83.28V188Z"/></symbol><symbol id="ph-palette" viewBox="0 0 256 256"><path d="M203.57,51A107.9,107.9,0,0,0,20,128c0,44.72,27.6,82.25,72,97.94A36,36,0,0,0,140,192a12,12,0,0,1,12-12h46.21a35.79,35.79,0,0,0,35.1-28A108.6,108.6,0,0,0,236,127.09,107.23,107.23,0,0,0,203.57,51Zm6.34,95.67a11.91,11.91,0,0,1-11.7,9.3H152a36,36,0,0,0-36,36,12,12,0,0,1-16,11.3c-16.65-5.88-30.65-15.76-40.48-28.56A76,76,0,0,1,44,128a84,84,0,0,1,83.13-84H128a84.35,84.35,0,0,1,84,83.29A84.72,84.72,0,0,1,209.91,146.71ZM144,76a16,16,0,1,1-16-16A16,16,0,0,1,144,76Zm-44,24A16,16,0,1,1,84,84,16,16,0,0,1,100,100Zm0,56a16,16,0,1,1-16-16A16,16,0,0,1,100,156Zm88-56a16,16,0,1,1-16-16A16,16,0,0,1,188,100Z"/></symbol><symbol id="ph-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 <!-- Golf-sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -55,11 +53,35 @@
     <path d="M0,40 C150,8 450,8 600,40 C750,72 1050,72 1200,40 C1350,8 1650,8 1800,40 C1950,72 2250,72 2400,40 L2400,80 L0,80 Z"/></symbol>
 </defs></svg>
 
-<div data-include="header"></div>
+<!--ingebakken:header--><header class="header" id="header" data-partial data-nav="light">
+  <nav class="nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#top"><img class="brand-logo" id="brandLogo" src="../../logo's/cropped-avatar-logo-2-e1721815131329-300x202-web.webp" alt="Studio Wotto" width="119" height="80"></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../projecten/">Projecten</a></li>
+      <li><a href="../../blog/">Blog</a></li>
+      <!-- Over ons blijft zelf gewoon klikbaar; het uitklapmenu hangt eronder.
+           Op mobiel wordt het weggelaten, want daar bestaat hover niet. -->
+      <li class="has-sub">
+        <a href="../../over-ons/">Over ons</a>
+        <ul class="sub">
+          <li><a href="../../interactieve-installaties/">Interactieve installaties</a></li>
+          <li><a href="../../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+          <li><a href="../../podium/">Podium &amp; instrumenten</a></li>
+          <li><a href="../../installatie-huren/">Installaties huren</a></li>
+          <li><a href="../../workshops/">Talks &amp; workshops</a></li>
+        </ul>
+      </li>
+      <li><a href="../../contact/">Contact</a></li>
+    </ul>
+  </nav>
+</header><!--/ingebakken:header-->
+<main id="inhoud">
 
 <!-- ============ ONDERWERP (blauw) ============ -->
 <section class="section section--blue" data-nav="light">
-  <i class="ph-bold ph-palette deco" style="top:14%;right:7%;font-size:56px"></i>
+  <svg class="ph deco" style="top:14%;right:7%;font-size:56px" aria-hidden="true"><use href="#ph-palette"/></svg>
   <div class="container">
     <div class="section-head">
       <p class="kicker">Onderwerp</p>
@@ -90,7 +112,7 @@
   <div class="container">
     <div class="section-head"><h2>Alles over interactieve kunst</h2></div>
     <div class="grid" data-list="all" data-subject="interactieve-kunst"
-         data-empty="Hier staat nog niets. Kijk eens bij een van de andere onderwerpen hierboven."></div>
+         data-empty="Hier staat nog niets. Kijk eens bij een van de andere onderwerpen hierboven."><!--ingebakken--><article class="project"><a href="../../werk/museum-speelklok/"><div class="project__img"><img src="../../werk/museum-speelklok/museum-speelklok-muziekmachine-kaart.webp" alt="Muziekmachines in Museum Speelklok" width="640" height="800" loading="lazy"></div><h3 class="project__titel">Muziekmachines in Museum Speelklok</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project"><a href="../../werk/workshop-soundsketch/"><div class="project__img"><img src="../../werk/workshop-soundsketch/workshop-soundsketch-kaart.webp" alt="SoundSketch: teken je eigen geluid" width="800" height="800" loading="lazy"></div><h3 class="project__titel">SoundSketch: teken je eigen geluid</h3><p class="project__excerpt">Teken met een potlood en hoor je tekening. Grafiet geleidt, en hoe langer je lijn, hoe lager de toon.</p></a></article><article class="project"><a href="../../werk/interactieve-arcade-kast/"><div class="project__img"><img src="../../werk/interactieve-arcade-kast/interactieve-arcade-kast-kaart.webp" alt="Een arcade-kast voor jonge uitvinders" width="800" height="534" loading="lazy"></div><h3 class="project__titel">Een arcade-kast voor jonge uitvinders</h3><div class="project__theme">Interactieve installaties</div></a></article><article class="project"><a href="../../werk/snes-videosynthesizer/"><div class="project__img" data-video="../../werk/snes-videosynthesizer/snes-videosynthesizer-kaart-web.mp4"><img src="../../werk/snes-videosynthesizer/snes-videosynthesizer-kaart.webp" alt="Van Kapotte Super Nintendo naar Audiovisuele Kunst" width="800" height="450" loading="lazy"></div><h3 class="project__titel">Van Kapotte Super Nintendo naar Audiovisuele Kunst</h3><div class="project__theme">Podium &amp; instrumenten</div></a></article><!--/ingebakken--></div>
   </div>
 </section>
 
@@ -102,13 +124,46 @@
     <h2>Iets moois maken samen?</h2>
     <p class="lead">Zoiets voor jouw plek? Bel of mail gerust, we denken graag mee.</p>
     <div class="touch__pills">
-      <a class="btn btn--light" href="mailto:info@studiowotto.com"><i class="ph-bold ph-envelope-simple"></i> info@studiowotto.com</a>
-      <a class="btn btn--light" href="tel:+31643474328"><i class="ph-bold ph-phone"></i> +31 6 43474328</a>
+      <a class="btn btn--light" href="mailto:info@studiowotto.com"><svg class="ph" aria-hidden="true"><use href="#ph-envelope-simple"/></svg> info@studiowotto.com</a>
+      <a class="btn btn--light" href="tel:+31643474328"><svg class="ph" aria-hidden="true"><use href="#ph-phone"/></svg> +31 6 43474328</a>
     </div>
   </div>
 </section>
 
-<div data-include="footer"></div>
+</main>
+<!--ingebakken:footer--><footer class="footer" data-partial data-nav="light">
+  <div class="wave-top rev" aria-hidden="true"><svg preserveAspectRatio="none"><use href="#wave"/></svg></div>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="../../logo's/logo%20studio%20wotto%20white-web.webp" alt="Studio Wotto" width="1360" height="523">
+        <p style="opacity:.8; max-width:26ch">Creatieve technologie uit Eindhoven. Interactief, muzikaal en phygital.</p>
+      </div>
+      <div><h2 class="footer__kop">Wat we doen</h2><ul>
+        <li><a href="../../interactieve-installaties/">Interactieve installaties</a></li>
+        <li><a href="../../muzikale-webapps/">Muzikale webapps &amp; games</a></li>
+        <li><a href="../../podium/">Podium &amp; instrumenten</a></li>
+        <li><a href="../../installatie-huren/">Installaties huren</a></li>
+        <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
+      <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
+        <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
+      <div><h2 class="footer__kop">Contact</h2><ul>
+        <li><a href="mailto:info@studiowotto.com">info@studiowotto.com</a></li>
+        <li><a href="tel:+31643474328">+31 6 43474328</a></li><li>Hurksestraat 19<br>5652 AH Eindhoven</li></ul></div>
+      <div><h2 class="footer__kop">Volg</h2><ul>
+        <li><a href="https://www.instagram.com/studio.wotto/">Instagram</a></li><li><a href="https://www.linkedin.com/company/studio-wotto/">LinkedIn</a></li><li><a href="https://www.youtube.com/@jwotto">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Studio Wotto · studiowotto.com</span>
+      <!-- KVK en BTW-id horen hier: een zakelijke site in Nederland moet ze
+           makkelijk vindbaar hebben staan (art. 3:15d BW). Let op: dit is het
+           BTW-IDENTIFICATIEnummer, niet het oude BTW-nummer. -->
+      <span>KVK 66978106 · BTW NL002219337B86</span>
+      <span>Creatieve technologie uit Eindhoven</span>
+    </div>
+  </div>
+</footer><!--/ingebakken:footer-->
 
 <script src="../../js/site.js"></script>
 </body>
