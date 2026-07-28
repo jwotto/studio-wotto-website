@@ -28,6 +28,7 @@
 <meta name="wotto:featured" content="ja">
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="muzikale-speelplaats.webp" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -72,7 +73,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -88,6 +89,7 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-play" viewBox="0 0 256 256"><path d="M234.49,111.07,90.41,22.94A20,20,0,0,0,60,39.87V216.13a20,20,0,0,0,30.41,16.93l144.08-88.13a19.82,19.82,0,0,0,0-33.86ZM84,208.85V47.15L216.16,128Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="wave" viewBox="0 0 2400 80" preserveAspectRatio="none">
@@ -134,7 +136,7 @@
       <h1>Een Muzikale Speelplaats voor Iedereen</h1>
       <p class="lead">Dit creatieve nerdje stond op het <a href="https://www.nerdlandfestival.be/nl/">Nerdland Festival</a> met de SideQuest Rave, een interactieve muziekinstallatie die mensen samenbrengt. Geen moment rust gehad, maar dat is voor mij pas echt de high score.</p>
 
-      <img class="float-left" src="muzikale-speelplaats.jpg" alt="Jan-Willem laat bezoekers de muzikale speelplaats spelen: gele, blauwe en rode lichtpanelen met knoppen in een festivaltent" data-cap="Samen spelen op de muzikale speelplaats" width="2560" height="1921">
+      <img class="float-left" src="muzikale-speelplaats.webp" alt="Jan-Willem laat bezoekers de muzikale speelplaats spelen: gele, blauwe en rode lichtpanelen met knoppen in een festivaltent" data-cap="Samen spelen op de muzikale speelplaats" width="2560" height="1921" fetchpriority="high">
 
       <p>De <a href="../side-quest-rave/">SideQuest Rave</a> is een interactieve muziekinstallatie waarmee iedereen vette elektronische beats kan maken. Door aan de knoppen te draaien en patronen te tekenen creëren mensen melodieën, basslines en ritmes. Het unieke is dat de machines samenwerken, waardoor er harmonie in muziek en tussen mensen ontstaat. Zelfs mensen zonder muzikale ervaring kunnen zich uitleven.</p>
 
@@ -146,9 +148,7 @@
       <h2>Oprechte reacties van bezoekers</h2>
       <p>De reacties op het Nerdland Festival waren positief. De installatie bracht een glimlach op de gezichten van jong en oud. De mooiste momenten zijn de families die, zonder muzikale achtergrond, trots staan te dansen op de muziek die ze zelf maken.</p>
 
-      <div class="video-embed">
-        <iframe src="https://player.vimeo.com/video/976308414" title="De SideQuest Rave in actie" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="video-embed video-embed--wacht" data-speler="https://player.vimeo.com/video/976308414?autoplay=1"><img src="embed-vimeo-976308414.webp" alt="" width="1280" height="720" loading="lazy" decoding="async"><button type="button" class="video-embed__knop" aria-label="Video afspelen: De SideQuest Rave in actie"><svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg></button></div>
 
       <p>Wil je zo'n muziekervaring op jouw locatie, of ben je benieuwd naar onze <a href="../../workshops/">workshops</a>? <a href="../../#contact">Neem contact op</a>.</p>
     </div>
@@ -171,6 +171,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

@@ -29,6 +29,7 @@
 <meta name="wotto:featured" content="ja">             <!-- op de homepage uitlichten -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="ramses3000-vloeistofprojecties-poster.jpg" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -69,7 +70,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -134,7 +135,7 @@
       <!-- Staand filmpje, dus smal en zwevend. Geluid erop, dus controls.
            poster + preload="none" = nul bytes tot iemand op play drukt. -->
       <figure class="float-right staand">
-        <video src="ramses3000-vloeistofprojecties.mp4" poster="ramses3000-vloeistofprojecties-poster.jpg"
+        <video data-src="ramses3000-vloeistofprojecties.mp4" poster="ramses3000-vloeistofprojecties-poster.jpg"
                width="720" height="1280" autoplay loop muted playsinline preload="metadata" class="film"></video>
         <figcaption>De camera hangt boven het schaaltje, de vloeistof gaat live de muur op.</figcaption>
       </figure>
@@ -155,26 +156,26 @@
            rijen. Let op de vololgorde: de staande staat in het midden, want het
            raster vult van links naar rechts. Zo sluit het blok onderaan gelijk af. -->
       <div class="gallery gallery--kolommen">
-        <img src="ramses3000-effenaar-hybrid-music-vibes.jpg" width="1600" height="1057" loading="lazy" decoding="async"
-             alt="Ramses3000 achter zijn tafel in de Effenaar, met de vloeistofprojectie levensgroot op het scherm achter hem en een cellist ernaast" data-cap="In de Effenaar, met de projectie">
+        <img src="ramses3000-effenaar-hybrid-music-vibes.webp" width="1600" height="1057"
+             alt="Ramses3000 achter zijn tafel in de Effenaar, met de vloeistofprojectie levensgroot op het scherm achter hem en een cellist ernaast" data-cap="In de Effenaar, met de projectie" fetchpriority="high">
         <div class="hoog">
-          <img src="ramses3000.jpg" width="677" height="1024" loading="lazy" decoding="async"
+          <img src="ramses3000.webp" width="677" height="1024" loading="lazy" decoding="async"
                alt="Ramses3000 buigt zich over de machine, met de camera boven het petrischaaltje en de vloeistof op het schermpje eronder" data-cap="Ramses3000 bespeelt de machine">
         </div>
-        <img src="ramses3000-vloeistofprojectie-publiek.jpg" width="1600" height="1057" loading="lazy" decoding="async"
+        <img src="ramses3000-vloeistofprojectie-publiek.webp" width="1600" height="1057" loading="lazy" decoding="async"
              alt="De zaal van de Effenaar tijdens Hybrid Music Vibes, publiek kijkt naar de vloeistofprojectie op het grote scherm" data-cap="De vloeistof levensgroot op het scherm">
       </div>
 
       <!-- Van prototype naar machine. Alle drie staand en even hoog, dus ze
            staan met z'n drieën op één rij en sluiten onderaan gelijk af. -->
       <div class="gallery">
-        <img src="ramses3000-prototype-multiplex-behuizing.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="ramses3000-prototype-multiplex-behuizing.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="Het eerste prototype van de videosynthesizer: een behuizing van multiplex op een rolkar in de studio, met een rond gat in het bovenblad en een camera aan een arm erboven"
              data-cap="Het eerste prototype, nog van multiplex">
-        <img src="ramses3000-printplaat-videosynthesizer.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="ramses3000-printplaat-videosynthesizer.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De printplaat van de videosynthesizer, met connectoren voor alle knoppen en faders en een microcontroller aan de zijkant, voor de zwarte behuizing gehouden"
              data-cap="De printplaat waar alle knoppen op samenkomen">
-        <img src="ramses3000-videosynthesizer-in-de-studio.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="ramses3000-videosynthesizer-in-de-studio.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De afgebouwde videosynthesizer in de studio van Studio Wotto: een zwarte kast met schermpje en bedieningspaneel, met de camera aan een arm erboven en een flesje gekleurde vloeistof ernaast"
              data-cap="Af, en klaar om te testen">
       </div>
@@ -227,6 +228,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

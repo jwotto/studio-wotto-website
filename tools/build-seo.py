@@ -171,6 +171,14 @@ def bouw(f):
                 "name": d["titel"].split("|")[0].strip(), "description": d["desc"],
                 "isPartOf": {"@id": WEB}, "inLanguage": "nl-NL", "publisher": {"@id": ORG}}
 
+    # /werk/ zelf is het complete overzicht, geen content-item. Deze test moet
+    # dus VOOR die van map0 == "werk" staan, anders wordt de overzichtspagina
+    # aangezien voor een project zonder type.
+    if rel == "werk/":
+        return {"@context": "https://schema.org", "@type": "CollectionPage", "url": d["url"],
+                "name": d["titel"].split("|")[0].strip(), "description": d["desc"],
+                "isPartOf": {"@id": WEB}, "inLanguage": "nl-NL", "publisher": {"@id": ORG}}
+
     if map0 == "werk":
         soort = leesmeta(h, "wotto:type")
         titel = leesmeta(h, "wotto:titel") or d["titel"]
@@ -206,9 +214,13 @@ def bouw(f):
             if datum:
                 node["dateCreated"] = datum
 
+        # Het kruimelpad wees naar /projecten/ terwijl het "Werk" heette, en op
+        # een blog klopte dat helemaal niet. Nu wijst het naar /werk/, waar
+        # inderdaad alles staat. Die pagina bestond eerst niet; de map gaf een
+        # 403 van de server.
         kruimels = {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
-            {"@type": "ListItem", "position": 2, "name": "Werk", "item": SITE + "/projecten/"},
+            {"@type": "ListItem", "position": 2, "name": "Werk", "item": SITE + "/werk/"},
             {"@type": "ListItem", "position": 3, "name": titel, "item": d["url"]}]}
         return {"@context": "https://schema.org", "@graph": [node, kruimels]}
 

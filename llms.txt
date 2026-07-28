@@ -1,0 +1,86 @@
+# Studio Wotto
+
+> Studio Wotto maakt interactieve muziekinstallaties, muzikale webapps en podiumtechniek voor musea, scholen, festivals en artiesten. Installaties worden op maat gebouwd of zijn kant-en-klaar te huur op locatie.
+
+Studio Wotto zit in Eindhoven (Hurksestraat 19, 5652 AH) en werkt in heel Nederland. Contact: info@studiowotto.com, +31643474328.
+
+Waar de studio verstand van heeft: interactieve installaties, interactieve muziekinstallaties, interactieve installatie huren, merkactivering, muzikale webapps, muziekinstrumenten op maat, live visuals, vj-techniek, stage props, videosynthesizers, muziektechnologie, interactieve kunst, creatieve technologie, phygital marketing, workshops muziek en techniek.
+
+Over de opbouw van deze site: alle content (projecten, blogs en workshops) staat in /werk/<naam>/. De overzichten /projecten/, /blog/ en /werk/ tonen dezelfde items, alleen anders gefilterd. Elke pagina staat volledig in de HTML, dus er is geen JavaScript nodig om hem te lezen.
+
+## Diensten
+
+- [Interactieve installaties laten maken](https://studiowotto.com/interactieve-installaties/): Interactieve installaties laten maken voor musea, scholen en beurzen. Wij ontwerpen en bouwen museuminstallaties waar bezoekers zelf mee spelen.
+- [Interactieve installatie huren voor je event](https://studiowotto.com/installatie-huren/): Een interactieve muziekinstallatie huren voor je festival, event of merkactivering. Van The Side Quest Rave tot een arcadekast, wij komen naar je locatie.
+- [Muzikale webapps en games laten maken](https://studiowotto.com/muzikale-webapps/): Muzikale webapps en educatieve games die meteen werken in de browser, op elk apparaat. Van gamification voor het onderwijs tot een spel in de etalage.
+- [Muziekinstrumenten, visuals en props op maat](https://studiowotto.com/podium/): Muziekinstrumenten, reactieve visuals en stage props op maat voor artiesten en podia. Studio Wotto bouwt eenmalige objecten die het podium op gaan.
+- [Workshops & talks over creatieve technologie](https://studiowotto.com/workshops/): Workshops over muziek, techniek en games. Voor scholen, musea, bibliotheken en cultuurhuizen. Bouw een gitaar, maak een game of teken je eigen geluid.
+
+## Projecten
+
+Gemaakt werk, met per stuk het verhaal erachter.
+
+- [Muziekmachines in Museum Speelklok](https://studiowotto.com/werk/museum-speelklok/): Vier schermen waarop je je eigen muziekmachine samenstelt. En dan draaien aan het rad, want zonder handbeweging geen muziek.
+- [Ramses3000 videosynthesizer](https://studiowotto.com/werk/ramses3000/): Een instrument waarmee je geen muziek maakt maar beeld. Gekleurde vloeistof in een schaaltje, live bespeeld.
+- [NoteCracker](https://studiowotto.com/werk/crackthenotes/): Muzieknoten leren lezen door puzzels op te lossen. Denk aan Duolingo, maar dan voor de notenbalk.
+- [Tantu Beats](https://studiowotto.com/werk/tantu-beats/): We werkten samen met producer Tantu Beats aan een 3D-geprint FL Studio-logo als hart van een campagne.
+- [Joost Klein](https://studiowotto.com/werk/joost-klein/): Een boksbeugel die op zijn microfoon klikt, 3D-geprint en met de hand afgewerkt voor Pukkelpop 2025.
+- [Bouw je eigen droombaan](https://studiowotto.com/werk/bouw-je-droombaan/): Jongeren ontwerpen hun eigen racebaan en racen er daarna zelf overheen. Gemaakt met Summa College Techniek.
+- [Aura Bouw: geluid naar lasers](https://studiowotto.com/werk/aura-bouw-lasers/): Samen met componist Aura Bouw vertaalden we geluid naar lasers. Elke trilling werd zichtbaar als vorm en beweging.
+- [Techno Maker](https://studiowotto.com/werk/technomaker/): Maak je eigen elektronische beat in je browser. Niet om te produceren, maar om live te spelen.
+- [Een arcade-kast voor jonge uitvinders](https://studiowotto.com/werk/interactieve-arcade-kast/): Ontwerp je eigen game-avatar en bouw je eigen controller in een interactieve arcade-kast die jongeren enthousiast maakt voor techniek.
+- [The Side Quest Rave](https://studiowotto.com/werk/side-quest-rave/): Een interactieve muziekinstallatie waarmee iedereen samen keiharde elektronische muziek maakt.
+- [Van Kapotte Super Nintendo naar Audiovisuele Kunst](https://studiowotto.com/werk/snes-videosynthesizer/): Een kapotte Super Nintendo omgebouwd tot muziekgestuurde videosynthesizer, met live visuals via circuitbending en MIDI.
+
+## Blogs
+
+Verslagen, achtergronden en aantekeningen.
+
+- [Een Nintendo Zapper als muziekinstrument](https://studiowotto.com/werk/nintendo-zapper-muziekinstrument/): Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.
+- [Een boek vol spelvouten](https://studiowotto.com/werk/boek-vol-spelvouten/): Een boek vol spelfouten, met bij elk exemplaar een rood pennetje. Een puzzelboek voor spellingspuristen.
+- [Drie dagen in de gevangenis](https://studiowotto.com/werk/workshop-jeugdgevangenis/): Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.
+- [Jureren op Crafted](https://studiowotto.com/werk/crafted-festival/): Een dag tussen het eindexamenwerk van Summa-studenten. De werken waren fantastisch, de verhalen erachter nog beter.
+- [Wie wil mijn robotstofzuiger besturen?](https://studiowotto.com/werk/robotstofzuiger-xp/): Gamen met mijn neefjes bracht me op een idee dat net te slecht is om te maken, maar net te leuk om los te laten.
+- [Workshops Lindenberg Cultuurhuis](https://studiowotto.com/werk/lindenberg-cultuurhuis/): Leerlingen maakten met de SideQuest Rave hun eigen soundtrack bij een zelfgemaakte film.
+- [MAKERDAYS Eindhoven 2025](https://studiowotto.com/werk/makerdays-eindhoven-2025/): Weer aanwezig bij de MAKERDAYS Eindhoven met de SideQuest Rave en de arcademachine, inmiddels bijna traditie.
+- [Cpunt Mediafestival 2025](https://studiowotto.com/werk/cpunt-mediafestival-2025/): We werden ingezet als rustmoment, maar werden het drukste plekje van het mediafestival.
+- [2025 terugblik](https://studiowotto.com/werk/2025-terugblik/): In 2025 werkten we samen met Joost Klein en bouwden we installaties voor musea die nog niemand gezien had.
+- [De drummende gitaar](https://studiowotto.com/werk/drummende-gitaar/): Een gitaar die ik niet alleen versterkte maar ook liet drummen. Achteraf het kantelpunt van muziek maken naar bouwen.
+- [Makers Festival Twente](https://studiowotto.com/werk/makers-festival-twente/): Vier dagen op het Makers Festival Twente met de arcadekast en de Side Quest Rave. Van giechelende kids tot ouders die weer kind durfden te zijn.
+- [The MKRDAYS Eindhoven](https://studiowotto.com/werk/mkrdays-2024/): Twee dagen in het teken van de makers, met de Side Quest Rave en de arcade-kast op de fair.
+- [Een Muzikale Speelplaats voor Iedereen](https://studiowotto.com/werk/muzikale-speelplaats/): Met de SideQuest Rave op het Nerdland Festival: samen muziek maken, ongeacht je muzikale achtergrond.
+- [Maak muziek die er ook mooi uitziet](https://studiowotto.com/werk/maak-muziek-die-er-ook-mooi-uitziet/): De uitdaging die ik gaf aan studenten van de KU Leuven, en de drumrobot die eruit voortkwam.
+
+## Workshops
+
+Wat er te boeken is voor scholen en groepen.
+
+- [SoundSketch: teken je eigen geluid](https://studiowotto.com/werk/workshop-soundsketch/): Teken met een potlood en hoor je tekening. Grafiet geleidt, en hoe langer je lijn, hoe lager de toon.
+- [Muziek en techniek](https://studiowotto.com/werk/maak-muziek-met-techniek/): Bouw je eigen muziekmachine met sequencers en tikkende elektronica, en maak een geluidskunstwerk dat er ook goed uitziet.
+- [Game ontwikkeling](https://studiowotto.com/werk/maak-een-game/): Ontwerp en bouw je eigen videogame, speel 'm op een echte arcadekast en deel 'm online met je vrienden.
+- [Bouw je eigen elektrische gitaar](https://studiowotto.com/werk/bouw-je-eigen-elektrische-gitaar/): Bouw van gerecyclede materialen je eigen elektrische gitaar, en ontdek de techniek achter geluid.
+
+## Over de studio
+
+- [Over Studio Wotto | Creatieve technologie uit Eindhoven](https://studiowotto.com/over-ons/): Techniek waar je mee speelt in plaats van naar kijkt. Interactieve installaties en muziekinstrumenten uit Eindhoven, gemaakt door Jan-Willem en Jaimy.
+- [Contact | Studio Wotto in Eindhoven](https://studiowotto.com/contact/): Neem contact op met Studio Wotto in Eindhoven. Bel of mail Jan-Willem Otto of Jaimy Kortenhoff, of stuur een bericht naar info@studiowotto.com.
+- Jan-Willem Otto, creatief leider & innovatieve technoloog. Profielen: https://www.linkedin.com/in/jan-willem-otto/, https://www.instagram.com/jw.otto/, https://www.youtube.com/@jwotto, https://x.com/otto_jw, https://www.reddit.com/user/jw-otto/
+- Jaimy Kortenhoff, projectmanager & communicatie. Profielen: https://www.linkedin.com/in/jaimy-kortenhoff-384105319/, https://www.instagram.com/jaimykortenhoff/, https://www.youtube.com/user/jaimykortenhoff
+
+## Optional
+
+Ingangen per onderwerp. Ze bevatten geen nieuw werk, alleen een andere doorsnede van wat hierboven staat.
+
+- [Creatieve technologie](https://studiowotto.com/onderwerp/creatieve-technologie/): Techniek als creatief gereedschap. Van 3D-ontwerp en printen tot circuit bending: kijken wat er gebeurt als je verder gaat dan waar iets voor bedoeld was.
+- [Educatie](https://studiowotto.com/onderwerp/educatie/): Werk voor het onderwijs. Workshops en installaties waarmee leerlingen niet over techniek horen, maar er zelf iets mee maken.
+- [Festival](https://studiowotto.com/onderwerp/festival/): Installaties die het festivalterrein op gaan. Druk, kort, en zonder uitleg: het moet meteen duidelijk zijn hoe het werkt.
+- [Games](https://studiowotto.com/onderwerp/games/): Games en gametechniek. Van een arcadekast waarin jij de avatar bent tot een game die je in een middag zelf leert bouwen.
+- [Gamification](https://studiowotto.com/onderwerp/gamification/): Werk waarin spelprincipes het leren of de beleving versterken. Punten als middel, niet als doel: is het spel zonder punten niet leuk, dan helpen punten niet.
+- [Geluidsontwerp](https://studiowotto.com/onderwerp/geluidsontwerp/): Geluid als materiaal. Van ritmes programmeren met tikkende motoren tot een tekening die je kunt horen.
+- [Interactieve kunst](https://studiowotto.com/onderwerp/interactieve-kunst/): Kunst die reageert. Installaties waarin het publiek het werk afmaakt, en die pas tot leven komen als iemand anders eraan begint.
+- [Interactieve reclame](https://studiowotto.com/onderwerp/interactieve-reclame/): Merkbeleving die blijft staan. In een winkel, horeca of etalage, waar voorbijgangers stoppen en meedoen in plaats van doorlopen. Op maat gebouwd.
+- [Merkactivering](https://studiowotto.com/onderwerp/merkactivering/): Een merk dat ergens even neerstrijkt. Een installatie op een festival, beurs of event, met jouw merk erop, die na afloop weer meegaat. Meestal te huur.
+- [Museum](https://studiowotto.com/onderwerp/museum/): Interactieve installaties voor musea en tentoonstellingen, waarmee bezoekers zelf aan de slag gaan in plaats van alleen kijken.
+- [Muziekinstrumenten](https://studiowotto.com/onderwerp/muziekinstrumenten/): Instrumenten die nog niet bestonden. Zelf gebouwd, met een eigen bediening en een eigen geluid, voor wie iets wil spelen dat niemand anders heeft.
+- [Muziektechnologie](https://studiowotto.com/onderwerp/muziektechnologie/): Waar muziek en techniek elkaar raken. Instrumenten, machines en tools die geluid maken, vaak zelf gebouwd omdat ze nog niet bestonden.
+- [Phygital](https://studiowotto.com/onderwerp/phygital/): Waar fysiek en digitaal in elkaar overlopen. Teken iets op papier en zie het bewegen op het scherm, of scan een code en je telefoon wordt de controller.

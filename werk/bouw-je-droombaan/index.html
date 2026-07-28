@@ -31,6 +31,7 @@
 <meta name="wotto:featured" content="ja">            <!-- op de homepage uitlichten -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="bouw-je-droombaan-poster.jpg" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -71,7 +72,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -133,7 +134,7 @@
       <p class="lead">Niet alleen mijn motto, maar ook de naam van dit project.</p>
 
       <figure class="float-right">
-        <video src="bouw-je-droombaan-parcours.mp4" poster="bouw-je-droombaan-poster.jpg"
+        <video data-src="bouw-je-droombaan-parcours.mp4" poster="bouw-je-droombaan-poster.jpg"
                width="800" height="800" autoplay loop muted playsinline preload="metadata" class="film"></video>
         <figcaption>Zelf de baan ontwerpen, dan racen vanuit het zicht van de bestuurder.</figcaption>
       </figure>
@@ -155,15 +156,15 @@
            worden en sluit het blok links en rechts toch gelijk af. De staande
            staat daarom als tweede: het raster vult van links naar rechts. -->
       <div class="gallery gallery--kolommen">
-        <img src="bouw-je-droombaan.jpg" width="1600" height="1067" loading="lazy" decoding="async"
-             alt="Overzicht van Bouw je droombaan in het Summa FutureLab: drie gekleurde stuurkasten en een parcours met vlaggetjes waarover kinderen een autootje besturen" data-cap="Bouw je droombaan in het Summa FutureLab">
+        <img src="bouw-je-droombaan.webp" width="1600" height="1067"
+             alt="Overzicht van Bouw je droombaan in het Summa FutureLab: drie gekleurde stuurkasten en een parcours met vlaggetjes waarover kinderen een autootje besturen" data-cap="Bouw je droombaan in het Summa FutureLab" fetchpriority="high">
         <div class="hoog" style="grid-row:span 3">
-          <img src="bouw-je-droombaan-rc-auto-werkplaats.jpg" width="901" height="1600" loading="lazy" decoding="async"
+          <img src="bouw-je-droombaan-rc-auto-werkplaats.webp" width="901" height="1600" loading="lazy" decoding="async"
                alt="Het blauwe RC-autootje met grote banden op de werkbank, tijdens de bouw van Bouw je droombaan in de werkplaats van Studio Wotto" data-cap="De race-auto in de werkplaats">
         </div>
-        <img src="bouw-je-droombaan-summa-future-lab.jpg" width="1600" height="1200" loading="lazy" decoding="async"
+        <img src="bouw-je-droombaan-summa-future-lab.webp" width="1600" height="1200" loading="lazy" decoding="async"
              alt="Jan-Willem bij de installatie Bouw je droombaan in het Summa FutureLab, terwijl kinderen een autootje over het parcours racen" data-cap="Racen over je eigen parcours">
-        <img src="bouw-je-droombaan-baanonderdelen.jpg" width="1600" height="901" loading="lazy" decoding="async"
+        <img src="bouw-je-droombaan-baanonderdelen.webp" width="1600" height="901" loading="lazy" decoding="async"
              alt="Zelf lasergesneden baanonderdelen voor Bouw je droombaan: een boom, een pion, een autootje, een startpoort en een vlaggetje" data-cap="Lasergesneden baanonderdelen">
       </div>
       <!-- Projectinformatie: compact infoblok voor lezer en zoekmachine -->
@@ -212,6 +213,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

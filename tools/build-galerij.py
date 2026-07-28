@@ -32,6 +32,12 @@ import json, pathlib, re, sys
 SITE_DIR = pathlib.Path(__file__).resolve().parent.parent
 BEELD = (".jpg", ".jpeg", ".png")
 FILM = (".mp4",)
+
+# Bestanden die de andere bouwstappen zelf hebben gemaakt. Die horen nooit in een
+# galerij: het zijn geen nieuwe beelden maar lichtere versies van beelden die er
+# al staan. Zonder deze filter meldde dit script "1 los bestand" over een
+# kaartfilmpje dat het zelf een stap eerder had gemaakt.
+GEGENEREERD = re.compile(r"(-kaart(-web)?|-web|-poster)\.[a-z0-9]+$|^embed-", re.I)
 MAX_BREED = 1600
 
 START = '<!-- galerij: gemaakt door tools/build-galerij.py uit de bestanden in deze map -->'
@@ -56,11 +62,16 @@ def bestaande_alts(html):
         blok = re.search(r'<div class="gallery[^"]*">(.*?)</div>\s*(?=<|$)', html, re.S)
     if not blok:
         return {}
+    # Op de bestandsnaam ZONDER extensie, niet op het hele pad. Sinds
+    # build-artikelbeeld.py naast elke foto een lichtere .webp zet, verwijst de
+    # HTML daarnaar, terwijl dit script de .jpg op schijf vindt. Zonder deze
+    # kleine ingreep zou hij de alt-tekst dan niet meer herkennen en je handwerk
+    # elke bouwronde overschrijven met een uit de bestandsnaam verzonnen tekst.
     uit = {}
     for m in re.finditer(r'<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"', blok.group(1)):
-        uit[m.group(1)] = m.group(2)
+        uit[pathlib.PurePosixPath(m.group(1)).stem] = m.group(2)
     for m in re.finditer(r'<a[^>]*href="([^"]+)"[^>]*data-tekst="([^"]*)"', blok.group(1)):
-        uit[m.group(1)] = m.group(2)
+        uit[pathlib.PurePosixPath(m.group(1)).stem] = m.group(2)
     return uit
 
 
@@ -119,13 +130,27 @@ def main():
         if START not in h and re.search(r'<div class="gallery', zonder):
             print("  %-30s eigen galerij, niet aangeraakt" % slug)
             continue
-        gebruikt = set(re.findall(r'(?:src|href|poster)="([^"/]+)"', zonder))
-        videocover = (re.search(r'wotto:videocover"\s+content="([^"]*)"', h) or [None, ""])[1]
-        if videocover:
-            gebruikt.add(videocover)
+        # Ook hier op de naam ZONDER extensie vergelijken. De HTML verwijst naar
+        # de lichte .webp van build-artikelbeeld.py, terwijl hier de .jpg op
+        # schijf langskomt. Op de volle naam vergelijken zou betekenen dat hij
+        # die .jpg niet herkent als "staat al in de tekst", en hem er onderaan
+        # nog een keer bij zou zetten.
+        gebruikt = {pathlib.PurePosixPath(x).stem
+                    for x in re.findall(r'(?:src|href|poster)="([^"/]+)"', zonder)}
+        # De cover en het kaartfilmpje staan nergens in de lopende tekst, maar
+        # worden wel degelijk gebruikt: op de kaartjes en als deel-thumbnail bij
+        # een berichtje op LinkedIn of WhatsApp. Zonder deze twee regels ziet dit
+        # script ze aan voor losse bestanden en stelt het voor om er een galerij
+        # van te maken.
+        for meta in ("videocover", "cover"):
+            m = re.search(r'wotto:%s"\s+content="([^"]*)"' % meta, h)
+            if m and m.group(1):
+                gebruikt.add(pathlib.PurePosixPath(m.group(1)).stem)
 
         media = sorted(p for p in d.iterdir()
-                       if p.suffix.lower() in BEELD + FILM and p.name not in gebruikt)
+                       if p.suffix.lower() in BEELD + FILM
+                       and p.stem not in gebruikt
+                       and not GEGENEREERD.search(p.name))
         if not media:
             continue
         if len(media) < 2 and START not in h:
@@ -138,7 +163,7 @@ def main():
         for p in media:
             if p.suffix.lower() in BEELD:
                 w, hgt = Image.open(p).size
-                alt = oude.get(p.name) or alt_uit_naam(p.name)
+                alt = oude.get(p.stem) or alt_uit_naam(p.name)
                 regels.append(
                     '        <img src="%s" width="%d" height="%d" loading="lazy" decoding="async"\n'
                     '             alt="%s">' % (p.name, w, hgt, esc(alt)))
@@ -148,7 +173,7 @@ def main():
                     print("   !! %s/%s: geen poster te maken, filmpje overgeslagen" % (slug, p.name))
                     continue
                 pw, ph = Image.open(d / poster).size
-                alt = oude.get(p.name) or alt_uit_naam(p.name)
+                alt = oude.get(p.stem) or alt_uit_naam(p.name)
                 regels.append(
                     '        <figure>\n'
                     '          <video src="%s" poster="%s" width="%d" height="%d"\n'

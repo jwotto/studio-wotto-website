@@ -29,6 +29,7 @@
 <meta name="wotto:huur"     content="ja">            <!-- te huur op locatie -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="embed-vimeo-1060039934.webp" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -69,7 +70,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -85,7 +86,7 @@
 <!-- /structured data -->
 </head>
 <body>
-<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-truck" viewBox="0 0 256 256"><path d="M255.14,115.54l-14-35A19.89,19.89,0,0,0,222.58,68H196V64a12,12,0,0,0-12-12H32A20,20,0,0,0,12,72V184a20,20,0,0,0,20,20H46.06a36,36,0,0,0,67.88,0h44.12a36,36,0,0,0,67.88,0H236a20,20,0,0,0,20-20V120A21.7,21.7,0,0,0,255.14,115.54ZM196,92h23.88l6.4,16H196ZM80,204a12,12,0,1,1,12-12A12,12,0,0,1,80,204Zm92-41.92A36.32,36.32,0,0,0,158.06,180H113.94a36,36,0,0,0-67.88,0H36V140H172ZM172,116H36V76H172Zm20,88a12,12,0,1,1,12-12A12,12,0,0,1,192,204Zm40-24h-6.06A36.09,36.09,0,0,0,196,156.23V132h36Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-play" viewBox="0 0 256 256"><path d="M234.49,111.07,90.41,22.94A20,20,0,0,0,60,39.87V216.13a20,20,0,0,0,30.41,16.93l144.08-88.13a19.82,19.82,0,0,0,0-33.86ZM84,208.85V47.15L216.16,128Z"/></symbol><symbol id="ph-truck" viewBox="0 0 256 256"><path d="M255.14,115.54l-14-35A19.89,19.89,0,0,0,222.58,68H196V64a12,12,0,0,0-12-12H32A20,20,0,0,0,12,72V184a20,20,0,0,0,20,20H46.06a36,36,0,0,0,67.88,0h44.12a36,36,0,0,0,67.88,0H236a20,20,0,0,0,20-20V120A21.7,21.7,0,0,0,255.14,115.54ZM196,92h23.88l6.4,16H196ZM80,204a12,12,0,1,1,12-12A12,12,0,0,1,80,204Zm92-41.92A36.32,36.32,0,0,0,158.06,180H113.94a36,36,0,0,0-67.88,0H36V140H172ZM172,116H36V76H172Zm20,88a12,12,0,1,1,12-12A12,12,0,0,1,192,204Zm40-24h-6.06A36.09,36.09,0,0,0,196,156.23V132h36Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 
 <!-- Golf-sprite -->
@@ -134,9 +135,7 @@
       <h1>Een arcade-kast voor jonge uitvinders</h1>
       <p class="lead">Je eigen game-avatar ontwerpen en zelf een game-controller bouwen waarmee jij op je eigen manier een game bestuurt. Studio Wotto inspireert de uitvinders van morgen en maakt een interactieve arcade-kast waarmee jongeren worden uitgedaagd om innovatief en creatief te denken.</p>
 
-      <div class="video-embed float-right" style="aspect-ratio:1/1">
-        <iframe src="https://player.vimeo.com/video/1060039934" title="Een arcade-kast voor jonge uitvinders" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="video-embed float-right video-embed--wacht" style="aspect-ratio:1/1" data-speler="https://player.vimeo.com/video/1060039934?autoplay=1"><img src="embed-vimeo-1060039934.webp" alt="" width="1280" height="1280" fetchpriority="high"><button type="button" class="video-embed__knop" aria-label="Video afspelen: Een arcade-kast voor jonge uitvinders"><svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg></button></div>
 
       <h2>Retro technologie als inspiratie</h2>
       <p>In samenwerking met het <a href="https://www.summacollege.nl/over-summa/scholen/summa-techniek">Summa College Techniek</a> heeft Studio Wotto een interactieve arcade-kast ontwikkeld om jongeren enthousiast te maken voor techniek. De machine was te zien op de High Tech Ontdekkingsroute in de Brainport regio. Met deze interactieve installatie kunnen jongeren hun eigen avatar ontwerpen en vervolgens uploaden naar de arcade-kast. Dit doen ze door hun ontwerp op papier via een ouderwetse floppy disk drive in de machine te stoppen, een soort postbus die hun avatar meteen in de game laat verschijnen.</p>
@@ -158,19 +157,19 @@
            stil, dus autoplay zonder class="film": die klasse zou er een
            tik-voor-geluid-knop aan hangen en daar zit niets op. -->
       <div class="gallery">
-        <img src="arcade-kast-3d-ontwerp-panelen.jpg" width="1048" height="786" loading="lazy" decoding="async"
+        <img src="arcade-kast-3d-ontwerp-panelen.webp" width="1048" height="786" loading="lazy" decoding="async"
              alt="3D-ontwerp van de arcade-kast waarbij een zijpaneel los naast de kast zweeft, met de vingerverbindingen voor de lasersnijder erin"
              data-cap="Alles wordt uit platen gesneden en in elkaar geklikt">
-        <img src="arcade-kast-3d-ontwerp-doorsnede.jpg" width="1080" height="810" loading="lazy" decoding="async"
+        <img src="arcade-kast-3d-ontwerp-doorsnede.webp" width="1080" height="810" loading="lazy" decoding="async"
              alt="3D-ontwerp van de arcade-kast met de zijkant weggelaten, zodat je de schappen en de gleuf in het bedieningspaneel ziet zitten"
              data-cap="Van binnen: de schappen en de gleuf">
         <figure>
-          <video src="arcade-kast-concepttekening.mp4" poster="arcade-kast-concepttekening-poster.jpg"
+          <video data-src="arcade-kast-concepttekening.mp4" poster="arcade-kast-concepttekening-poster.jpg"
                  width="772" height="1080" autoplay loop muted playsinline preload="metadata"></video>
           <figcaption>De eerste schets van de kast, van eerste lijn tot kleur.</figcaption>
         </figure>
         <figure>
-          <video src="arcade-kast-avatar-tekenen.mp4" poster="arcade-kast-avatar-tekenen-poster.jpg"
+          <video data-src="arcade-kast-avatar-tekenen.mp4" poster="arcade-kast-avatar-tekenen-poster.jpg"
                  width="772" height="1080" autoplay loop muted playsinline preload="metadata"></video>
           <figcaption>En zo vult een bezoeker zo'n Avatar Maker-vel in.</figcaption>
         </figure>
@@ -180,49 +179,49 @@
            stylesheet er twee groot boven en drie kleiner eronder, zodat allebei
            de rijen vol zijn. Volgorde = bouwvolgorde. -->
       <div class="gallery">
-        <img src="arcade-kast-casco-multiplex.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="arcade-kast-casco-multiplex.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="Het casco van de arcade-kast in multiplex, in elkaar gezet in de werkplaats van Studio Wotto, met de vingerverbindingen nog in het zicht"
              data-cap="Zo komt hij van de lasersnijder">
-        <img src="arcade-kast-geplamuurd-en-geschuurd.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="arcade-kast-geplamuurd-en-geschuurd.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De arcade-kast in de plamuur, glad geschuurd en klaar om gespoten te worden"
              data-cap="Plamuren en schuren tot de naden weg zijn">
-        <img src="arcade-kast-gespoten-met-gekleurde-sleuven.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="arcade-kast-gespoten-met-gekleurde-sleuven.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De gespoten arcade-kast op een tafel in de werkplaats, met de blauwe, rode en gele gleuven in het bedieningspaneel"
              data-cap="Gespoten, met de drie gekleurde gleuven">
-        <img src="arcade-kast-met-scherm-in-de-werkplaats.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="arcade-kast-met-scherm-in-de-werkplaats.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De arcade-kast met het scherm erin, in de werkplaats, met de tweede kast op de achtergrond"
              data-cap="Het scherm erin, en meteen door met de volgende">
-        <img src="arcade-kast-draw-and-play-logo.jpg" width="901" height="1600" loading="lazy" decoding="async"
+        <img src="arcade-kast-draw-and-play-logo.webp" width="901" height="1600" loading="lazy" decoding="async"
              alt="De arcade-kast met het zelfgemaakte DRAW &amp; PLAY-logo op de kop en de bedrade knoppen op het paneel"
              data-cap="Het logo erop en de knoppen bedraad">
       </div>
 
       <!-- Drie foto's van dezelfde camera, alle drie 3:2, dus een gelijke rij. -->
       <div class="gallery">
-        <img src="arcade-kast-avatar-tekeningen-stiften.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+        <img src="arcade-kast-avatar-tekeningen-stiften.webp" width="1600" height="1067" loading="lazy" decoding="async"
              alt="Acht ingekleurde Avatar Maker-vellen op tafel tussen de stiften, met zelfgetekende figuren die straks in de game verschijnen"
              data-cap="Iedereen tekent eerst zijn eigen avatar">
-        <img src="arcade-kast-avatar-tekening-voor-de-kast.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+        <img src="arcade-kast-avatar-tekening-voor-de-kast.webp" width="1600" height="1067" loading="lazy" decoding="async"
              alt="Een ingekleurd Avatar Maker-vel wordt omhooggehouden voor de arcade-kast, waarop de game al klaarstaat"
              data-cap="Klaar om ingelezen te worden">
-        <img src="arcade-kast-tekening-in-de-scanner.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+        <img src="arcade-kast-tekening-in-de-scanner.webp" width="1600" height="1067" loading="lazy" decoding="async"
              alt="Het getekende vel gaat via de gleuf in het bedieningspaneel de arcade-kast in, als een floppy disk in een drive"
              data-cap="De gleuf leest je tekening in">
       </div>
 
       <!-- Allebei 16:9, dus deze twee lopen gelijk. -->
       <div class="gallery">
-        <img src="arcade-kast-game-met-getekende-avatars.jpg" width="1600" height="900" loading="lazy" decoding="async"
+        <img src="arcade-kast-game-met-getekende-avatars.webp" width="1600" height="900" loading="lazy" decoding="async"
              alt="Beeld uit de game: onder water zwemmen zelfgetekende kwallen en krabben tussen de netten, met bovenin de score per speler"
              data-cap="In de game zwemmen de getekende avatars rond">
-        <img src="arcade-kast-groen-klaar-voor-transport.jpg" width="1600" height="901" loading="lazy" decoding="async"
+        <img src="arcade-kast-groen-klaar-voor-transport.webp" width="1600" height="901" loading="lazy" decoding="async"
              alt="De groen gespoten arcade-kast met het DRAW &amp; PLAY-logo staat buiten bij de laad- en losplaats, klaar voor vervoer"
              data-cap="Klaar om op pad te gaan">
       </div>
 
       <!-- Eén los beeld, dus over de volle breedte (stijl.md: een galerij is
            altijd een vullend vlak, nooit een foto met lucht links en rechts). -->
-      <img class="vol" src="arcade-kast-home-computer-museum.jpg" width="1600" height="1200" loading="lazy" decoding="async"
+      <img class="vol" src="arcade-kast-home-computer-museum.webp" width="1600" height="1200" loading="lazy" decoding="async"
            alt="De arcade-kast afgeleverd bij het Home Computer Museum, met aan weerszijden een persoon die tegen de kast leunt en op het scherm een zelfgetekende onderwaterwereld"
            data-cap="Afgeleverd bij het Home Computer Museum">
 
@@ -275,6 +274,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

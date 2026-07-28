@@ -29,6 +29,7 @@
 <meta name="wotto:featured" content="ja">
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="snes-videosynthesizer.webp" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -69,7 +70,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -85,6 +86,7 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-play" viewBox="0 0 256 256"><path d="M234.49,111.07,90.41,22.94A20,20,0,0,0,60,39.87V216.13a20,20,0,0,0,30.41,16.93l144.08-88.13a19.82,19.82,0,0,0,0-33.86ZM84,208.85V47.15L216.16,128Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="wave" viewBox="0 0 2400 80" preserveAspectRatio="none">
@@ -130,7 +132,7 @@
       <h1>Van Kapotte Super Nintendo naar Audiovisuele Kunst</h1>
       <p class="lead">Een kapotte Super Nintendo, omgebouwd tot een muziekgestuurde videosynthesizer. Oude gametechnologie die nieuw leven krijgt met circuitbending, live visuals en muziek.</p>
 
-      <img class="float-right" src="snes-videosynthesizer.jpg" alt="De opstelling van de SNES-videosynthesizer: een Super Nintendo met een glitchende Super Mario World op een oude Philips-tv, naast een Game Boy en een MIDI-keyboard" data-cap="De opstelling met de Super Nintendo" width="1024" height="576">
+      <img class="float-right" src="snes-videosynthesizer.webp" alt="De opstelling van de SNES-videosynthesizer: een Super Nintendo met een glitchende Super Mario World op een oude Philips-tv, naast een Game Boy en een MIDI-keyboard" data-cap="De opstelling met de Super Nintendo" width="1024" height="576" fetchpriority="high">
 
       <h2>Een nieuw leven voor een oude SNES</h2>
       <p>Al jaren lag er een kapotte SNES in mijn kast. Hij functioneert nog, maar kan bepaalde visuele sprites, zoals Mario in Super Mario World, niet weergeven. Dit bracht me op een idee: waarom zou ik deze al kapotte console niet omtoveren tot een muziekgestuurde videosynthesizer?</p>
@@ -150,9 +152,7 @@
 
       <p>Deze experimentele mix van oude gametechnologie en moderne visuals toont precies waar mijn hart ligt. Door verder te kijken dan conventionele toepassingen ontstaan nieuwe kunstvormen en expressiemogelijkheden. Blijf experimenteren, blijf creëren.</p>
 
-      <div class="video-embed">
-        <iframe src="https://www.youtube.com/embed/iDArikhlg2Y" title="Super Nintendo videosynthesizer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="video-embed video-embed--wacht" data-speler="https://www.youtube-nocookie.com/embed/iDArikhlg2Y?autoplay=1"><img src="embed-youtube-iDArikhlg2Y.webp" alt="" width="1280" height="720" loading="lazy" decoding="async"><button type="button" class="video-embed__knop" aria-label="Video afspelen: Super Nintendo videosynthesizer"><svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg></button></div>
       <!-- Projectinformatie: compact infoblok voor lezer en zoekmachine -->
       <section class="projectinfo" aria-label="Projectinformatie">
         <h2>Projectinformatie</h2>
@@ -187,11 +187,6 @@
                  controls preload="none" playsinline></video>
           <figcaption>Insta vj snes</figcaption>
         </figure>
-        <figure>
-          <video src="snes-videosynthesizer-kaart-web.mp4" poster="snes-videosynthesizer-kaart-web-poster.jpg" width="1600" height="1600"
-                 controls preload="none" playsinline></video>
-          <figcaption>Snes videosynthesizer kaart web</figcaption>
-        </figure>
       </div>
       <!-- /galerij -->
     </div>
@@ -214,6 +209,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

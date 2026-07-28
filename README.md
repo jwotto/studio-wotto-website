@@ -38,6 +38,7 @@ tools/                      python-scripts, zie onderaan
 .htaccess                   redirects + 404. Werkt ALLEEN op Vimexx.
 robots.txt  sitemap.xml     zoekmachines
 content.json                lijst met welke items bestaan (gemaakt door een tool)
+llms.txt                    wegwijzer voor AI-assistenten (gemaakt door een tool)
 ```
 
 ---
@@ -305,6 +306,8 @@ juiste volgorde:
 | `build-seo.py` | structured data op elke pagina + `sitemap.xml` |
 | `build-kaartbeeld.py` | maakt van elke cover een lichte `-kaart.webp` voor de kaartjes |
 | `build-kaartfilm.py` | maakt van elk kaartfilmpje een lichte `-web.mp4`. Het filmpje in het artikel zelf blijft ongemoeid |
+| `build-artikelbeeld.py` | zet naast elke artikelfoto een `.webp` in dezelfde afmetingen, alleen beter gecomprimeerd |
+| `build-llms.py` | schrijft `llms.txt`, een wegwijzer door de site voor AI-assistenten |
 | `build-inbakken.py` | zet header, footer, kaartjes, iconen en `<main>` in de HTML |
 
 Daarna draait `check-snelheid.py` nog als controle. Die bouwt niets, maar kijkt
@@ -328,6 +331,7 @@ Deze horen niet in `build.py`, want ze hoeven bijna nooit:
 | `haal-lettertypen.py` | een ander lettertype, of een nieuwe versie van Google overnemen |
 | `haal-iconen.py` | je gebruikt een nieuw Phosphor-icoon. `build-inbakken.py` waarschuwt als er één mist |
 | `verklein-logos.py` | een klantlogo toegevoegd of vervangen |
+| `haal-embedposters.py` | je hebt ergens een Vimeo- of YouTube-video ingesloten |
 | `bijschriften.py` | overzicht van alle bijschriften nalopen |
 | `check-snelheid.py` | los nakijken zonder te bouwen |
 

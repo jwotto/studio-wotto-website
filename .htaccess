@@ -44,7 +44,7 @@ ErrorDocument 404 /404.html
 # nieuwe bestand een andere naam, wat toch al de gewoonte is omdat de
 # bestandsnaam je zoekwoorden bevat.
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|css|js|json|xml)$">
+  <FilesMatch "\.(html|css|js|json|xml|txt)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
   <FilesMatch "\.(jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|webm|woff2?)$">

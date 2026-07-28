@@ -19,7 +19,11 @@ Gebruik dit in plaats van de losse scripts. De volgorde is namelijk niet vrij:
                            kaartformaat
   6. build-kaartfilm.py    maakt van elk kaartfilmpje een lichte mp4. Alleen de
                            uitschieters worden echt aangepakt
-  7. build-inbakken.py     zet de header, de footer en de kaartjes in de HTML.
+  7. build-artikelbeeld.py zet naast elke artikelfoto een lichtere WebP, in
+                           dezelfde afmetingen
+  8. build-llms.py         schrijft llms.txt: een wegwijzer door de site voor
+                           AI-assistenten, uit content.json en build-seo.py
+  9. build-inbakken.py     zet de header, de footer en de kaartjes in de HTML.
                            Moet als LAATSTE bouwstap, want stap 3 schrijft
                            pagina's helemaal opnieuw en zou het inbakwerk dus
                            weggooien.
@@ -37,6 +41,7 @@ import pathlib, subprocess, sys
 TOOLS = pathlib.Path(__file__).resolve().parent
 STAPPEN = ["build-manifest.py", "build-galerij.py", "build-onderwerpen.py",
            "build-seo.py", "build-kaartbeeld.py", "build-kaartfilm.py",
+           "build-artikelbeeld.py", "build-llms.py",
            "build-inbakken.py"]
 
 # flush=True bij elke kop. Zonder dat houdt Python onze eigen regels vast in een

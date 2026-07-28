@@ -222,7 +222,44 @@ zelfpromotie op Reddit is de snelste route naar een ban.
 
 ---
 
-## 7. Openstaand: vier covers zijn foto's die als PNG zijn opgeslagen
+## 7. Openstaand: de onderwerp-pagina's zijn te dun
+
+**Jan-Willem schrijft deze teksten zelf.** Niet inplannen als klus voor een
+tool of voor Claude; wel klaarzetten zodat het zo ingevuld kan worden.
+
+Dertien pagina's van 48 tot 127 woorden. Ze zijn nu een kop met een lijst
+kaartjes eronder, en dat is precies te weinig om iets te betekenen voor
+"interactieve installatie museum" of "muziektechnologie workshop". Juist die
+pagina's zouden dat moeten opvangen.
+
+Wat er per pagina bij hoort, ongeveer 300 woorden:
+
+- wat je voor dat soort opdrachtgever maakt
+- waarom het daar anders werkt dan elders (een festival is niet een museum)
+- pas daarna de voorbeelden, die er via `data-subject` al automatisch onder staan
+
+De sjabloontekst staat in `tools/build-onderwerpen.py`, dus een handgeschreven
+stuk moet daar landen of als apart blok in het sjabloon meegenomen worden,
+anders overschrijft de bouwstap het bij de eerstvolgende ronde.
+
+**Begin niet alle dertien tegelijk.** De Prestaties-export uit Search Console
+vertelt op welke onderwerpen je al vertoningen krijgt maar nog niet klikt. Dat
+zijn de pagina's waar 300 woorden meteen iets doen. De rest kan wachten.
+
+Bijkomend: de titels zijn 19 tot 29 tekens ("Museum | Studio Wotto") terwijl
+Google er 60 toont. Die schrijf je in dezelfde ronde mee.
+
+---
+
+## 7b. Besloten: geen prijzen of richtprijzen op de site
+
+Opgekomen als SEO-advies (het vangt zoekopdrachten met koopintentie af en
+scheelt gesprekken zonder budget), en **bewust niet gedaan**. Dit is een
+ondernemersbeslissing, geen technische. Niet opnieuw voorstellen.
+
+---
+
+## 7c. Openstaand: vier covers zijn foto's die als PNG zijn opgeslagen
 
 Samen ruim 6 MB, en het zijn **covers**, dus ze staan op elke lijstpagina.
 

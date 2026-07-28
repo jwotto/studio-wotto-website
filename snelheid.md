@@ -98,6 +98,11 @@ voor een duimnagel. Na verkleinen 8 KB.
   (`build-kaartbeeld.py`). Je hoeft niets te doen.
 - **Foto's in een artikel** worden op 1600 pixels gezet door `build-galerij.py`.
 - **Logo's** doe je met `python tools/verklein-logos.py` als je er een toevoegt.
+- **Artikelfoto's** krijgen automatisch een `.webp` ernaast met exact dezelfde
+  afmetingen (`build-artikelbeeld.py`). Dat verkleint niets, het comprimeert
+  alleen beter: 9,5 MB in plaats van 15,1 MB over 94 foto's. Op een project- of
+  blogpagina zie je dus gewoon het grote beeld. De JPEG blijft staan als
+  origineel en als deel-thumbnail.
 
 Vuistregel voor de maat: **het dubbele van hoe groot het in beeld staat.** Dat
 dekt een telefoon met dubbele pixeldichtheid, en meer zie je niet.
@@ -110,8 +115,14 @@ verhouding. Valt hij op een kaart in een vierkant vakje, dan doet de CSS dat met
 
 ### 5. Filmpjes zijn zwaar, gebruik ze met mate
 
-Een filmpje in een artikel staat op `preload="none"` met een afspeelknop. Dat
+Een filmpje in een artikel met een afspeelknop staat op `preload="none"`. Dat
 kost pas iets als iemand erop drukt, dus dat mag gerust groot zijn.
+
+Een filmpje dat **vanzelf speelt** als bewegende illustratie is iets anders: dat
+haalde de browser altijd binnen, ook onderaan een pagina waar je nooit komt. Over
+de hele site ging dat om 24 MB, waarvan 4,7 MB op één projectpagina. Die staan nu
+op `data-src` en laden pas als ze in beeld komen. Je schrijft ze gewoon als
+altijd; `build-inbakken.py` zet het adres om.
 
 Een filmpje op een **kaart** is een ander verhaal: dat speelt vanzelf af, dus de
 browser haalt hem altijd helemaal op, ook als de kaart onderaan de pagina staat
@@ -179,7 +190,37 @@ eindeloos doorscrollen komen uit het cachegeheugen.
 Wat we bewust niet doen: **WebM of AV1 ernaast** zetten. Dat scheelt nog eens
 30%, maar verdubbelt je bestandenbeheer voor de laatste paar procent.
 
-### 6. Eén `<h1>`, en geen gat in de kopvolgorde
+### 6. Sluit geen Vimeo of YouTube rechtstreeks in
+
+Een ingesloten speler haalt ruim 300 KB aan JavaScript op van een vreemd domein
+en zet cookies van derden, en dat gebeurt al bij het laden van de pagina. Ook
+voor de meeste bezoekers die nooit op play drukken. Op `side-quest-rave` kostte
+dat 393 KB, een FCP van 5,3 seconden en een LCP van 10,2 seconden. De pagina
+scoorde 60 op snelheid en 77 op praktische tips.
+
+Je schrijft nog steeds gewoon een `<iframe>` in je artikel. `build-inbakken.py`
+maakt daar een namaakspeler van: het posterbeeld met een afspeelknop, en pas op
+klik de echte speler. Het posterbeeld haal je één keer op met
+`python tools/haal-embedposters.py`, zodat ook dat van je eigen server komt.
+
+Na die ingreep: FCP 1,8 s, LCP 4,5 s, 0 KB naar vreemde domeinen, en 100 op
+praktische tips.
+
+### 7. Het bovenste beeld krijgt voorrang, de rest laadt lui
+
+Alles op `loading="lazy"` zetten voelt zuinig, maar voor het bovenste beeld is
+het verkeerd. Dat is meestal het grootste ding in beeld, en daar meet Google je
+LCP aan af. Een luie afbeelding wordt pas opgehaald als de browser klaar is met
+de rest, dus je straft precies het beeld waar de bezoeker op wacht. Op
+`museum-speelklok` stond zelfs de eerste galerijfoto op lazy.
+
+`build-inbakken.py` regelt dit: het bovenste beeld in `<main>` krijgt
+`fetchpriority="high"`, verliest zijn `loading="lazy"`, en komt als
+`<link rel="preload">` in de head te staan zodat de browser er meteen aan begint.
+Dat bovenste beeld hoeft trouwens geen foto te zijn: op `museum-speelklok` is het
+het posterbeeld van een zwevend filmpje.
+
+### 8. Eén `<h1>`, en geen gat in de kopvolgorde
 
 Je mag afdalen met één niveau tegelijk: h1, dan h2, dan h3. Van h1 meteen naar
 h3 mag niet. Wie met een schermlezer door de koppen springt om de pagina te
@@ -203,7 +244,7 @@ zelf in, tussen de header en de footer.
 
 *Wordt automatisch gecontroleerd.*
 
-### 8. Titel tussen de 30 en 60 tekens, description maximaal 160
+### 9. Titel tussen de 30 en 60 tekens, description maximaal 160
 
 Boven de 60 kapt Google je titel af. Ver eronder laat je ruimte liggen:
 "Museum | Studio Wotto" is 21 tekens waar je er 60 mag gebruiken.
@@ -240,6 +281,13 @@ toegankelijkheidsscore op 95 steken in plaats van 100.
 **De filmpjes.** 1258 KB, de grootste post die nog over is. Opnieuw comprimeren
 is een kwaliteitsafweging.
 
-**Verkleinen van CSS en JavaScript.** Zou samen zo'n 57 KB schelen. Bewust niet
-gedaan: het maakt de bestanden onleesbaar, en dat is precies wat deze site niet
-wil zijn.
+**Verkleinen van CSS en JavaScript: niet doen.** Lighthouse rekent voor dat het
+57 KB scheelt, maar dat cijfer gaat over de bestanden op schijf. Vimexx
+comprimeert ze al met gzip voordat ze de deur uitgaan: `styles.css` is 48,5 KB
+op schijf en 14,8 KB over de lijn, `site.js` 20,9 KB. Verkleinen levert daar
+bovenop nog een paar kilobyte op, en dat weegt niet op tegen onleesbare
+bestanden.
+
+Dit is meteen een waarschuwing bij het meten: **een testserver op je eigen
+machine comprimeert meestal niet**. Meet je lokaal, dan lijken je CSS en
+JavaScript ruim drie keer zo zwaar als ze in het echt zijn.

@@ -29,6 +29,7 @@
 <meta name="wotto:featured" content="ja">            <!-- op de homepage uitlichten -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="museum-speelklok-muziekmachine-spelen-poster.jpg" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -69,7 +70,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -134,7 +135,7 @@
       <!-- Staand filmpje, dus smal en zwevend. Geluid erop (het gaat over muziek),
            dus controls. poster + preload="none" = nul bytes tot iemand op play drukt. -->
       <figure class="float-right staand">
-        <video src="museum-speelklok-muziekmachine-spelen.mp4" poster="museum-speelklok-muziekmachine-spelen-poster.jpg"
+        <video data-src="museum-speelklok-muziekmachine-spelen.mp4" poster="museum-speelklok-muziekmachine-spelen-poster.jpg"
                width="800" height="1000" autoplay loop muted playsinline preload="metadata" class="film"></video>
         <figcaption>Draaien aan het rad. Sneller draaien is sneller spelen.</figcaption>
       </figure>
@@ -160,13 +161,13 @@
       <p>Zoiets voor jouw museum? Kijk eens bij <a href="../../interactieve-installaties/">interactieve installaties</a>.</p>
 
       <div class="gallery">
-        <img src="museum-speelklok-muziekmachine.jpg" width="1200" height="1500" loading="lazy" decoding="async"
-             alt="De vier gele schermen op een rij in de kerkzaal van Museum Speelklok, met op het voorste scherm een zelfontworpen muziekmachine" data-cap="De vier schermen in Museum Speelklok">
-        <img src="museum-speelklok-bezoeker-aan-het-scherm.jpg" width="1200" height="1500" loading="lazy" decoding="async"
+        <img src="museum-speelklok-muziekmachine.webp" width="1200" height="1500"
+             alt="De vier gele schermen op een rij in de kerkzaal van Museum Speelklok, met op het voorste scherm een zelfontworpen muziekmachine" data-cap="De vier schermen in Museum Speelklok" fetchpriority="high">
+        <img src="museum-speelklok-bezoeker-aan-het-scherm.webp" width="1200" height="1500" loading="lazy" decoding="async"
              alt="Een bezoeker stelt aan een van de gele schermen haar eigen muziekmachine samen, tussen de gewelven van Museum Speelklok" data-cap="Zelf een muziekmachine ontwerpen">
-        <img src="museum-speelklok-hall-of-fame.jpg" width="1200" height="1500" loading="lazy" decoding="async"
+        <img src="museum-speelklok-hall-of-fame.webp" width="1200" height="1500" loading="lazy" decoding="async"
              alt="Het scherm met de hall of fame waarop de nieuwste muziekmachines van bezoekers voorbijkomen, en bezoekers aan de schermen" data-cap="De hall of fame met nieuwe machines">
-        <img src="museum-speelklok-bouwproces-werkplaats.jpg" width="1200" height="1500" loading="lazy" decoding="async"
+        <img src="museum-speelklok-bouwproces-werkplaats.webp" width="1200" height="1500" loading="lazy" decoding="async"
              alt="De kast in aanbouw in de werkplaats: eerst kaal multiplex, daarna wit geplamuurd en geel gelakt" data-cap="De kast in aanbouw">
       </div>
 
@@ -219,6 +220,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

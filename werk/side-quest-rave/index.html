@@ -28,6 +28,7 @@
 <meta name="wotto:huur"     content="ja">            <!-- te huur op locatie -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="side-quest-rave.webp" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -68,7 +69,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -84,7 +85,7 @@
 <!-- /structured data -->
 </head>
 <body>
-<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-truck" viewBox="0 0 256 256"><path d="M255.14,115.54l-14-35A19.89,19.89,0,0,0,222.58,68H196V64a12,12,0,0,0-12-12H32A20,20,0,0,0,12,72V184a20,20,0,0,0,20,20H46.06a36,36,0,0,0,67.88,0h44.12a36,36,0,0,0,67.88,0H236a20,20,0,0,0,20-20V120A21.7,21.7,0,0,0,255.14,115.54ZM196,92h23.88l6.4,16H196ZM80,204a12,12,0,1,1,12-12A12,12,0,0,1,80,204Zm92-41.92A36.32,36.32,0,0,0,158.06,180H113.94a36,36,0,0,0-67.88,0H36V140H172ZM172,116H36V76H172Zm20,88a12,12,0,1,1,12-12A12,12,0,0,1,192,204Zm40-24h-6.06A36.09,36.09,0,0,0,196,156.23V132h36Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-play" viewBox="0 0 256 256"><path d="M234.49,111.07,90.41,22.94A20,20,0,0,0,60,39.87V216.13a20,20,0,0,0,30.41,16.93l144.08-88.13a19.82,19.82,0,0,0,0-33.86ZM84,208.85V47.15L216.16,128Z"/></symbol><symbol id="ph-truck" viewBox="0 0 256 256"><path d="M255.14,115.54l-14-35A19.89,19.89,0,0,0,222.58,68H196V64a12,12,0,0,0-12-12H32A20,20,0,0,0,12,72V184a20,20,0,0,0,20,20H46.06a36,36,0,0,0,67.88,0h44.12a36,36,0,0,0,67.88,0H236a20,20,0,0,0,20-20V120A21.7,21.7,0,0,0,255.14,115.54ZM196,92h23.88l6.4,16H196ZM80,204a12,12,0,1,1,12-12A12,12,0,0,1,80,204Zm92-41.92A36.32,36.32,0,0,0,158.06,180H113.94a36,36,0,0,0-67.88,0H36V140H172ZM172,116H36V76H172Zm20,88a12,12,0,1,1,12-12A12,12,0,0,1,192,204Zm40-24h-6.06A36.09,36.09,0,0,0,196,156.23V132h36Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -132,7 +133,7 @@
       <h1>The Side Quest Rave</h1>
       <p class="lead">The Side Quest Rave is een interactieve muziekinstallatie waarmee iedereen keiharde elektronische muziek kan maken in harmonie met anderen. Een unieke samensmelting van technologie, muziek en design, waarbij het publiek centraal staat. Bezoekers experimenteren met drie intuïtief ontworpen muziekmachines.</p>
 
-      <img class="float-right" src="side-quest-rave.jpg" alt="Bezoekers maken samen muziek op de gele, blauwe en rode lichtpanelen van de Side Quest Rave, met koptelefoons in een loungeruimte" data-cap="Samen keiharde muziek maken" width="1024" height="683">
+      <img class="float-right" src="side-quest-rave.webp" alt="Bezoekers maken samen muziek op de gele, blauwe en rode lichtpanelen van de Side Quest Rave, met koptelefoons in een loungeruimte" data-cap="Samen keiharde muziek maken" width="1024" height="683" fetchpriority="high">
 
       <p>Elke machine heeft een speels design, geïnspireerd door Gameboys en arcadekasten uit de jaren 90, en elk beschikt over zijn eigen kleur en type geluid. De gele machine is voor de lage tonen, waarmee je basgeluiden maakt. Met de rode machine maak je hoge tonen, perfect voor de melodie. De blauwe machine richt zich op ritmische geluiden, zoals de klanken van een drumstel.</p>
 
@@ -140,9 +141,7 @@
 
       <p>Deze installatie was te bewonderen tijdens de Dutch Design Week 2023 en het Nerdland Festival 2024.</p>
 
-      <div class="video-embed">
-        <iframe src="https://player.vimeo.com/video/932368065" title="The Side Quest Rave in actie" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="video-embed video-embed--wacht" data-speler="https://player.vimeo.com/video/932368065?autoplay=1"><img src="embed-vimeo-932368065.webp" alt="" width="1280" height="720" loading="lazy" decoding="async"><button type="button" class="video-embed__knop" aria-label="Video afspelen: The Side Quest Rave in actie"><svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg></button></div>
 
       <!-- Alle beelden onderaan, in de volgorde van het verhaal: prototype,
            bouw, en de installatie in gebruik. Per rij staat beeld van dezelfde
@@ -150,14 +149,14 @@
 
       <!-- Twee foto's en een filmpje, alle drie 739x1600 oftewel 0,462. -->
       <div class="gallery">
-        <img src="side-quest-rave-prototype-breadboard.jpg" width="739" height="1600" loading="lazy" decoding="async"
+        <img src="side-quest-rave-prototype-breadboard.webp" width="739" height="1600" loading="lazy" decoding="async"
              alt="Het eerste prototype van de Side Quest Rave op tafel: een zwart paneel met verlichte drukknoppen, bedraad naar een breadboard, naast een oude draaischijftelefoon"
              data-cap="Het begon met een breadboard en wat knoppen">
-        <img src="side-quest-rave-prototype-aluminium-paneel.jpg" width="739" height="1600" loading="lazy" decoding="async"
+        <img src="side-quest-rave-prototype-aluminium-paneel.webp" width="739" height="1600" loading="lazy" decoding="async"
              alt="Het aluminium prototype van een Side Quest Rave-machine op een statief, met acht rijen verlichte drukknoppen waarvan er een paar geel oplichten"
              data-cap="Daarna een paneel van aluminium, op een statief">
         <figure>
-          <video src="side-quest-rave-prototype-knoppen.mp4" poster="side-quest-rave-prototype-knoppen-poster.jpg"
+          <video data-src="side-quest-rave-prototype-knoppen.mp4" poster="side-quest-rave-prototype-knoppen-poster.jpg"
                  width="592" height="1280" autoplay loop muted playsinline preload="metadata"></video>
           <figcaption>De knoppen lichten op waar je ze indrukt.</figcaption>
         </figure>
@@ -167,36 +166,36 @@
            krijgen de kolommen de breedte van hun eigen verhouding, dan worden de
            tegels precies even hoog. Zie stijl.md, "Kolommen op maat". -->
       <div class="gallery gallery--opmaat" style="--kolommen:2.036fr 2.165fr">
-        <img src="side-quest-rave-3d-ontwerp-drie-kasten.jpg" width="1598" height="785" loading="lazy" decoding="async"
+        <img src="side-quest-rave-3d-ontwerp-drie-kasten.webp" width="1598" height="785" loading="lazy" decoding="async"
              alt="3D-ontwerp van de drie machines van de Side Quest Rave naast elkaar op een gele achtergrond: een blauwe, een gele en een rode kast met roosters van ronde knoppen"
              data-cap="Eerst in 3D: blauw, geel en rood">
-        <img src="side-quest-rave-drie-kasten-in-de-werkplaats.jpg" width="1600" height="739" loading="lazy" decoding="async"
+        <img src="side-quest-rave-drie-kasten-in-de-werkplaats.webp" width="1600" height="739" loading="lazy" decoding="async"
              alt="De drie gespoten machines van de Side Quest Rave naast elkaar op de werkbank in de werkplaats, nog zonder poten"
              data-cap="En daarna echt, op de werkbank">
       </div>
 
       <!-- Een vierkante en een 3:2, dus ook hier kolommen op maat. -->
       <div class="gallery gallery--opmaat" style="--kolommen:1fr 1.5fr">
-        <img src="side-quest-rave-installatie-in-de-zaal.jpg" width="1600" height="1600" loading="lazy" decoding="async"
+        <img src="side-quest-rave-installatie-in-de-zaal.webp" width="1600" height="1600" loading="lazy" decoding="async"
              alt="De drie machines van de Side Quest Rave op hun gekleurde poten in een zaal, met koptelefoons ernaast en iemand die de blauwe machine bespeelt"
              data-cap="De drie machines op hun poten">
-        <img src="side-quest-rave-bezoeker-speelt.jpg" width="1600" height="1067" loading="lazy" decoding="async"
+        <img src="side-quest-rave-bezoeker-speelt.webp" width="1600" height="1067" loading="lazy" decoding="async"
              alt="Een jongen in een gele hoodie drukt de verlichte knoppen van de blauwe machine in, met de gele machine ernaast"
              data-cap="Zonder uitleg meteen aan de slag">
       </div>
 
       <!-- Een foto en twee filmpjes, alle drie 16:9. -->
       <div class="gallery">
-        <img src="side-quest-rave-knoppen-van-dichtbij.jpg" width="1600" height="896" loading="lazy" decoding="async"
+        <img src="side-quest-rave-knoppen-van-dichtbij.webp" width="1600" height="896" loading="lazy" decoding="async"
              alt="Van dichtbij: een bezoeker drukt de blauw oplichtende knoppen in van de Side Quest Rave, met de rode machine op de voorgrond"
              data-cap="De knoppen kleuren mee met de machine">
         <figure>
-          <video src="side-quest-rave-samen-spelen.mp4" poster="side-quest-rave-samen-spelen-poster.jpg"
+          <video data-src="side-quest-rave-samen-spelen.mp4" poster="side-quest-rave-samen-spelen-poster.jpg"
                  width="960" height="540" autoplay loop muted playsinline preload="metadata"></video>
           <figcaption>Met koptelefoon op, samen een track opbouwen.</figcaption>
         </figure>
         <figure>
-          <video src="side-quest-rave-knoppen-in-actie.mp4" poster="side-quest-rave-knoppen-in-actie-poster.jpg"
+          <video data-src="side-quest-rave-knoppen-in-actie.mp4" poster="side-quest-rave-knoppen-in-actie-poster.jpg"
                  width="960" height="540" autoplay loop muted playsinline preload="metadata"></video>
           <figcaption>Elke ingedrukte knop blijft branden zolang hij klinkt.</figcaption>
         </figure>
@@ -251,6 +250,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

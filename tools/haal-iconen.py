@@ -41,7 +41,9 @@ NEGEER_MAPPEN = {"tools", ".git", ".astro", "node_modules", "oude blogs en pagin
 
 # JavaScript zet de "Te huur"-chip zelf in elkaar, met een icoon dat dus nergens
 # in de HTML staat. Die moet er altijd bij.
-ALTIJD = {"truck"}
+# play staat in de namaakspeler die build-inbakken.py maakt, dus ook niet in de
+# bron te vinden.
+ALTIJD = {"truck", "play"}
 
 
 def gebruikte_iconen() -> set:

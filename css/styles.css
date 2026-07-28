@@ -560,6 +560,26 @@ a.chip--huur:hover{ background:var(--coral); color:var(--cream) }
 /* Video in de tekst: volle tekstbreedte. Zwevende video (float-left/right) blijft smal. */
 .article-body .video-embed{ position:relative; width:100%; margin:var(--space-6) 0; aspect-ratio:16/9; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md) }
 .article-body .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
+
+/* Namaakspeler: het posterbeeld met een afspeelknop erop. De echte Vimeo- of
+   YouTube-speler haalt ruim 300 KB aan JavaScript op van een vreemd domein en
+   zet cookies van derden, en dat gebeurde al bij het laden van de pagina. Nu pas
+   als iemand klikt. Zie tools/build-inbakken.py en snelheid.md. */
+.article-body .video-embed--wacht{ cursor:pointer; background:var(--ink) }
+.article-body .video-embed--wacht img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover }
+.video-embed__knop{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  display:grid; place-items:center; width:80px; height:80px; padding:0;
+  border:0; border-radius:var(--radius-full); cursor:pointer;
+  background:var(--coral); color:var(--cream); font-size:34px;
+  box-shadow:var(--shadow-md);
+  transition:transform var(--dur) var(--ease-bounce), background var(--dur) linear;
+}
+/* De knop staat iets naar rechts: bij een afspeeldriehoek ligt het optische
+   midden niet op het echte midden. */
+.video-embed__knop .ph{ margin-left:.08em }
+.video-embed--wacht:hover .video-embed__knop{ transform:translate(-50%,-50%) scale(1.08); background:var(--blue) }
+.video-embed__knop:focus-visible{ outline:3px solid var(--cream); outline-offset:3px }
 /* Beeld zweeft, tekst loopt eromheen. Voeg 'float-left' of 'float-right' toe aan
    een <img> of aan het .video-embed-blok. Op mobiel wordt het beeld volle breedte. */
 .article-body::after{ content:""; display:block; clear:both }   /* houdt de floats binnen het blok */

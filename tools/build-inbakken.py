@@ -48,6 +48,15 @@ import pathlib
 import posixpath
 import re
 import sys
+import urllib.parse
+
+# Alleen nodig om de maat van een posterbeeld te lezen, zodat er width en height
+# op kunnen en de pagina niet verspringt. Ontbreekt Pillow, dan gaat de rest
+# gewoon door.
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
 
@@ -356,6 +365,204 @@ def bak_iconen(txt: str, iconen: dict, ontbreekt: set) -> tuple:
     return txt, n
 
 
+def bak_insluitingen(txt: str, van_map: str, ontbreekt: list) -> tuple:
+    """Vervangt een Vimeo- of YouTube-iframe door een poster met afspeelknop.
+
+    Zo'n ingesloten speler is duur. Op de pagina van side-quest-rave haalde hij
+    312 KB aan JavaScript op van een vreemd domein, plús cookies van derden, en
+    dat gebeurde al bij het laden. Die pagina scoorde 60 op snelheid met een LCP
+    van 10,2 seconden, terwijl een blog zonder insluiting op 91 stond.
+
+    Nu staat er een stilstaand beeld met een afspeelknop, en js/site.js zet de
+    echte speler er pas in als iemand klikt. Dat is wat een bezoeker toch al
+    verwacht, en wie niet klikt betaalt niets.
+
+    De poster staat op onze eigen server (tools/haal-embedposters.py). Hem
+    rechtstreeks van vimeocdn of ytimg laden zou het vreemde domein weer
+    terugbrengen. Ontbreekt de poster, dan laten we het iframe met rust: liever
+    een trage video dan geen video.
+
+    YouTube wordt onderweg omgezet naar youtube-nocookie.com. Dat is dezelfde
+    speler, maar hij zet pas een cookie als er echt gekeken wordt.
+    """
+    n = [0]
+
+    def om(m):
+        heel, attrs, klassen, src = m.group(0), m.group(1), m.group(2), m.group(4)
+        titel = (re.search(r'\btitle="([^"]*)"', heel) or [None, "Video"])[1]
+
+        vm = re.search(r"player\.vimeo\.com/video/(\d+)", src)
+        yt = re.search(r"youtube(?:-nocookie)?\.com/embed/([\w-]+)", src)
+        if vm:
+            dienst, nummer = "vimeo", vm.group(1)
+            speler = "https://player.vimeo.com/video/%s?autoplay=1" % nummer
+        elif yt:
+            dienst, nummer = "youtube", yt.group(1)
+            speler = "https://www.youtube-nocookie.com/embed/%s?autoplay=1" % nummer
+        else:
+            return heel
+
+        poster = "embed-%s-%s.webp" % (dienst, nummer)
+        if not (BASE / van_map / poster).exists():
+            ontbreekt.append("%s/%s" % (van_map, poster))
+            return heel
+
+        if Image is None:
+            return heel                             # zonder maat geen fatsoenlijke poster
+        with Image.open(BASE / van_map / poster) as im:
+            breed, hoog = im.size
+
+        n[0] += 1
+        # De overige attributen blijven staan. Sommige insluitingen hebben
+        # float-right en een eigen aspect-ratio in een style, en zonder die twee
+        # springt de opmaak van het artikel om.
+        nieuw_attrs = attrs.replace('class="%s"' % klassen,
+                                    'class="%s video-embed--wacht"' % klassen, 1)
+        return ('<div %s data-speler="%s">'
+                '<img src="%s" alt="" width="%d" height="%d" loading="lazy" decoding="async">'
+                '<button type="button" class="video-embed__knop" aria-label="Video afspelen: %s">'
+                '<svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg>'
+                '</button></div>') % (nieuw_attrs, speler, poster, breed, hoog, esc(titel))
+
+    # Het iframe zit in een div met de klasse video-embed, soms met extra
+    # klassen erbij. Die hele div vervangen we, want de namaakspeler heeft zijn
+    # eigen inhoud. Zonder iframe erin matcht dit niet meer, dus opnieuw draaien
+    # is veilig.
+    patroon = re.compile(
+        r'<div\s+([^>]*\bclass="([^"]*\bvideo-embed\b[^"]*)"[^>]*)>'
+        r'\s*(<iframe[^>]*\bsrc="([^"]+)"[^>]*>\s*</iframe>)\s*</div>', re.S)
+    return patroon.sub(om, txt), n[0]
+
+
+def bak_webp(txt: str, van_map: str) -> tuple:
+    """Laat elke <img> naar de lichtere WebP wijzen als die er ligt.
+
+    tools/build-artikelbeeld.py zet naast elke artikelfoto een .webp met exact
+    dezelfde afmetingen, alleen beter gecomprimeerd: samen 15,1 MB in plaats van
+    9,5 MB. Hier verhuist de verwijzing.
+
+    Alleen de <img> in de pagina. De og:image en de structured data blijven naar
+    de JPEG wijzen: sociale netwerken gaan wisselend om met WebP, en dat is nu
+    net het plaatje dat je in een berichtje wilt zien verschijnen.
+    """
+    n = [0]
+
+    def om(m):
+        heel, src = m.group(0), m.group(1)
+        if re.match(r"^(?:[a-z][a-z0-9+.-]*:|//|data:)", src, re.I):
+            return heel
+        if not re.search(r"\.(jpe?g|png)$", src, re.I):
+            return heel
+        webp = re.sub(r"\.(jpe?g|png)$", ".webp", src, flags=re.I)
+        if not (BASE / van_map / urllib.parse.unquote(webp)).exists():
+            return heel
+        n[0] += 1
+        return heel.replace('src="%s"' % src, 'src="%s"' % webp, 1)
+
+    return re.sub(r'<img\s[^>]*\bsrc="([^"]+)"[^>]*>', om, txt, flags=re.S), n[0]
+
+
+def bak_eerste_beeld(txt: str) -> tuple:
+    """Het eerste beeld in <main> krijgt voorrang in plaats van luiheid.
+
+    Alles op loading="lazy" zetten voelt zuinig, maar voor het beeld bovenaan is
+    het juist verkeerd. Dat is meestal het grootste ding in beeld, en daar meet
+    Google je LCP aan af. Een luie afbeelding wordt pas opgehaald als de browser
+    klaar is met de rest van de pagina, dus je straft precies het beeld waar de
+    bezoeker op wacht.
+
+    Op museum-speelklok stond zelfs de eerste galerijfoto op lazy.
+
+    Eén beeld per pagina, dus het risico is klein: staat het toch onder de vouw,
+    dan heb je één afbeelding te vroeg opgehaald. fetchpriority="high" zegt er
+    bovendien bij dat dit vóór de rest mag.
+    """
+    m_main = re.search(r"<main[^>]*>", txt)
+    if not m_main:
+        return txt, 0, None
+    rest = txt[m_main.end():]
+
+    # Het bovenste beeld hoeft geen <img> te zijn. Op museum-speelklok is het
+    # grootste ding in beeld een zwevend filmpje, en dan is het posterbeeld
+    # daarvan waar de bezoeker op wacht. Dus pakken we wat als eerste komt.
+    m_img = re.search(r"<img\s[^>]*>", rest, re.S)
+    m_vid = re.search(r'<video\s[^>]*\bposter="([^"]+)"[^>]*>', rest, re.S)
+
+    if m_vid and (not m_img or m_vid.start() < m_img.start()):
+        return txt, 0, m_vid.group(1)                # alleen vooraf klaarzetten
+
+    if not m_img:
+        return txt, 0, None
+
+    tag = m_img.group(0)
+    vooraf = (re.search(r'\bsrc="([^"]+)"', tag) or [None, None])[1]
+    if 'fetchpriority="high"' in tag:
+        return txt, 0, vooraf                        # al gedaan
+
+    nieuw = re.sub(r'\s*loading="lazy"', "", tag)
+    # decoding="async" zegt "je mag hiermee wachten", en dat is voor precies dit
+    # beeld het verkeerde signaal.
+    nieuw = re.sub(r'\s*decoding="async"', "", nieuw)
+    nieuw = nieuw[:-1].rstrip() + ' fetchpriority="high">'
+
+    start = m_main.end() + m_img.start()
+    return txt[:start] + nieuw + txt[start + len(tag):], 1, vooraf
+
+
+def bak_voorlader(txt: str, bron: str) -> str:
+    """Zet het bovenste beeld al in de <head> klaar.
+
+    fetchpriority alleen is niet genoeg. De browser ontdekt een beeld pas als
+    hij bij die regel in de HTML aankomt, en dat is ná de stylesheet. Met een
+    preload in de head begint hij er meteen aan. Op een trage verbinding scheelt
+    dat een halve seconde op je LCP, en dat is precies het cijfer waar Google op
+    let.
+
+    Eén regel per pagina, tussen markeringen zodat opnieuw bouwen hem vervangt
+    in plaats van er nog een bij te zetten.
+    """
+    blok = ('<!--ingebakken:voorlader--><link rel="preload" as="image" href="%s" '
+            'fetchpriority="high"><!--/ingebakken:voorlader-->' % esc(bron)) if bron else ""
+    txt = re.sub(r"\s*<!--ingebakken:voorlader-->.*?<!--/ingebakken:voorlader-->", "", txt, flags=re.S)
+    if not blok:
+        return txt
+    m = re.search(r'\n?<link rel="stylesheet" href="[^"]*css/styles\.css">', txt)
+    return txt[:m.start()] + "\n" + blok + txt[m.start():] if m else txt
+
+
+def bak_luie_films(txt: str) -> tuple:
+    """Zet automatisch spelende filmpjes op data-src, zodat ze pas laden in beeld.
+
+    In de artikelen staan twee soorten filmpje. Eén met een afspeelknop
+    (controls preload="none"): die kost pas iets als iemand erop drukt, en daar
+    hoeven we niets aan te doen. En één die vanzelf speelt, als bewegende
+    illustratie in de tekst. Die haalt de browser altijd binnen, ook als hij
+    onderaan de pagina staat en je nooit zover scrolt.
+
+    Over de hele site ging dat om 24 MB die ongevraagd binnenkwam, waarvan 4,7 MB
+    op de pagina van aura-bouw-lasers alleen. Op traag 4G is dat het verschil
+    tussen een pagina die staat en een pagina die blijft laden.
+
+    De truc is klein: het adres verhuist van src naar data-src. Een <video>
+    zonder src laat gewoon zijn poster zien, dus je ziet nog steeds een beeld.
+    js/site.js zet het adres terug zodra het filmpje in de buurt van het scherm
+    komt. Verspringen kan niet, want width en height staan er al op.
+    """
+    n = [0]
+
+    def om(m):
+        tag = m.group(0)
+        # Geen autoplay? Dan staat er een afspeelknop op en laadt hij toch al
+        # niets. Al omgezet? Dan niets te doen: dit script moet zo vaak te
+        # draaien zijn als je wilt.
+        if "autoplay" not in tag or "data-src=" in tag:
+            return tag
+        n[0] += 1
+        return re.sub(r'\bsrc="', 'data-src="', tag, count=1)
+
+    return re.sub(r"<video\s[^>]*>", om, txt, flags=re.S), n[0]
+
+
 def bak_main(txt: str) -> tuple:
     """Zet alles tussen de header en de footer in een <main>.
 
@@ -440,33 +647,66 @@ def main():
                          "Draai eerst: python tools/haal-iconen.py")
     iconen = json.loads(iconen_pad.read_text(encoding="utf-8"))
 
-    ontbreekt = set()
-    tot_p = tot_k = tot_m = tot_i = tot_h = tot_bestanden = 0
+    ontbreekt, geen_poster = set(), []
+    tot_p = tot_k = tot_m = tot_i = tot_h = tot_f = tot_e = tot_b = tot_w = tot_bestanden = 0
     for pad in paginas():
         txt = oud = pad.read_text(encoding="utf-8")
         van_map = posixpath.dirname(pad.relative_to(BASE).as_posix())
         txt, n_h = bak_head(txt, van_map)
         txt, n_p = bak_partials(txt, van_map, parts)
+        txt, n_e = bak_insluitingen(txt, van_map, geen_poster)
+        txt, n_f = bak_luie_films(txt)
         txt, n_m = bak_main(txt)
+        txt, n_w = bak_webp(txt, van_map)
         txt, n_k = bak_lijsten(txt, van_map, items)
+        # Ná de lijsten: anders hangt het ervan af of de kaarten al in het
+        # bestand stonden welk beeld hier het eerste is.
+        txt, n_b, bovenste = bak_eerste_beeld(txt)
+        txt = bak_voorlader(txt, bovenste)
         # De iconen als laatste: dan pakt hij ook de iconen mee die net uit de
         # header, de footer en de kaartjes in de pagina zijn gekomen.
         txt, n_i = bak_iconen(txt, iconen, ontbreekt)
         if txt != oud:
             pad.write_text(txt, encoding="utf-8")
             tot_bestanden += 1
-        if n_p or n_k or n_m or n_i:
-            print("  %-52s %d partial(s), %d kaart(en), %d icoon/iconen%s" % (
-                pad.relative_to(BASE).as_posix(), n_p, n_k, n_i, ", main" if n_m else ""))
+        if n_p or n_k or n_m or n_i or n_f:
+            print("  %-52s %d partial(s), %d kaart(en), %d icoon/iconen%s%s" % (
+                pad.relative_to(BASE).as_posix(), n_p, n_k, n_i,
+                ", %d luie film(s)" % n_f if n_f else "", ", main" if n_m else ""))
         tot_p += n_p
         tot_k += n_k
         tot_m += n_m
         tot_i += n_i
         tot_h += n_h
+        tot_f += n_f
+        tot_e += n_e
+        tot_b += n_b
+        tot_w += n_w
 
     print("\ningebakken: %d partial(s), %d kaart(en), %d icoon/iconen en %d nieuwe "
           "<main> in %d gewijzigd(e) bestand(en)"
           % (tot_p, tot_k, tot_i, tot_m, tot_bestanden))
+    if tot_w:
+        print("%d beeldverwijzing(en) staan op de lichtere WebP naast het origineel."
+              % tot_w)
+    if tot_b:
+        # Let op: dit telt hoe vaak het attribuut gezet is, niet hoeveel er
+        # veranderde. Op een lijstpagina worden de kaarten elke ronde opnieuw
+        # opgebouwd, dus wordt het daar elke keer opnieuw gezet terwijl het
+        # bestand identiek blijft.
+        print("op %d pagina('s) staat het bovenste beeld op voorrang in plaats "
+              "van lui laden." % tot_b)
+    if tot_e:
+        print("%d ingesloten video('s) wachten nu op een klik in plaats van dat ze "
+              "meteen een speler van een vreemd domein ophalen." % tot_e)
+    if geen_poster:
+        print("\n!! posterbeeld ontbreekt, iframe blijft zoals het was:")
+        for x in geen_poster:
+            print("   %s" % x)
+        print("   Draai: python tools/haal-embedposters.py")
+    if tot_f:
+        print("%d automatisch spelend(e) filmpje(s) wachten nu tot ze in beeld komen."
+              % tot_f)
     if tot_h:
         print("head opgeruimd in %d geval(len): blokkerende <link>-regels weg, "
               "lettertypen vooraf klaargezet." % tot_h)

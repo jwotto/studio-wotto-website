@@ -30,6 +30,7 @@
 <meta name="wotto:featured" content="ja">            <!-- op de homepage uitlichten -->
 <link rel="preload" href="../../fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!--ingebakken:voorlader--><link rel="preload" as="image" href="aura-bouw-lasers.jpg" fetchpriority="high"><!--/ingebakken:voorlader-->
 <link rel="stylesheet" href="../../css/styles.css">
 <!-- Favicon -->
 <link rel="icon" href="../../favicon.ico" sizes="32x32">
@@ -70,7 +71,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Werk",
-          "item": "https://studiowotto.com/projecten/"
+          "item": "https://studiowotto.com/werk/"
         },
         {
           "@type": "ListItem",
@@ -86,6 +87,7 @@
 <!-- /structured data -->
 </head>
 <body>
+<!--ingebakken:iconen--><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="ph-play" viewBox="0 0 256 256"><path d="M234.49,111.07,90.41,22.94A20,20,0,0,0,60,39.87V216.13a20,20,0,0,0,30.41,16.93l144.08-88.13a19.82,19.82,0,0,0,0-33.86ZM84,208.85V47.15L216.16,128Z"/></symbol></defs></svg><!--/ingebakken:iconen-->
 
 <!-- Golf-sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -133,7 +135,7 @@
       <p class="lead">Iedere trilling zichtbaar als vorm en beweging. Muziek die je niet alleen hoort, maar ook ziet.</p>
 
       <figure class="float-right">
-        <video src="aura-bouw-lasers-hybrid-music-vibes.mp4" poster="aura-bouw-lasers.jpg"
+        <video data-src="aura-bouw-lasers-hybrid-music-vibes.mp4" poster="aura-bouw-lasers.jpg"
                width="800" height="800" autoplay loop muted playsinline preload="metadata" class="film"></video>
         <figcaption>De lasers volgen live de composities van Aura Bouw.</figcaption>
       </figure>
@@ -148,10 +150,10 @@
 
       <!-- Foto en filmpje zijn allebei 16:9, dus deze twee lopen gelijk. -->
       <div class="gallery">
-        <img src="aura-bouw-lasers-studio-opstelling.jpg" width="1600" height="901" loading="lazy" decoding="async"
-             alt="De studio-opstelling van het laserproject met Aura Bouw: een videosynthesizer in een zelfgebouwde zwarte kast op de werkbank" data-cap="Alles ingebouwd in een kast">
+        <img src="aura-bouw-lasers-studio-opstelling.webp" width="1600" height="901"
+             alt="De studio-opstelling van het laserproject met Aura Bouw: een videosynthesizer in een zelfgebouwde zwarte kast op de werkbank" data-cap="Alles ingebouwd in een kast" fetchpriority="high">
         <figure>
-          <video src="aura-bouw-lasers-geluid-naar-lasers.mp4" poster="aura-bouw-lasers-geluid-naar-lasers-poster.jpg"
+          <video data-src="aura-bouw-lasers-geluid-naar-lasers.mp4" poster="aura-bouw-lasers-geluid-naar-lasers-poster.jpg"
                  width="1600" height="900" autoplay loop muted playsinline preload="metadata" class="film"></video>
           <figcaption>Links de compositie, rechts de patronen die eruit volgen.</figcaption>
         </figure>
@@ -159,12 +161,7 @@
 
       <!-- YouTube van Effenaar. nocookie-variant: plant pas een cookie na een klik
            op play, scheelt je een cookiemelding. lazy: laadt pas bij scrollen. -->
-      <div class="video-embed">
-        <iframe src="https://www.youtube-nocookie.com/embed/wMfCk8O0lsU"
-                title="Hybrid Music Vibes met Aura Bouw in de Effenaar"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="video-embed video-embed--wacht" data-speler="https://www.youtube-nocookie.com/embed/wMfCk8O0lsU?autoplay=1"><img src="embed-youtube-wMfCk8O0lsU.webp" alt="" width="1280" height="720" loading="lazy" decoding="async"><button type="button" class="video-embed__knop" aria-label="Video afspelen: Hybrid Music Vibes met Aura Bouw in de Effenaar"><svg class="ph" aria-hidden="true"><use href="#ph-play"/></svg></button></div>
 
       <p class="credit">Grote dank aan <a href="https://www.effenaar.nl/hybrid-music-vibes-3-aura">Effenaar / Hybrid Music Vibes</a> voor het mogelijk maken van deze ervaring. Video via Effenaar.</p>
       <!-- Projectinformatie: compact infoblok voor lezer en zoekmachine -->
@@ -216,6 +213,7 @@
         <li><a href="../../installatie-huren/">Installaties huren</a></li>
         <li><a href="../../workshops/">Talks &amp; workshops</a></li></ul></div>
       <div><h2 class="footer__kop">Menu</h2><ul>
+        <li><a href="../">Al ons werk</a></li>
         <li><a href="../../projecten/">Projecten</a></li><li><a href="../../blog/">Blog</a></li>
         <li><a href="../../over-ons/">Over ons</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
       <div><h2 class="footer__kop">Contact</h2><ul>

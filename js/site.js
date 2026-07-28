@@ -485,7 +485,15 @@
         // ene scrollstand wel botsen en bij de andere niet.
         const b = d.getBoundingClientRect();
         const mx = (b.left + b.right) / 2, my = (b.top + b.bottom) / 2;
-        const hw = d.offsetWidth / 2 + DECO_LUCHT, hh = d.offsetHeight / 2 + DECO_LUCHT;
+        // Niet offsetWidth: de iconen zijn <svg> geworden, en offsetWidth is een
+        // eigenschap van HTML-elementen. Op een SVG geeft hij undefined, en dan
+        // wordt hw NaN. Elke vergelijking met NaN is onwaar, dus botste er
+        // stilletjes nooit meer iets en bleven de iconen dwars door de tekst
+        // heen staan. De berekende breedte werkt voor allebei en telt de
+        // draaiing niet mee, precies wat we hier nodig hebben.
+        const stijl = getComputedStyle(d);
+        const hw = parseFloat(stijl.width) / 2 + DECO_LUCHT;
+        const hh = parseFloat(stijl.height) / 2 + DECO_LUCHT;
         const botst = perSectie.get(sec).some(o =>
           mx - hw < o.right && mx + hw > o.left && my - hh < o.bottom && my + hh > o.top);
         d.classList.toggle('deco--weg', botst);
@@ -1066,6 +1074,61 @@
      echte systeeminstelling, o.a. tegen misselijkheid) houdt die foto. De rest
      krijgt hier het filmpje eroverheen. Verspringen kan niet: .project__img
      heeft een vaste verhouding van 1/1, dus de doos is al even groot. */
+  /* Namaakspeler: pas op klik de echte speler laden.
+     tools/build-inbakken.py heeft het iframe vervangen door een posterbeeld met
+     een afspeelknop. De echte Vimeo- of YouTube-speler haalt ruim 300 KB aan
+     JavaScript op van een vreemd domein en zet cookies van derden. Dat gebeurde
+     bij het laden van de pagina, ook voor de meeste bezoekers die nooit op play
+     drukken. Nu betaalt alleen wie kijkt.
+
+     De speler start met autoplay=1, want je hebt net op afspelen geklikt en dan
+     wil je niet nog een keer klikken. */
+  function namaakSpelers(){
+    document.addEventListener('click', function(e){
+      const doos = e.target.closest('.video-embed--wacht');
+      if (!doos || !doos.dataset.speler) return;
+      const titel = (doos.querySelector('.video-embed__knop') || {}).ariaLabel || 'Video';
+      const f = document.createElement('iframe');
+      f.src = doos.dataset.speler;
+      f.title = titel;
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.allowFullscreen = true;
+      doos.innerHTML = '';
+      doos.classList.remove('video-embed--wacht');
+      doos.removeAttribute('data-speler');
+      doos.appendChild(f);
+    });
+  }
+
+  /* Automatisch spelende filmpjes in een artikel: pas ophalen in beeld.
+     Deze staan als bewegende illustratie in de tekst. De browser haalde ze
+     altijd binnen, ook als ze onderaan de pagina stonden. Over de hele site
+     ging dat om 24 MB, waarvan 4,7 MB op één projectpagina.
+
+     tools/build-inbakken.py heeft het adres verplaatst van src naar data-src.
+     Een <video> zonder src laat gewoon zijn poster zien, dus je ziet nog steeds
+     een beeld, en width en height staan er al op, dus verspringen kan niet.
+     Hier zetten we het adres terug zodra het filmpje in de buurt komt.
+
+     De filmpjes met een afspeelknop blijven zoals ze zijn: die staan al op
+     preload="none" en kosten pas iets als iemand erop drukt. */
+  function luieFilms(){
+    const films = document.querySelectorAll('video[data-src]');
+    if (!films.length) return;
+    if (!('IntersectionObserver' in window)){
+      films.forEach(function(v){ v.src = v.dataset.src; });   // dan maar meteen
+      return;
+    }
+    const kijker = new IntersectionObserver(function(regels){
+      regels.forEach(function(r){
+        if (!r.isIntersecting) return;
+        kijker.unobserve(r.target);
+        r.target.src = r.target.dataset.src;
+      });
+    }, { rootMargin: '400px' });
+    films.forEach(function(v){ kijker.observe(v); });
+  }
+
   function videoCovers(){
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const boxen = document.querySelectorAll('.project__img[data-video]');
@@ -1189,5 +1252,7 @@
     // krijgen. Andersom keek de kijker alleen naar de originelen en bleef de
     // kaart die je in beeld kreeg stilstaan.
     .then(initSite)
-    .then(videoCovers);
+    .then(videoCovers)
+    .then(luieFilms)
+    .then(namaakSpelers);
 })();

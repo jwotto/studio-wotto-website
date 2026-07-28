@@ -12,3 +12,8 @@ moodboard/
 # OS-rommel
 Thumbs.db
 .DS_Store
+
+# Python-rommel. build-llms.py leest build-seo.py als module in, en dan legt
+# Python daar een gecompileerde kopie naast. Die hoort niet in de repo.
+__pycache__/
+*.pyc
