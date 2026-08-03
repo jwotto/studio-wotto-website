@@ -36,6 +36,7 @@ Gemaakt werk, met per stuk het verhaal erachter.
 
 Verslagen, achtergronden en aantekeningen.
 
+- [De Nintendo controller als muziekinstrument](https://studiowotto.com/werk/nintendo-controller-muziekinstrument/): De eerste Nintendo controller, ken je hem nog? Ik heb er een MIDI controller van gemaakt.
 - [Een Nintendo Zapper als muziekinstrument](https://studiowotto.com/werk/nintendo-zapper-muziekinstrument/): Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.
 - [Een boek vol spelvouten](https://studiowotto.com/werk/boek-vol-spelvouten/): Een boek vol spelfouten, met bij elk exemplaar een rood pennetje. Een puzzelboek voor spellingspuristen.
 - [Drie dagen in de gevangenis](https://studiowotto.com/werk/workshop-jeugdgevangenis/): Poortjes door, een pieper op zak en geen mobiel. Drie dagen workshop geven in de jeugdgevangenis in Breda.

@@ -1,5 +1,26 @@
 [
   {
+    "slug": "nintendo-controller-muziekinstrument",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "muziekinstrumenten",
+      "creatieve-technologie"
+    ],
+    "titel": "De Nintendo controller als muziekinstrument",
+    "excerpt": "De eerste Nintendo controller, ken je hem nog? Ik heb er een MIDI controller van gemaakt.",
+    "datum": "2026-08-03",
+    "featured": false,
+    "huur": false,
+    "cover": "nintendo-controller-muziekinstrument.jpg",
+    "videocover": "nintendo-controller-muziekinstrument-kaart.mp4",
+    "kaartmaat": [
+      800,
+      450
+    ],
+    "videocover_licht": "nintendo-controller-muziekinstrument-kaart-web.mp4"
+  },
+  {
     "slug": "nintendo-zapper-muziekinstrument",
     "type": "blog",
     "pilaar": "",
