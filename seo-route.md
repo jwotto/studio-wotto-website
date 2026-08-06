@@ -193,6 +193,11 @@ dient, en precies wat niemand ooit bijhoudt.
 Werkt anders dan Google: een AI **rankt** niet, hij **citeert**. Vier dingen
 sturen dat.
 
+> **Let op: dit werkt nu niet, en het ligt niet aan de site.** Vimexx blokkeert
+> AI-crawlers op de server, nog voordat je robots.txt aan de beurt komt. Alles
+> hieronder klopt en is goed ingesteld, maar er komt geen AI-bot binnen zolang
+> de site daar staat. Zie 7d.
+
 **Je robots.txt laat AI-bots bewust binnen.** Er staat geen `Disallow`. Dat is
 geen slordigheid: `GPTBot`, `OAI-SearchBot`, `ClaudeBot` en `PerplexityBot`
 vallen onder de `*` en mogen er dus in. In het bestand staat hoe je ze
@@ -279,6 +284,84 @@ bestandsnaam, en die staat in `wotto:cover`, in `og:image` en in de HTML. Dat
 moet dus in één ronde, met alle verwijzingen mee. Ook moet je eerst kijken of
 het echt een foto is: bij een schermafdruk of een logo is PNG juist beter.
 Dat is precies waarom `crackthenotes` PNG's mag houden.
+
+---
+
+## 7d. Openstaand: Vimexx blokkeert AI-crawlers, de site moet verhuizen
+
+**Wat ik wil:** dat ChatGPT, Claude en Perplexity de site gewoon kunnen lezen.
+Dat wordt een steeds belangrijker kanaal om gevonden te worden, en het is
+precies waar sectie 6 op gebouwd is.
+
+**Wat er gebeurt:** Vimexx weigert AI-crawlers met een 403. Vastgesteld op
+4 augustus 2026, en bevestigd door hun support: *"We blokkeren zo goed als alle
+AI agents. Dit komt omdat ze voor veel overlast zorgen op ons platform. Helaas
+is er ook geen uitzondering op een gedeelde omgeving mogelijk. Je kunt wel een
+VPS kiezen want daar worden ze niet geblokkeerd."*
+
+Zelf testen:
+
+```
+curl -I -A "Mozilla/5.0"   https://studiowotto.com/    ->  200
+curl -I -A "ClaudeBot/1.0" https://studiowotto.com/    ->  403
+```
+
+Het is een filter op user-agent-naam, afgegeven **vóór** Apache. Aan `.htaccess`
+sleutelen heeft dus geen enkel effect: het verzoek bereikt de site niet eens.
+Geblokkeerd zijn onder meer ClaudeBot, GPTBot, OAI-SearchBot, PerplexityBot,
+AhrefsBot en SemrushBot. Googlebot en bingbot komen er gewoon in, dus je
+gewone Google-vindbaarheid is niet geraakt. Ook `/robots.txt` zelf geeft 403,
+wat het extra schadelijk maakt: een crawler die de robots.txt niet mag ophalen
+gaat er standaard van uit dat de hele site verboden is.
+
+Het raakt alle drie de domeinen (studiowotto.com, technomaker.org,
+crackthenotes.com) en elke andere Vimexx-server die getest is.
+
+**De oplossing: de website naar Cloudflare Pages, de mail bij Vimexx laten.**
+
+De site is puur HTML, CSS en JavaScript, dus statische hosting is er letterlijk
+voor gemaakt. Gratis, sneller (wereldwijd CDN in plaats van één server in Ede),
+geen bot-blokkade, en pushen blijft publiceren via GitHub. Een VPS is voor een
+site zonder PHP of database weggegooid geld en beheerwerk.
+
+Alleen twee DNS-records wijzigen. De rest blijft staan:
+
+| Record | Nu | Wat ermee gebeurt |
+|---|---|---|
+| `studiowotto.com` | 185.104.29.144 | naar Cloudflare Pages |
+| `www.studiowotto.com` | 185.104.29.144 | naar Cloudflare Pages |
+| MX (prio 10) | mail.studiowotto.com | blijft |
+| `mail` / `smtp` / `pop` | 185.104.29.144 | blijft |
+
+De stappen, in deze volgorde. Tot de laatste stap draait de site gewoon door
+op Vimexx en merkt niemand iets.
+
+- [ ] `.htaccess` omzetten naar `_redirects` en `_headers`. Dat bestand werkt
+      niet op Cloudflare Pages, en het bevat de 43 WordPress-redirects en de
+      cacheregels. GitHub Pages valt daarom af: dat kan helemaal geen redirects,
+      en dan verlies je de opgebouwde posities van de oude URL's.
+- [ ] Cloudflare Pages koppelen aan de GitHub-repo, testen op de tijdelijke
+      `pages.dev`-URL. Redirects, video's, de 404 en de galerijen nalopen.
+- [ ] **Cloudflare's eigen AI-blokkade uitzetten.** Die staat standaard aan op
+      nieuwe projecten. Sla je dit over, dan ruil je Vimexx' filter in voor dat
+      van Cloudflare.
+- [ ] Nameservers naar Cloudflare, en controleren of de import van de
+      mailrecords compleet is. Zo'n scan mist er soms één.
+- [ ] `mail.studiowotto.com` op **grijs** zetten in Cloudflare (proxy uit).
+      Staat dat op oranje, dan loopt mailverkeer door de webproxy en werkt je
+      mailprogramma niet meer. Alleen `studiowotto.com` en `www` gaan door de
+      proxy.
+- [ ] Controleren: `curl -I -A "ClaudeBot/1.0" https://studiowotto.com/` moet
+      200 geven in plaats van 403.
+- [ ] Vimexx vragen of er een goedkoper e-mail-only pakket is. De webruimte
+      gebruik je daarna niet meer, maar de mail zit in het hostingpakket. Opzeggen
+      betekent dus ook je mail kwijt. Dit levert geen besparing op zonder zo'n
+      pakket.
+
+Meegenomen bij het DNS-werk: er staat nu **geen SPF- en geen DMARC-record**.
+Daardoor belandt uitgaande mail eerder in spamfilters en kan iemand relatief
+makkelijk uit jouw naam mailen. Twee DNS-regels, los van dit verhaal maar
+handig om in dezelfde ronde te doen.
 
 ---
 
