@@ -185,6 +185,7 @@ dient, en precies wat niemand ooit bijhoudt.
 | workshop muziek en techniek | `/workshops/` |
 | muzieknoten leren lezen | `/werk/crackthenotes/` |
 | videosynthesizer | `/werk/snes-videosynthesizer/` |
+| Ramses3000 Hit The City | `/werk/ramses3000-hit-the-city/` |
 
 ---
 

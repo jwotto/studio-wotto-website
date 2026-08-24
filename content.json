@@ -1,5 +1,26 @@
 [
   {
+    "slug": "ramses3000-hit-the-city",
+    "type": "blog",
+    "pilaar": "podium",
+    "subjects": [
+      "muziektechnologie",
+      "creatieve-technologie",
+      "festival"
+    ],
+    "titel": "Ramses3000 op Hit The City",
+    "excerpt": "Dromerige synths, een live cellist, en de visuals op de achtergrond bespeelt Ramses zelf uit een petrischaaltje. Zaterdag 29 augustus, gratis.",
+    "datum": "2026-08-24",
+    "featured": false,
+    "huur": false,
+    "cover": "ramses3000-vloeistofprojectie-live-podium.jpg",
+    "videocover": "",
+    "kaartmaat": [
+      800,
+      529
+    ]
+  },
+  {
     "slug": "lofi-synthesizer-knoppen",
     "type": "blog",
     "pilaar": "",

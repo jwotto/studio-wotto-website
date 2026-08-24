@@ -10,9 +10,9 @@ Over de opbouw van deze site: alle content (projecten, blogs en workshops) staat
 
 ## Diensten
 
-- [Interactieve installaties laten maken](https://studiowotto.com/interactieve-installaties/): Interactieve installaties laten maken voor musea, scholen en beurzen. Wij ontwerpen en bouwen museuminstallaties waar bezoekers zelf mee spelen.
+- [Interactieve installaties laten maken](https://studiowotto.com/interactieve-installaties/): Interactieve installaties laten maken voor musea, science centers en scholen in Nederland. Wij ontwikkelen museuminstallaties waar bezoekers zelf mee spelen.
 - [Interactieve installatie huren voor je event](https://studiowotto.com/installatie-huren/): Een interactieve muziekinstallatie huren voor je festival, event of merkactivering. Van The Side Quest Rave tot een arcadekast, wij komen naar je locatie.
-- [Muzikale webapps en games laten maken](https://studiowotto.com/muzikale-webapps/): Muzikale webapps en educatieve games die meteen werken in de browser, op elk apparaat. Van gamification voor het onderwijs tot een spel in de etalage.
+- [Muzikale webapps en games laten maken](https://studiowotto.com/muzikale-webapps/): Muzikale webapps en educatieve games die meteen werken in de browser. Voor het onderwijs, voor musea en als tweede scherm bij een installatie.
 - [Muziekinstrumenten, visuals en props op maat](https://studiowotto.com/podium/): Muziekinstrumenten, reactieve visuals en stage props op maat voor artiesten en podia. Studio Wotto bouwt eenmalige objecten die het podium op gaan.
 - [Workshops & talks over creatieve technologie](https://studiowotto.com/workshops/): Workshops over muziek, techniek en games. Voor scholen, musea, bibliotheken en cultuurhuizen. Bouw een gitaar, maak een game of teken je eigen geluid.
 
@@ -36,6 +36,7 @@ Gemaakt werk, met per stuk het verhaal erachter.
 
 Verslagen, achtergronden en aantekeningen.
 
+- [Ramses3000 op Hit The City](https://studiowotto.com/werk/ramses3000-hit-the-city/): Dromerige synths, een live cellist, en de visuals op de achtergrond bespeelt Ramses zelf uit een petrischaaltje. Zaterdag 29 augustus, gratis.
 - [Een lofi-synthesizer met alleen knoppen](https://studiowotto.com/werk/lofi-synthesizer-knoppen/): Geen witte en zwarte toetsen, gewoon knopjes draaien en akkoorden maken. Al het geluid komt uit dit lofi apparaatje zelf.
 - [De Nintendo controller als muziekinstrument](https://studiowotto.com/werk/nintendo-controller-muziekinstrument/): De eerste Nintendo controller, ken je hem nog? Ik heb er een MIDI controller van gemaakt.
 - [Een Nintendo Zapper als muziekinstrument](https://studiowotto.com/werk/nintendo-zapper-muziekinstrument/): Dit heeft pappa nog geprogrammeerd zonder de hulp van AI. In 2020 bouwde ik een Nintendo Zapper om tot muziekinstrument.
