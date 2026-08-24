@@ -1,5 +1,26 @@
 [
   {
+    "slug": "lofi-synthesizer-knoppen",
+    "type": "blog",
+    "pilaar": "",
+    "subjects": [
+      "muziekinstrumenten",
+      "creatieve-technologie"
+    ],
+    "titel": "Een lofi-synthesizer met alleen knoppen",
+    "excerpt": "Geen witte en zwarte toetsen, gewoon knopjes draaien en akkoorden maken. Al het geluid komt uit dit lofi apparaatje zelf.",
+    "datum": "2026-08-04",
+    "featured": false,
+    "huur": false,
+    "cover": "lofi-synthesizer-knoppen.jpg",
+    "videocover": "lofi-synthesizer-knoppen-kaart.mp4",
+    "kaartmaat": [
+      640,
+      640
+    ],
+    "videocover_licht": "lofi-synthesizer-knoppen-kaart-web.mp4"
+  },
+  {
     "slug": "nintendo-controller-muziekinstrument",
     "type": "blog",
     "pilaar": "",
