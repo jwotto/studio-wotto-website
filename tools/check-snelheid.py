@@ -34,6 +34,12 @@ MAX_TITEL = 60              # daarboven kapt Google de titel af
 MIN_TITEL = 30              # daaronder laat je ruimte liggen
 MAX_OMSCHRIJVING = 160
 
+# Cloudflare Web Analytics. Staat per pagina onderaan de body en niet in een
+# partial, want lees_partial() in build-inbakken.py pakt alleen het element
+# met data-partial (de <footer> zelf) en negeert alles wat daarna in
+# partials/footer.html staat.
+BEACON = "static.cloudflareinsights.com"
+
 
 def paginas():
     for p in sorted(BASE.rglob("*.html")):
@@ -159,6 +165,14 @@ def controleer(pad: pathlib.Path) -> list:
     # --- 7. Iconen die niet zijn omgezet ------------------------------------
     if re.search(r'<i class="ph-', txt):
         op.append(("nog een <i class=\"ph-...\">", "draai python tools/build.py"))
+
+    # --- 8. Cloudflare Web Analytics ----------------------------------------
+    # Een nieuwe pagina maak je meestal door een bestaande te kopieren, en dan
+    # komt de beacon vanzelf mee. Tik je er een vanaf nul, dan mist hij en zie
+    # je dat aan niets: de pagina werkt gewoon, hij telt alleen niet mee.
+    if BEACON not in txt:
+        op.append(("geen Cloudflare Web Analytics",
+                   "beacon onderaan de body, zie de valkuilen in README.md"))
 
     return op
 

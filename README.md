@@ -240,6 +240,15 @@ het verkeerde niveau wijzen. Die pagina gebruikt als enige `/css/` en `/js/`.
 laden. Die attributen werken als CSS. Zonder die regel legt `height="1500"` een
 hoogte van 1500px op en rekt je foto uit.
 
+**De analytics-beacon staat per pagina, niet in de footer-partial.** Cloudflare
+Web Analytics hoort onderaan de body, na `site.js`. In de partial kan het niet:
+`lees_partial()` in `build-inbakken.py` pakt alleen het element met
+`data-partial`, dus de `<footer>` zelf, en negeert wat daarna in het bestand
+staat. Kopieer je een bestaande pagina, dan komt de beacon mee. De dertien
+onderwerp-pagina's krijgen hem uit het sjabloon in `build-onderwerpen.py`, en
+daar staan de accolades van de JSON verdubbeld omdat dat sjabloon door
+`.format()` gaat. `check-snelheid.py` meldt het als een pagina hem mist.
+
 **Foto's verkleinen hoeft niet meer met de hand.** `tools/build-galerij.py` doet
 alles boven 1600px. Een cameraorigineel is zo 7 MB.
 
