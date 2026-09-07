@@ -28,8 +28,8 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 # de map wordt daaruit afgeleid (kleine letters, streepjes).
 ONDERWERPEN = [
     ("Gamification", "ph-trophy",
-     "Werk waarin spelprincipes het leren of de beleving versterken. Punten als middel, "
-     "niet als doel: is het spel zonder punten niet leuk, dan helpen punten niet."),
+     "Werk waarin spelprincipes het leren of de beleving versterken. Vooral bedoeld om "
+     "mensen aan het werk te krijgen, want beginnen is de grootste drempel."),
     ("Educatie", "ph-student",
      "Werk voor het onderwijs. Workshops en installaties waarmee leerlingen niet over "
      "techniek horen, maar er zelf iets mee maken."),

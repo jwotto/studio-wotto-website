@@ -78,7 +78,7 @@ Ingangen per onderwerp. Ze bevatten geen nieuw werk, alleen een andere doorsnede
 - [Educatie](https://studiowotto.com/onderwerp/educatie/): Werk voor het onderwijs. Workshops en installaties waarmee leerlingen niet over techniek horen, maar er zelf iets mee maken.
 - [Festival](https://studiowotto.com/onderwerp/festival/): Installaties die het festivalterrein op gaan. Druk, kort, en zonder uitleg: het moet meteen duidelijk zijn hoe het werkt.
 - [Games](https://studiowotto.com/onderwerp/games/): Games en gametechniek. Van een arcadekast waarin jij de avatar bent tot een game die je in een middag zelf leert bouwen.
-- [Gamification](https://studiowotto.com/onderwerp/gamification/): Werk waarin spelprincipes het leren of de beleving versterken. Punten als middel, niet als doel: is het spel zonder punten niet leuk, dan helpen punten niet.
+- [Gamification](https://studiowotto.com/onderwerp/gamification/): Werk waarin spelprincipes het leren of de beleving versterken. Vooral bedoeld om mensen aan het werk te krijgen, want beginnen is de grootste drempel.
 - [Geluidsontwerp](https://studiowotto.com/onderwerp/geluidsontwerp/): Geluid als materiaal. Van ritmes programmeren met tikkende motoren tot een tekening die je kunt horen.
 - [Interactieve kunst](https://studiowotto.com/onderwerp/interactieve-kunst/): Kunst die reageert. Installaties waarin het publiek het werk afmaakt, en die pas tot leven komen als iemand anders eraan begint.
 - [Interactieve reclame](https://studiowotto.com/onderwerp/interactieve-reclame/): Merkbeleving die blijft staan. In een winkel, horeca of etalage, waar voorbijgangers stoppen en meedoen in plaats van doorlopen. Op maat gebouwd.
