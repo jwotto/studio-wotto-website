@@ -240,7 +240,10 @@ def schrijf(f, data):
 
 
 def main():
-    SKIP = (".git", "oude blogs", "moodboard", "node_modules", "_site", "partials")
+    # afluistertelefoon: een klantpagina waar niets naartoe linkt. Geen
+    # structured data en niet in de sitemap, want hij hoort niet in Google.
+    SKIP = (".git", "oude blogs", "moodboard", "node_modules", "_site", "partials",
+            "afluistertelefoon")
     pages = [f for f in sorted(BASE.rglob("*.html")) if not any(s in str(f) for s in SKIP)]
 
     per_soort, urls = {}, []

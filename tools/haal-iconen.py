@@ -37,7 +37,8 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 BRON = "https://unpkg.com/@phosphor-icons/core@2.1.1/assets/bold/%s-bold.svg"
 LICENTIE = "https://unpkg.com/@phosphor-icons/core@2.1.1/LICENSE"
 
-NEGEER_MAPPEN = {"tools", ".git", ".astro", "node_modules", "oude blogs en pagina's"}
+NEGEER_MAPPEN = {"tools", ".git", ".astro", "node_modules", "oude blogs en pagina's",
+                 "download"}   # de app in afluistertelefoon/download/
 
 # JavaScript zet de "Te huur"-chip zelf in elkaar, met een icoon dat dus nergens
 # in de HTML staat. Die moet er altijd bij.

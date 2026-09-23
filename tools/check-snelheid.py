@@ -24,7 +24,8 @@ import urllib.parse
 
 BASE = pathlib.Path(__file__).resolve().parent.parent
 NEGEER = {"partials", "tools", "moodboard", ".git", ".astro", ".github",
-          "node_modules", "oude blogs en pagina's"}
+          "node_modules", "oude blogs en pagina's",
+          "download"}   # de app in afluistertelefoon/download/, geen site-pagina
 
 # Grenzen. Ruim gekozen: dit moet je waarschuwen bij een uitschieter, niet
 # zeuren over elke foto.

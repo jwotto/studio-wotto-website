@@ -63,7 +63,10 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 # Mappen die geen echte site-pagina's bevatten.
 NEGEER = {"partials", "tools", "afbeeldingen", "moodboard", "logo's",
           "logo's klanten", "favicons", "css", "js", ".git", ".astro",
-          ".github", "node_modules", "oude blogs en pagina's"}
+          ".github", "node_modules", "oude blogs en pagina's",
+          # afluistertelefoon/download/ bevat de app als kant-en-klaar bestand.
+          # Die komt uit een andere repo en moet exact blijven zoals hij is.
+          "download"}
 
 PILAAR_LABEL = {
     "installaties": "Interactieve installaties",
