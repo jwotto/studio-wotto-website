@@ -95,6 +95,12 @@ Kopieer een bestaand item en pas aan. Kijk vooral naar:
       juist wel beter, dus dit is geen algemene regel.
 - [ ] Meerdere foto's? Eén zwevend in de tekst, de rest onderaan in een
       `<div class="gallery">` naast elkaar.
+- [ ] **Het deelplaatje gaat vanzelf.** Bij een blog maakt de build van je
+      cover een liggend plaatje van 1200x630 (`<cover>-deel.jpg`) en zet
+      `og:image` ernaartoe, met breedte, hoogte en alt. Dat is de vorm die
+      Facebook, LinkedIn en WhatsApp willen, dus ze snijden niets meer af. Kies
+      daarom een cover waar de hele foto goed op staat, want die zie je ook
+      terug als iemand je link deelt.
 
 ### Film
 - [ ] **Geen GIF.** Nooit. Gemeten op een loop van 8 seconden: GIF 1954 kB
@@ -186,6 +192,7 @@ dient, en precies wat niemand ooit bijhoudt.
 | muzieknoten leren lezen | `/werk/crackthenotes/` |
 | videosynthesizer | `/werk/snes-videosynthesizer/` |
 | Ramses3000 Hit The City | `/werk/ramses3000-hit-the-city/` |
+| Deense makers op bezoek, makerspace Eindhoven | `/werk/deense-makers-op-bezoek/` |
 
 ---
 
@@ -395,6 +402,7 @@ In deze volgorde.
 | `tools/build-manifest.py` | schrijft `content.json`: welke items bestaan er. Slaat items zonder cover over. |
 | `tools/build-onderwerpen.py` | onderwerp-pagina's, chip-wolken en de chips op elk item |
 | `tools/build-seo.py` | structured data op elke pagina + `sitemap.xml` |
+| `tools/build-deelplaatje.py` | het deelplaatje per blog, en `og:image` ernaartoe |
 
 De volgorde is niet vrij: `build-onderwerpen.py` schrijft de onderwerp-pagina's
 opnieuw uit een sjabloon zonder structured data, dus `build-seo.py` moet erna.

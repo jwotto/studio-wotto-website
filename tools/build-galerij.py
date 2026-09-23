@@ -37,7 +37,7 @@ FILM = (".mp4",)
 # galerij: het zijn geen nieuwe beelden maar lichtere versies van beelden die er
 # al staan. Zonder deze filter meldde dit script "1 los bestand" over een
 # kaartfilmpje dat het zelf een stap eerder had gemaakt.
-GEGENEREERD = re.compile(r"(-kaart(-web)?|-web|-poster)\.[a-z0-9]+$|^embed-", re.I)
+GEGENEREERD = re.compile(r"(-kaart(-web)?|-web|-poster|-deel)\.[a-z0-9]+$|^embed-", re.I)
 MAX_BREED = 1600
 
 START = '<!-- galerij: gemaakt door tools/build-galerij.py uit de bestanden in deze map -->'

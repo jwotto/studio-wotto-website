@@ -54,8 +54,9 @@ def main():
         for bron in sorted((BASE / "werk" / item["slug"]).iterdir()):
             if bron.suffix.lower() not in BRON:
                 continue
-            # De kaartversies zijn al WebP en hebben hier niets te zoeken.
-            if bron.stem.endswith("-kaart"):
+            # De kaartversies zijn al WebP en hebben hier niets te zoeken. Het
+            # deelplaatje staat nergens in de tekst, dus een WebP is zonde.
+            if bron.stem.endswith(("-kaart", "-deel")):
                 continue
             doel = bron.with_suffix(".webp")
             if doel.exists() and doel.stat().st_mtime >= bron.stat().st_mtime:

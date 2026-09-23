@@ -148,6 +148,15 @@ Zet foto's en filmpjes in `werk/<slug>/` en draai `python tools/build.py`. Dan:
   galerij van één foto is onzin: die hoort zwevend in je tekst.
 - **Een eigen galerij blijft van jou.** Het script beheert alleen wat het zelf
   tussen zijn markers heeft neergezet.
+- **Elke blog krijgt een deelplaatje** van 1200x630, voor als je de link deelt
+  op Facebook, LinkedIn of WhatsApp. Het is je cover in zijn geheel, op een roze
+  vlak met het logo ernaast, en heet `<cover>-deel.jpg`. `og:image` wijst er
+  vanzelf naartoe, met breedte, hoogte en alt erbij. Je hoeft er niets voor te
+  doen. Waarom? Een platform toont een link liggend en snijdt een staande cover
+  zelf bij, en dan vallen de hoofden eraf. Nieuwe cover? Het plaatje wordt
+  vanzelf opnieuw gemaakt. De preview testen kan pas als de pagina online staat,
+  met de [Sharing Debugger](https://developers.facebook.com/tools/debug/) van
+  Facebook. Die haalt de preview ook opnieuw op als hij verouderd is.
 
 **Elke foto heeft twee teksten**, twee losse dingen:
 
@@ -304,7 +313,7 @@ Python, geen dependencies behalve Pillow. Draaien vanuit de projectmap.
 python tools/build.py
 ```
 
-Dat is het enige commando dat je nodig hebt. Het draait de zes stappen in de
+Dat is het enige commando dat je nodig hebt. Het draait de tien stappen in de
 juiste volgorde:
 
 | Stap | Wat het doet |
@@ -315,6 +324,7 @@ juiste volgorde:
 | `build-seo.py` | structured data op elke pagina + `sitemap.xml` |
 | `build-kaartbeeld.py` | maakt van elke cover een lichte `-kaart.webp` voor de kaartjes |
 | `build-kaartfilm.py` | maakt van elk kaartfilmpje een lichte `-web.mp4`. Het filmpje in het artikel zelf blijft ongemoeid |
+| `build-deelplaatje.py` | maakt per blog een `-deel.jpg` van 1200x630 voor Facebook, LinkedIn en WhatsApp, en zet `og:image` ernaartoe. Met `--opnieuw` maakt hij ze allemaal opnieuw, bijvoorbeeld als je de opmaak aanpast |
 | `build-artikelbeeld.py` | zet naast elke artikelfoto een `.webp` in dezelfde afmetingen, alleen beter gecomprimeerd |
 | `build-llms.py` | schrijft `llms.txt`, een wegwijzer door de site voor AI-assistenten |
 | `build-inbakken.py` | zet header, footer, kaartjes, iconen en `<main>` in de HTML |
